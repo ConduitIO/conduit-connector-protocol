@@ -1,0 +1,10 @@
+version: v1
+plugins:
+  - name: go
+    out: cpluginv1/internal/cproto
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: cpluginv1/internal/cproto
+    opt:
+      - paths=source_relative

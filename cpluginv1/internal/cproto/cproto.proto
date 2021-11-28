@@ -1,0 +1,120 @@
+syntax = "proto3";
+option go_package = "github.com/conduitio/conduit-plugin/cpluginv1/internal/cproto";
+
+package cpluginv1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/descriptor.proto";
+
+message Record {
+    bytes position = 1;
+    map<string, string> metadata = 2;
+    google.protobuf.Timestamp createdAt = 3;
+    Data key = 4;
+    Data payload = 5;
+}
+
+message Data {
+    oneof data {
+        bytes rawData = 1;
+        google.protobuf.Struct structuredData = 2;
+    }
+}
+
+service SourcePlugin {
+    rpc Configure(Source.Configure.Request) returns (Source.Configure.Response);
+    rpc Start(Source.Start.Request) returns (Source.Start.Response);
+    rpc Run(stream Source.Run.Request) returns (stream Source.Run.Response);
+    rpc Stop(Source.Stop.Request) returns (Source.Stop.Response);
+}
+
+service SinkPlugin {
+    rpc Configure(Sink.Configure.Request) returns (Sink.Configure.Response);
+    rpc Start(Sink.Start.Request) returns (Sink.Start.Response);
+    rpc Run(stream Sink.Run.Request) returns (stream Sink.Run.Response);
+    rpc Stop(Sink.Stop.Request) returns (Sink.Stop.Response);
+}
+
+service SpecifierPlugin {
+    rpc Specify(Specifier.Specify.Request) returns (Specifier.Specify.Response);
+}
+
+message Source {
+    message Configure {
+        message Request {
+            map<string, string> config = 1;
+        }
+        message Response {}
+    }
+
+    message Start {
+        message Request {
+            bytes position = 1;
+        }
+        message Response {}
+    }
+
+    message Run {
+        message Request {
+            bytes ackPosition = 1;
+        }
+        message Response {
+            Record record = 1;
+        }
+    }
+
+    message Stop {
+        message Request {}
+        message Response {}
+    }
+}
+
+message Sink {
+    message Configure {
+        message Request {
+            map<string, string> config = 1;
+        }
+        message Response {}
+    }
+
+    message Start {
+        message Request {}
+        message Response {}
+    }
+
+    message Run {
+        message Request {
+            Record record = 1;
+        }
+        message Response {
+            bytes ackPosition = 1;
+            string error = 2;
+        }
+    }
+
+    message Stop {
+        message Request {}
+        message Response {}
+    }
+}
+
+message Specifier {
+    message Specify {
+        message Request {}
+        message Response {
+            string summary = 1;
+            string description = 2;
+            string version = 3;
+            string author = 4;
+            map<string, Parameter> sinkSpec = 5;
+            map<string, Parameter> sourceSpec = 6;
+        }
+    }
+
+    message Parameter {
+        string default = 1;
+        bool required = 2;
+        string description = 3;
+    }
+}
