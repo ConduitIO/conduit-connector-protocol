@@ -40,7 +40,7 @@ var _ plugin.Plugin = (*grpcDestinationPlugin)(nil)
 // GRPCClient always returns an error; we're only implementing the server half
 // of the interface.
 func (p *grpcDestinationPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
-	return nil, errors.New("conduit-plugin only implements gRPC servers")
+	return nil, errors.New("this package only implements gRPC servers")
 }
 
 // GRPCServer registers the gRPC destination plugin server with the gRPC server

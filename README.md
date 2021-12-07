@@ -6,3 +6,26 @@ This repository contains the definition of the Conduit plugin. It is a thin laye
 details without adding any functionality on top. This is NOT the plugin SDK.
 
 This repository is the only connection point between Conduit and one of its plugins.
+
+## Generating code for other languages
+
+You can use [buf](https://buf.build/) to generate code for building a Conduit plugin in a language other than Go. To do
+that you need to create a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#create-a-bufgenyaml) file and configure
+the plugins for the language you want to use.
+
+For example here is a `buf.gen.yaml` file that is configured to generate C++ and Java code:
+
+```yaml
+version: v1
+plugins:
+  - name: cpp
+    out: gen/proto/cpp
+  - name: java
+    out: gen/proto/java
+```
+
+Then you can run this command to generate the code:
+
+```shell
+buf generate buf.build/conduitio/conduit-plugin --template buf.gen.yaml
+```
