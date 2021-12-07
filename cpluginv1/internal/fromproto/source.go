@@ -16,39 +16,39 @@ package fromproto
 
 import (
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 )
 
-func SourceConfigureRequest(in *cproto.Source_Configure_Request) (cpluginv1.SourceConfigureRequest, error) {
+func SourceConfigureRequest(in *connectorv1.Source_Configure_Request) (cpluginv1.SourceConfigureRequest, error) {
 	out := cpluginv1.SourceConfigureRequest{
 		Config: in.Config,
 	}
 	return out, nil
 }
 
-func SourceConfigureResponse(in *cproto.Source_Configure_Response) (cpluginv1.SourceConfigureResponse, error) {
+func SourceConfigureResponse(in *connectorv1.Source_Configure_Response) (cpluginv1.SourceConfigureResponse, error) {
 	return cpluginv1.SourceConfigureResponse{}, nil
 }
 
-func SourceStartRequest(in *cproto.Source_Start_Request) (cpluginv1.SourceStartRequest, error) {
+func SourceStartRequest(in *connectorv1.Source_Start_Request) (cpluginv1.SourceStartRequest, error) {
 	out := cpluginv1.SourceStartRequest{
 		Position: in.Position,
 	}
 	return out, nil
 }
 
-func SourceStartResponse(in *cproto.Source_Start_Response) (cpluginv1.SourceStartResponse, error) {
+func SourceStartResponse(in *connectorv1.Source_Start_Response) (cpluginv1.SourceStartResponse, error) {
 	return cpluginv1.SourceStartResponse{}, nil
 }
 
-func SourceRunRequest(in *cproto.Source_Run_Request) (cpluginv1.SourceRunRequest, error) {
+func SourceRunRequest(in *connectorv1.Source_Run_Request) (cpluginv1.SourceRunRequest, error) {
 	out := cpluginv1.SourceRunRequest{
 		AckPosition: in.AckPosition,
 	}
 	return out, nil
 }
 
-func SourceRunResponse(in *cproto.Source_Run_Response) (cpluginv1.SourceRunResponse, error) {
+func SourceRunResponse(in *connectorv1.Source_Run_Response) (cpluginv1.SourceRunResponse, error) {
 	rec, err := Record(in.Record)
 	if err != nil {
 		return cpluginv1.SourceRunResponse{}, err
@@ -60,10 +60,10 @@ func SourceRunResponse(in *cproto.Source_Run_Response) (cpluginv1.SourceRunRespo
 	return out, nil
 }
 
-func SourceStopRequest(in *cproto.Source_Stop_Request) (cpluginv1.SourceStopRequest, error) {
+func SourceStopRequest(in *connectorv1.Source_Stop_Request) (cpluginv1.SourceStopRequest, error) {
 	return cpluginv1.SourceStopRequest{}, nil
 }
 
-func SourceStopResponse(in *cproto.Source_Stop_Response) (cpluginv1.SourceStopResponse, error) {
+func SourceStopResponse(in *connectorv1.Source_Stop_Response) (cpluginv1.SourceStopResponse, error) {
 	return cpluginv1.SourceStopResponse{}, nil
 }

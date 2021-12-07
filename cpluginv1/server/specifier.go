@@ -21,7 +21,7 @@ import (
 	"github.com/conduitio/conduit-plugin/cpluginv1"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/fromproto"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/toproto"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
@@ -46,20 +46,20 @@ func (p *grpcSpecifierPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *g
 // GRPCServer registers the gRPC specifier plugin server with the gRPC server that
 // go-plugin is standing up.
 func (p *grpcSpecifierPlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
-	cproto.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.SpecifierPluginServer()))
+	connectorv1.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.SpecifierPluginServer()))
 	return nil
 }
 
-func NewSpecifierPluginServer(impl cpluginv1.SpecifierPluginServer) cproto.SpecifierPluginServer {
+func NewSpecifierPluginServer(impl cpluginv1.SpecifierPluginServer) connectorv1.SpecifierPluginServer {
 	return &specifierPluginServer{impl: impl}
 }
 
 type specifierPluginServer struct {
-	cproto.UnimplementedSpecifierPluginServer
+	connectorv1.UnimplementedSpecifierPluginServer
 	impl cpluginv1.SpecifierPluginServer
 }
 
-func (s specifierPluginServer) Specify(ctx context.Context, req *cproto.Specifier_Specify_Request) (*cproto.Specifier_Specify_Response, error) {
+func (s specifierPluginServer) Specify(ctx context.Context, req *connectorv1.Specifier_Specify_Request) (*connectorv1.Specifier_Specify_Response, error) {
 	r, err := fromproto.SpecifierSpecifyRequest(req)
 	if err != nil {
 		return nil, err

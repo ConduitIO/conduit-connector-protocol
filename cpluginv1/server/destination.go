@@ -21,7 +21,7 @@ import (
 	"github.com/conduitio/conduit-plugin/cpluginv1"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/fromproto"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/toproto"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
@@ -46,20 +46,20 @@ func (p *grpcDestinationPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, 
 // GRPCServer registers the gRPC destination plugin server with the gRPC server
 // that go-plugin is standing up.
 func (p *grpcDestinationPlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
-	cproto.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.DestinationPluginServer()))
+	connectorv1.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.DestinationPluginServer()))
 	return nil
 }
 
-func NewDestinationPluginServer(impl cpluginv1.DestinationPluginServer) cproto.DestinationPluginServer {
+func NewDestinationPluginServer(impl cpluginv1.DestinationPluginServer) connectorv1.DestinationPluginServer {
 	return &destinationPluginServer{impl: impl}
 }
 
 type destinationPluginServer struct {
-	cproto.UnimplementedDestinationPluginServer
+	connectorv1.UnimplementedDestinationPluginServer
 	impl cpluginv1.DestinationPluginServer
 }
 
-func (s *destinationPluginServer) Configure(ctx context.Context, req *cproto.Destination_Configure_Request) (*cproto.Destination_Configure_Response, error) {
+func (s *destinationPluginServer) Configure(ctx context.Context, req *connectorv1.Destination_Configure_Request) (*connectorv1.Destination_Configure_Response, error) {
 	r, err := fromproto.DestinationConfigureRequest(req)
 	if err != nil {
 		return nil, err
@@ -74,7 +74,7 @@ func (s *destinationPluginServer) Configure(ctx context.Context, req *cproto.Des
 	}
 	return ret, nil
 }
-func (s *destinationPluginServer) Start(ctx context.Context, req *cproto.Destination_Start_Request) (*cproto.Destination_Start_Response, error) {
+func (s *destinationPluginServer) Start(ctx context.Context, req *connectorv1.Destination_Start_Request) (*connectorv1.Destination_Start_Response, error) {
 	r, err := fromproto.DestinationStartRequest(req)
 	if err != nil {
 		return nil, err
@@ -89,14 +89,14 @@ func (s *destinationPluginServer) Start(ctx context.Context, req *cproto.Destina
 	}
 	return ret, nil
 }
-func (s *destinationPluginServer) Run(stream cproto.DestinationPlugin_RunServer) error {
+func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (s *destinationPluginServer) Stop(ctx context.Context, req *cproto.Destination_Stop_Request) (*cproto.Destination_Stop_Response, error) {
+func (s *destinationPluginServer) Stop(ctx context.Context, req *connectorv1.Destination_Stop_Request) (*connectorv1.Destination_Stop_Response, error) {
 	r, err := fromproto.DestinationStopRequest(req)
 	if err != nil {
 		return nil, err
@@ -113,7 +113,7 @@ func (s *destinationPluginServer) Stop(ctx context.Context, req *cproto.Destinat
 }
 
 type destinationRunStream struct {
-	impl cproto.DestinationPlugin_RunServer
+	impl connectorv1.DestinationPlugin_RunServer
 }
 
 func (s *destinationRunStream) Send(in cpluginv1.DestinationRunResponse) error {

@@ -19,12 +19,12 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 	"google.golang.org/protobuf/types/known/structpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func Record(record cpluginv1.Record) (*cproto.Record, error) {
+func Record(record cpluginv1.Record) (*connectorv1.Record, error) {
 	key, err := Data(record.Key)
 	if err != nil {
 		return nil, fmt.Errorf("error converting key: %w", err)
@@ -35,7 +35,7 @@ func Record(record cpluginv1.Record) (*cproto.Record, error) {
 		return nil, fmt.Errorf("error converting payload: %w", err)
 	}
 
-	out := cproto.Record{
+	out := connectorv1.Record{
 		Position:  record.Position,
 		Metadata:  record.Metadata,
 		CreatedAt: timestamppb.New(record.CreatedAt),
@@ -45,12 +45,12 @@ func Record(record cpluginv1.Record) (*cproto.Record, error) {
 	return &out, nil
 }
 
-func Data(in cpluginv1.Data) (*cproto.Data, error) {
-	var out cproto.Data
+func Data(in cpluginv1.Data) (*connectorv1.Data, error) {
+	var out connectorv1.Data
 
 	switch v := in.(type) {
 	case cpluginv1.RawData:
-		out.Data = &cproto.Data_RawData{
+		out.Data = &connectorv1.Data_RawData{
 			RawData: v,
 		}
 	case cpluginv1.StructuredData:
@@ -58,7 +58,7 @@ func Data(in cpluginv1.Data) (*cproto.Data, error) {
 		if err != nil {
 			return nil, err
 		}
-		out.Data = &cproto.Data_StructuredData{
+		out.Data = &connectorv1.Data_StructuredData{
 			StructuredData: content,
 		}
 	default:

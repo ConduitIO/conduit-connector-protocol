@@ -18,15 +18,15 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 )
 
-func SpecifierSpecifyRequest(in *cproto.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
+func SpecifierSpecifyRequest(in *connectorv1.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
 	return cpluginv1.SpecifierSpecifyRequest{}, nil
 }
 
-func SpecifierSpecifyResponse(in *cproto.Specifier_Specify_Response) (cpluginv1.SpecifierSpecifyResponse, error) {
-	specMap := func(in map[string]*cproto.Specifier_Parameter) (map[string]cpluginv1.SpecifierParameter, error) {
+func SpecifierSpecifyResponse(in *connectorv1.Specifier_Specify_Response) (cpluginv1.SpecifierSpecifyResponse, error) {
+	specMap := func(in map[string]*connectorv1.Specifier_Parameter) (map[string]cpluginv1.SpecifierParameter, error) {
 		out := make(map[string]cpluginv1.SpecifierParameter, len(in))
 		var err error
 		for k, v := range in {
@@ -59,7 +59,7 @@ func SpecifierSpecifyResponse(in *cproto.Specifier_Specify_Response) (cpluginv1.
 	return out, nil
 }
 
-func SpecifierParameter(in *cproto.Specifier_Parameter) (cpluginv1.SpecifierParameter, error) {
+func SpecifierParameter(in *connectorv1.Specifier_Parameter) (cpluginv1.SpecifierParameter, error) {
 	out := cpluginv1.SpecifierParameter{
 		Default:     in.Default,
 		Required:    in.Required,

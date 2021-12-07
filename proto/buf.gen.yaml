@@ -2,13 +2,13 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/conduit-plugin/proto/gen/go
+    default: github.com/conduitio/conduit-plugin/internal
 plugins:
   - name: go
-    out: gen/go
+    out: ../internal
     opt:
       - paths=source_relative
   - name: go-grpc
-    out: gen/go
+    out: ../internal
     opt:
       - paths=source_relative

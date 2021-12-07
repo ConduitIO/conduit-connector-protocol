@@ -21,7 +21,7 @@ import (
 	"github.com/conduitio/conduit-plugin/cpluginv1"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/fromproto"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/toproto"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
@@ -46,20 +46,20 @@ func (p *grpcSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc
 // GRPCServer registers the gRPC source plugin server with the gRPC server that
 // go-plugin is standing up.
 func (p *grpcSourcePlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
-	cproto.RegisterSourcePluginServer(s, NewSourcePluginServer(p.SourcePluginServer()))
+	connectorv1.RegisterSourcePluginServer(s, NewSourcePluginServer(p.SourcePluginServer()))
 	return nil
 }
 
-func NewSourcePluginServer(impl cpluginv1.SourcePluginServer) cproto.SourcePluginServer {
+func NewSourcePluginServer(impl cpluginv1.SourcePluginServer) connectorv1.SourcePluginServer {
 	return &sourcePluginServer{impl: impl}
 }
 
 type sourcePluginServer struct {
-	cproto.UnimplementedSourcePluginServer
+	connectorv1.UnimplementedSourcePluginServer
 	impl cpluginv1.SourcePluginServer
 }
 
-func (s *sourcePluginServer) Configure(ctx context.Context, req *cproto.Source_Configure_Request) (*cproto.Source_Configure_Response, error) {
+func (s *sourcePluginServer) Configure(ctx context.Context, req *connectorv1.Source_Configure_Request) (*connectorv1.Source_Configure_Response, error) {
 	r, err := fromproto.SourceConfigureRequest(req)
 	if err != nil {
 		return nil, err
@@ -74,7 +74,7 @@ func (s *sourcePluginServer) Configure(ctx context.Context, req *cproto.Source_C
 	}
 	return ret, nil
 }
-func (s *sourcePluginServer) Start(ctx context.Context, req *cproto.Source_Start_Request) (*cproto.Source_Start_Response, error) {
+func (s *sourcePluginServer) Start(ctx context.Context, req *connectorv1.Source_Start_Request) (*connectorv1.Source_Start_Response, error) {
 	r, err := fromproto.SourceStartRequest(req)
 	if err != nil {
 		return nil, err
@@ -89,14 +89,14 @@ func (s *sourcePluginServer) Start(ctx context.Context, req *cproto.Source_Start
 	}
 	return ret, nil
 }
-func (s *sourcePluginServer) Run(stream cproto.SourcePlugin_RunServer) error {
+func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (s *sourcePluginServer) Stop(ctx context.Context, req *cproto.Source_Stop_Request) (*cproto.Source_Stop_Response, error) {
+func (s *sourcePluginServer) Stop(ctx context.Context, req *connectorv1.Source_Stop_Request) (*connectorv1.Source_Stop_Response, error) {
 	r, err := fromproto.SourceStopRequest(req)
 	if err != nil {
 		return nil, err
@@ -113,7 +113,7 @@ func (s *sourcePluginServer) Stop(ctx context.Context, req *cproto.Source_Stop_R
 }
 
 type sourceRunStream struct {
-	impl cproto.SourcePlugin_RunServer
+	impl connectorv1.SourcePlugin_RunServer
 }
 
 func (s *sourceRunStream) Send(in cpluginv1.SourceRunResponse) error {

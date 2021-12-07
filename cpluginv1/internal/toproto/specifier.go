@@ -18,16 +18,16 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 )
 
-func SpecifierSpecifyRequest(in cpluginv1.SpecifierSpecifyRequest) (*cproto.Specifier_Specify_Request, error) {
-	return &cproto.Specifier_Specify_Request{}, nil
+func SpecifierSpecifyRequest(in cpluginv1.SpecifierSpecifyRequest) (*connectorv1.Specifier_Specify_Request, error) {
+	return &connectorv1.Specifier_Specify_Request{}, nil
 }
 
-func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*cproto.Specifier_Specify_Response, error) {
-	specMap := func(in map[string]cpluginv1.SpecifierParameter) (map[string]*cproto.Specifier_Parameter, error) {
-		out := make(map[string]*cproto.Specifier_Parameter, len(in))
+func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*connectorv1.Specifier_Specify_Response, error) {
+	specMap := func(in map[string]cpluginv1.SpecifierParameter) (map[string]*connectorv1.Specifier_Parameter, error) {
+		out := make(map[string]*connectorv1.Specifier_Parameter, len(in))
 		var err error
 		for k, v := range in {
 			out[k], err = SpecifierParameter(v)
@@ -48,7 +48,7 @@ func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*cproto.Sp
 		return nil, fmt.Errorf("error converting DestinationSpec: %w", err)
 	}
 
-	out := cproto.Specifier_Specify_Response{
+	out := connectorv1.Specifier_Specify_Response{
 		Summary:         in.Summary,
 		Description:     in.Description,
 		Version:         in.Version,
@@ -59,8 +59,8 @@ func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*cproto.Sp
 	return &out, nil
 }
 
-func SpecifierParameter(in cpluginv1.SpecifierParameter) (*cproto.Specifier_Parameter, error) {
-	out := cproto.Specifier_Parameter{
+func SpecifierParameter(in cpluginv1.SpecifierParameter) (*connectorv1.Specifier_Parameter, error) {
+	out := connectorv1.Specifier_Parameter{
 		Default:     in.Default,
 		Required:    in.Required,
 		Description: in.Description,

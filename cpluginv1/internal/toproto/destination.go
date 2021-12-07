@@ -16,51 +16,51 @@ package toproto
 
 import (
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 )
 
-func DestinationConfigureRequest(in cpluginv1.DestinationConfigureRequest) (*cproto.Destination_Configure_Request, error) {
-	out := cproto.Destination_Configure_Request{
+func DestinationConfigureRequest(in cpluginv1.DestinationConfigureRequest) (*connectorv1.Destination_Configure_Request, error) {
+	out := connectorv1.Destination_Configure_Request{
 		Config: in.Config,
 	}
 	return &out, nil
 }
 
-func DestinationConfigureResponse(in cpluginv1.DestinationConfigureResponse) (*cproto.Destination_Configure_Response, error) {
-	return &cproto.Destination_Configure_Response{}, nil
+func DestinationConfigureResponse(in cpluginv1.DestinationConfigureResponse) (*connectorv1.Destination_Configure_Response, error) {
+	return &connectorv1.Destination_Configure_Response{}, nil
 }
 
-func DestinationStartRequest(in cpluginv1.DestinationStartRequest) (*cproto.Destination_Start_Request, error) {
-	return &cproto.Destination_Start_Request{}, nil
+func DestinationStartRequest(in cpluginv1.DestinationStartRequest) (*connectorv1.Destination_Start_Request, error) {
+	return &connectorv1.Destination_Start_Request{}, nil
 }
 
-func DestinationStartResponse(in cpluginv1.DestinationStartResponse) (*cproto.Destination_Start_Response, error) {
-	return &cproto.Destination_Start_Response{}, nil
+func DestinationStartResponse(in cpluginv1.DestinationStartResponse) (*connectorv1.Destination_Start_Response, error) {
+	return &connectorv1.Destination_Start_Response{}, nil
 }
 
-func DestinationRunRequest(in cpluginv1.DestinationRunRequest) (*cproto.Destination_Run_Request, error) {
+func DestinationRunRequest(in cpluginv1.DestinationRunRequest) (*connectorv1.Destination_Run_Request, error) {
 	rec, err := Record(in.Record)
 	if err != nil {
 		return nil, err
 	}
-	out := cproto.Destination_Run_Request{
+	out := connectorv1.Destination_Run_Request{
 		Record: rec,
 	}
 	return &out, nil
 }
 
-func DestinationRunResponse(in cpluginv1.DestinationRunResponse) (*cproto.Destination_Run_Response, error) {
-	out := cproto.Destination_Run_Response{
+func DestinationRunResponse(in cpluginv1.DestinationRunResponse) (*connectorv1.Destination_Run_Response, error) {
+	out := connectorv1.Destination_Run_Response{
 		AckPosition: in.AckPosition,
 		Error:       in.Error,
 	}
 	return &out, nil
 }
 
-func DestinationStopRequest(in cpluginv1.DestinationStopRequest) (*cproto.Destination_Stop_Request, error) {
-	return &cproto.Destination_Stop_Request{}, nil
+func DestinationStopRequest(in cpluginv1.DestinationStopRequest) (*connectorv1.Destination_Stop_Request, error) {
+	return &connectorv1.Destination_Stop_Request{}, nil
 }
 
-func DestinationStopResponse(in cpluginv1.DestinationStopResponse) (*cproto.Destination_Stop_Response, error) {
-	return &cproto.Destination_Stop_Response{}, nil
+func DestinationStopResponse(in cpluginv1.DestinationStopResponse) (*connectorv1.Destination_Stop_Response, error) {
+	return &connectorv1.Destination_Stop_Response{}, nil
 }

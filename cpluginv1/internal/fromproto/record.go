@@ -19,10 +19,10 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
+	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
 )
 
-func Record(record *cproto.Record) (cpluginv1.Record, error) {
+func Record(record *connectorv1.Record) (cpluginv1.Record, error) {
 	key, err := Data(record.Key)
 	if err != nil {
 		return cpluginv1.Record{}, fmt.Errorf("error converting key: %w", err)
@@ -43,16 +43,16 @@ func Record(record *cproto.Record) (cpluginv1.Record, error) {
 	return out, nil
 }
 
-func Data(in *cproto.Data) (cpluginv1.Data, error) {
+func Data(in *connectorv1.Data) (cpluginv1.Data, error) {
 	d := in.GetData()
 	if d == nil {
 		return nil, nil
 	}
 
 	switch v := d.(type) {
-	case *cproto.Data_RawData:
+	case *connectorv1.Data_RawData:
 		return cpluginv1.RawData(v.RawData), nil
-	case *cproto.Data_StructuredData:
+	case *connectorv1.Data_StructuredData:
 		return cpluginv1.StructuredData(v.StructuredData.AsMap()), nil
 	default:
 		return nil, errors.New("invalid Data type")
