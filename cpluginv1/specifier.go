@@ -20,8 +20,8 @@ type SpecifierPluginServer interface {
 	Specify(context.Context, SpecifierSpecifyRequest) (SpecifierSpecifyResponse, error)
 }
 
-type SpecifierSpecifyRequest struct {}
-type SpecifierSpecifyResponse struct{
+type SpecifierSpecifyRequest struct{}
+type SpecifierSpecifyResponse struct {
 	Summary         string
 	Description     string
 	Version         string

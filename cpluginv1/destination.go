@@ -37,12 +37,12 @@ type DestinationRunStream interface {
 	Send(DestinationRunResponse) error
 	Recv() (DestinationRunRequest, error)
 }
-type DestinationRunRequest struct{
+type DestinationRunRequest struct {
 	Record Record
 }
-type DestinationRunResponse struct{
+type DestinationRunResponse struct {
 	AckPosition []byte
-	Error string
+	Error       string
 }
 
 type DestinationStopRequest struct{}

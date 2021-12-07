@@ -52,7 +52,7 @@ func DestinationRunRequest(in *cproto.Destination_Run_Request) (cpluginv1.Destin
 func DestinationRunResponse(in *cproto.Destination_Run_Response) (cpluginv1.DestinationRunResponse, error) {
 	out := cpluginv1.DestinationRunResponse{
 		AckPosition: in.AckPosition,
-		Error: in.Error,
+		Error:       in.Error,
 	}
 	return out, nil
 }

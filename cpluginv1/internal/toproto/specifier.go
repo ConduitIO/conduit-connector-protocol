@@ -29,7 +29,7 @@ func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*cproto.Sp
 	specMap := func(in map[string]cpluginv1.SpecifierParameter) (map[string]*cproto.Specifier_Parameter, error) {
 		out := make(map[string]*cproto.Specifier_Parameter, len(in))
 		var err error
-		for k,v := range in {
+		for k, v := range in {
 			out[k], err = SpecifierParameter(v)
 			if err != nil {
 				return nil, fmt.Errorf("error converting SpecifierParameter %q: %w", k, err)
