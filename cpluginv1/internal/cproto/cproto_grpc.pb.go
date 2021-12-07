@@ -241,226 +241,226 @@ var SourcePlugin_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "cproto.proto",
 }
 
-// SinkPluginClient is the client API for SinkPlugin service.
+// DestinationPluginClient is the client API for DestinationPlugin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type SinkPluginClient interface {
-	Configure(ctx context.Context, in *Sink_Configure_Request, opts ...grpc.CallOption) (*Sink_Configure_Response, error)
-	Start(ctx context.Context, in *Sink_Start_Request, opts ...grpc.CallOption) (*Sink_Start_Response, error)
-	Run(ctx context.Context, opts ...grpc.CallOption) (SinkPlugin_RunClient, error)
-	Stop(ctx context.Context, in *Sink_Stop_Request, opts ...grpc.CallOption) (*Sink_Stop_Response, error)
+type DestinationPluginClient interface {
+	Configure(ctx context.Context, in *Destination_Configure_Request, opts ...grpc.CallOption) (*Destination_Configure_Response, error)
+	Start(ctx context.Context, in *Destination_Start_Request, opts ...grpc.CallOption) (*Destination_Start_Response, error)
+	Run(ctx context.Context, opts ...grpc.CallOption) (DestinationPlugin_RunClient, error)
+	Stop(ctx context.Context, in *Destination_Stop_Request, opts ...grpc.CallOption) (*Destination_Stop_Response, error)
 }
 
-type sinkPluginClient struct {
+type destinationPluginClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewSinkPluginClient(cc grpc.ClientConnInterface) SinkPluginClient {
-	return &sinkPluginClient{cc}
+func NewDestinationPluginClient(cc grpc.ClientConnInterface) DestinationPluginClient {
+	return &destinationPluginClient{cc}
 }
 
-func (c *sinkPluginClient) Configure(ctx context.Context, in *Sink_Configure_Request, opts ...grpc.CallOption) (*Sink_Configure_Response, error) {
-	out := new(Sink_Configure_Response)
-	err := c.cc.Invoke(ctx, "/cpluginv1.SinkPlugin/Configure", in, out, opts...)
+func (c *destinationPluginClient) Configure(ctx context.Context, in *Destination_Configure_Request, opts ...grpc.CallOption) (*Destination_Configure_Response, error) {
+	out := new(Destination_Configure_Response)
+	err := c.cc.Invoke(ctx, "/cpluginv1.DestinationPlugin/Configure", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *sinkPluginClient) Start(ctx context.Context, in *Sink_Start_Request, opts ...grpc.CallOption) (*Sink_Start_Response, error) {
-	out := new(Sink_Start_Response)
-	err := c.cc.Invoke(ctx, "/cpluginv1.SinkPlugin/Start", in, out, opts...)
+func (c *destinationPluginClient) Start(ctx context.Context, in *Destination_Start_Request, opts ...grpc.CallOption) (*Destination_Start_Response, error) {
+	out := new(Destination_Start_Response)
+	err := c.cc.Invoke(ctx, "/cpluginv1.DestinationPlugin/Start", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *sinkPluginClient) Run(ctx context.Context, opts ...grpc.CallOption) (SinkPlugin_RunClient, error) {
-	stream, err := c.cc.NewStream(ctx, &SinkPlugin_ServiceDesc.Streams[0], "/cpluginv1.SinkPlugin/Run", opts...)
+func (c *destinationPluginClient) Run(ctx context.Context, opts ...grpc.CallOption) (DestinationPlugin_RunClient, error) {
+	stream, err := c.cc.NewStream(ctx, &DestinationPlugin_ServiceDesc.Streams[0], "/cpluginv1.DestinationPlugin/Run", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &sinkPluginRunClient{stream}
+	x := &destinationPluginRunClient{stream}
 	return x, nil
 }
 
-type SinkPlugin_RunClient interface {
-	Send(*Sink_Run_Request) error
-	Recv() (*Sink_Run_Response, error)
+type DestinationPlugin_RunClient interface {
+	Send(*Destination_Run_Request) error
+	Recv() (*Destination_Run_Response, error)
 	grpc.ClientStream
 }
 
-type sinkPluginRunClient struct {
+type destinationPluginRunClient struct {
 	grpc.ClientStream
 }
 
-func (x *sinkPluginRunClient) Send(m *Sink_Run_Request) error {
+func (x *destinationPluginRunClient) Send(m *Destination_Run_Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *sinkPluginRunClient) Recv() (*Sink_Run_Response, error) {
-	m := new(Sink_Run_Response)
+func (x *destinationPluginRunClient) Recv() (*Destination_Run_Response, error) {
+	m := new(Destination_Run_Response)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *sinkPluginClient) Stop(ctx context.Context, in *Sink_Stop_Request, opts ...grpc.CallOption) (*Sink_Stop_Response, error) {
-	out := new(Sink_Stop_Response)
-	err := c.cc.Invoke(ctx, "/cpluginv1.SinkPlugin/Stop", in, out, opts...)
+func (c *destinationPluginClient) Stop(ctx context.Context, in *Destination_Stop_Request, opts ...grpc.CallOption) (*Destination_Stop_Response, error) {
+	out := new(Destination_Stop_Response)
+	err := c.cc.Invoke(ctx, "/cpluginv1.DestinationPlugin/Stop", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// SinkPluginServer is the server API for SinkPlugin service.
-// All implementations must embed UnimplementedSinkPluginServer
+// DestinationPluginServer is the server API for DestinationPlugin service.
+// All implementations must embed UnimplementedDestinationPluginServer
 // for forward compatibility
-type SinkPluginServer interface {
-	Configure(context.Context, *Sink_Configure_Request) (*Sink_Configure_Response, error)
-	Start(context.Context, *Sink_Start_Request) (*Sink_Start_Response, error)
-	Run(SinkPlugin_RunServer) error
-	Stop(context.Context, *Sink_Stop_Request) (*Sink_Stop_Response, error)
-	mustEmbedUnimplementedSinkPluginServer()
+type DestinationPluginServer interface {
+	Configure(context.Context, *Destination_Configure_Request) (*Destination_Configure_Response, error)
+	Start(context.Context, *Destination_Start_Request) (*Destination_Start_Response, error)
+	Run(DestinationPlugin_RunServer) error
+	Stop(context.Context, *Destination_Stop_Request) (*Destination_Stop_Response, error)
+	mustEmbedUnimplementedDestinationPluginServer()
 }
 
-// UnimplementedSinkPluginServer must be embedded to have forward compatible implementations.
-type UnimplementedSinkPluginServer struct {
+// UnimplementedDestinationPluginServer must be embedded to have forward compatible implementations.
+type UnimplementedDestinationPluginServer struct {
 }
 
-func (UnimplementedSinkPluginServer) Configure(context.Context, *Sink_Configure_Request) (*Sink_Configure_Response, error) {
+func (UnimplementedDestinationPluginServer) Configure(context.Context, *Destination_Configure_Request) (*Destination_Configure_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
 }
-func (UnimplementedSinkPluginServer) Start(context.Context, *Sink_Start_Request) (*Sink_Start_Response, error) {
+func (UnimplementedDestinationPluginServer) Start(context.Context, *Destination_Start_Request) (*Destination_Start_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
 }
-func (UnimplementedSinkPluginServer) Run(SinkPlugin_RunServer) error {
+func (UnimplementedDestinationPluginServer) Run(DestinationPlugin_RunServer) error {
 	return status.Errorf(codes.Unimplemented, "method Run not implemented")
 }
-func (UnimplementedSinkPluginServer) Stop(context.Context, *Sink_Stop_Request) (*Sink_Stop_Response, error) {
+func (UnimplementedDestinationPluginServer) Stop(context.Context, *Destination_Stop_Request) (*Destination_Stop_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
-func (UnimplementedSinkPluginServer) mustEmbedUnimplementedSinkPluginServer() {}
+func (UnimplementedDestinationPluginServer) mustEmbedUnimplementedDestinationPluginServer() {}
 
-// UnsafeSinkPluginServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SinkPluginServer will
+// UnsafeDestinationPluginServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DestinationPluginServer will
 // result in compilation errors.
-type UnsafeSinkPluginServer interface {
-	mustEmbedUnimplementedSinkPluginServer()
+type UnsafeDestinationPluginServer interface {
+	mustEmbedUnimplementedDestinationPluginServer()
 }
 
-func RegisterSinkPluginServer(s grpc.ServiceRegistrar, srv SinkPluginServer) {
-	s.RegisterService(&SinkPlugin_ServiceDesc, srv)
+func RegisterDestinationPluginServer(s grpc.ServiceRegistrar, srv DestinationPluginServer) {
+	s.RegisterService(&DestinationPlugin_ServiceDesc, srv)
 }
 
-func _SinkPlugin_Configure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Sink_Configure_Request)
+func _DestinationPlugin_Configure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Configure_Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SinkPluginServer).Configure(ctx, in)
+		return srv.(DestinationPluginServer).Configure(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cpluginv1.SinkPlugin/Configure",
+		FullMethod: "/cpluginv1.DestinationPlugin/Configure",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SinkPluginServer).Configure(ctx, req.(*Sink_Configure_Request))
+		return srv.(DestinationPluginServer).Configure(ctx, req.(*Destination_Configure_Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SinkPlugin_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Sink_Start_Request)
+func _DestinationPlugin_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Start_Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SinkPluginServer).Start(ctx, in)
+		return srv.(DestinationPluginServer).Start(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cpluginv1.SinkPlugin/Start",
+		FullMethod: "/cpluginv1.DestinationPlugin/Start",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SinkPluginServer).Start(ctx, req.(*Sink_Start_Request))
+		return srv.(DestinationPluginServer).Start(ctx, req.(*Destination_Start_Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SinkPlugin_Run_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(SinkPluginServer).Run(&sinkPluginRunServer{stream})
+func _DestinationPlugin_Run_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(DestinationPluginServer).Run(&destinationPluginRunServer{stream})
 }
 
-type SinkPlugin_RunServer interface {
-	Send(*Sink_Run_Response) error
-	Recv() (*Sink_Run_Request, error)
+type DestinationPlugin_RunServer interface {
+	Send(*Destination_Run_Response) error
+	Recv() (*Destination_Run_Request, error)
 	grpc.ServerStream
 }
 
-type sinkPluginRunServer struct {
+type destinationPluginRunServer struct {
 	grpc.ServerStream
 }
 
-func (x *sinkPluginRunServer) Send(m *Sink_Run_Response) error {
+func (x *destinationPluginRunServer) Send(m *Destination_Run_Response) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *sinkPluginRunServer) Recv() (*Sink_Run_Request, error) {
-	m := new(Sink_Run_Request)
+func (x *destinationPluginRunServer) Recv() (*Destination_Run_Request, error) {
+	m := new(Destination_Run_Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _SinkPlugin_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Sink_Stop_Request)
+func _DestinationPlugin_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Stop_Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SinkPluginServer).Stop(ctx, in)
+		return srv.(DestinationPluginServer).Stop(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cpluginv1.SinkPlugin/Stop",
+		FullMethod: "/cpluginv1.DestinationPlugin/Stop",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SinkPluginServer).Stop(ctx, req.(*Sink_Stop_Request))
+		return srv.(DestinationPluginServer).Stop(ctx, req.(*Destination_Stop_Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// SinkPlugin_ServiceDesc is the grpc.ServiceDesc for SinkPlugin service.
+// DestinationPlugin_ServiceDesc is the grpc.ServiceDesc for DestinationPlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var SinkPlugin_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "cpluginv1.SinkPlugin",
-	HandlerType: (*SinkPluginServer)(nil),
+var DestinationPlugin_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "cpluginv1.DestinationPlugin",
+	HandlerType: (*DestinationPluginServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Configure",
-			Handler:    _SinkPlugin_Configure_Handler,
+			Handler:    _DestinationPlugin_Configure_Handler,
 		},
 		{
 			MethodName: "Start",
-			Handler:    _SinkPlugin_Start_Handler,
+			Handler:    _DestinationPlugin_Start_Handler,
 		},
 		{
 			MethodName: "Stop",
-			Handler:    _SinkPlugin_Stop_Handler,
+			Handler:    _DestinationPlugin_Stop_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Run",
-			Handler:       _SinkPlugin_Run_Handler,
+			Handler:       _DestinationPlugin_Run_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
