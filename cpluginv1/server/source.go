@@ -43,7 +43,7 @@ func (p *grpcSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc
 	return nil, errors.New("conduit-plugin only implements gRPC servers")
 }
 
-// GRPCServer registers the gRPC provider server with the gRPC server that
+// GRPCServer registers the gRPC source plugin server with the gRPC server that
 // go-plugin is standing up.
 func (p *grpcSourcePlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
 	cproto.RegisterSourcePluginServer(s, NewSourcePluginServer(p.SourcePluginServer()))

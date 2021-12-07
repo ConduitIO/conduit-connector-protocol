@@ -21,7 +21,7 @@ import (
 type DestinationPluginServer interface {
 	Configure(context.Context, DestinationConfigureRequest) (DestinationConfigureResponse, error)
 	Start(context.Context, DestinationStartRequest) (DestinationStartResponse, error)
-	Run(context.Context, DestinationRunRequest) (DestinationRunResponse, error)
+	Run(context.Context, DestinationRunStream) error
 	Stop(context.Context, DestinationStopRequest) (DestinationStopResponse, error)
 }
 
@@ -33,8 +33,17 @@ type DestinationConfigureResponse struct{}
 type DestinationStartRequest struct{}
 type DestinationStartResponse struct{}
 
-type DestinationRunRequest struct{}
-type DestinationRunResponse struct{}
+type DestinationRunStream interface {
+	Send(DestinationRunResponse) error
+	Recv() (DestinationRunRequest, error)
+}
+type DestinationRunRequest struct{
+	Record Record
+}
+type DestinationRunResponse struct{
+	AckPosition []byte
+	Error string
+}
 
 type DestinationStopRequest struct{}
 type DestinationStopResponse struct{}
