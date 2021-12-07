@@ -16,7 +16,7 @@ package toproto
 
 import (
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	"github.com/conduitio/conduit-plugin/cpluginv1/internal/cproto"
+	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
 )
 
 func SourceConfigureRequest(in cpluginv1.SourceConfigureRequest) (*cproto.Source_Configure_Request, error) {

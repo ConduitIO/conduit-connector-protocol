@@ -19,7 +19,7 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	"github.com/conduitio/conduit-plugin/cpluginv1/internal/cproto"
+	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
 )
 
 func Record(record *cproto.Record) (cpluginv1.Record, error) {

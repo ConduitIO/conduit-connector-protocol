@@ -19,9 +19,9 @@ import (
 	"errors"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	"github.com/conduitio/conduit-plugin/cpluginv1/internal/cproto"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/fromproto"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/toproto"
+	cproto "github.com/conduitio/conduit-plugin/proto/gen/go/conduitio/cplugin/v1"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
