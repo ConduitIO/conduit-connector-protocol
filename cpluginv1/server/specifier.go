@@ -29,10 +29,10 @@ import (
 // grpcSpecifierPlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
-// cpluginv1.SpecifierPluginServer.
+// cpluginv1.SpecifierPlugin.
 type grpcSpecifierPlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	SpecifierPluginServer func() cpluginv1.SpecifierPluginServer
+	SpecifierPluginServer func() cpluginv1.SpecifierPlugin
 }
 
 var _ plugin.Plugin = (*grpcSpecifierPlugin)(nil)
@@ -45,32 +45,32 @@ func (p *grpcSpecifierPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *g
 
 // GRPCServer registers the gRPC specifier plugin server with the gRPC server that
 // go-plugin is standing up.
-func (p *grpcSpecifierPlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
+func (p *grpcSpecifierPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
 	connectorv1.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.SpecifierPluginServer()))
 	return nil
 }
 
-func NewSpecifierPluginServer(impl cpluginv1.SpecifierPluginServer) connectorv1.SpecifierPluginServer {
+func NewSpecifierPluginServer(impl cpluginv1.SpecifierPlugin) connectorv1.SpecifierPluginServer {
 	return &specifierPluginServer{impl: impl}
 }
 
 type specifierPluginServer struct {
 	connectorv1.UnimplementedSpecifierPluginServer
-	impl cpluginv1.SpecifierPluginServer
+	impl cpluginv1.SpecifierPlugin
 }
 
-func (s specifierPluginServer) Specify(ctx context.Context, req *connectorv1.Specifier_Specify_Request) (*connectorv1.Specifier_Specify_Response, error) {
-	r, err := fromproto.SpecifierSpecifyRequest(req)
+func (s specifierPluginServer) Specify(ctx context.Context, protoReq *connectorv1.Specifier_Specify_Request) (*connectorv1.Specifier_Specify_Response, error) {
+	goReq, err := fromproto.SpecifierSpecifyRequest(protoReq)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := s.impl.Specify(ctx, r)
+	goResp, err := s.impl.Specify(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	ret, err := toproto.SpecifierSpecifyResponse(resp)
+	protoResp, err := toproto.SpecifierSpecifyResponse(goResp)
 	if err != nil {
 		return nil, err
 	}
-	return ret, nil
+	return protoResp, nil
 }

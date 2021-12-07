@@ -18,7 +18,7 @@ import (
 	"context"
 )
 
-type DestinationPluginServer interface {
+type DestinationPlugin interface {
 	Configure(context.Context, DestinationConfigureRequest) (DestinationConfigureResponse, error)
 	Start(context.Context, DestinationStartRequest) (DestinationStartResponse, error)
 	Run(context.Context, DestinationRunStream) error

@@ -29,10 +29,10 @@ import (
 // grpcDestinationPlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
-// cpluginv1.DestinationPluginServer.
+// cpluginv1.DestinationPlugin.
 type grpcDestinationPlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	DestinationPluginServer func() cpluginv1.DestinationPluginServer
+	DestinationPlugin func() cpluginv1.DestinationPlugin
 }
 
 var _ plugin.Plugin = (*grpcDestinationPlugin)(nil)
@@ -45,49 +45,64 @@ func (p *grpcDestinationPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, 
 
 // GRPCServer registers the gRPC destination plugin server with the gRPC server
 // that go-plugin is standing up.
-func (p *grpcDestinationPlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.DestinationPluginServer()))
+func (p *grpcDestinationPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
+	connectorv1.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.DestinationPlugin()))
 	return nil
 }
 
-func NewDestinationPluginServer(impl cpluginv1.DestinationPluginServer) connectorv1.DestinationPluginServer {
+func NewDestinationPluginServer(impl cpluginv1.DestinationPlugin) connectorv1.DestinationPluginServer {
 	return &destinationPluginServer{impl: impl}
 }
 
 type destinationPluginServer struct {
 	connectorv1.UnimplementedDestinationPluginServer
-	impl cpluginv1.DestinationPluginServer
+	impl cpluginv1.DestinationPlugin
 }
 
-func (s *destinationPluginServer) Configure(ctx context.Context, req *connectorv1.Destination_Configure_Request) (*connectorv1.Destination_Configure_Response, error) {
-	r, err := fromproto.DestinationConfigureRequest(req)
+func (s *destinationPluginServer) Configure(ctx context.Context, protoReq *connectorv1.Destination_Configure_Request) (*connectorv1.Destination_Configure_Response, error) {
+	goReq, err := fromproto.DestinationConfigureRequest(protoReq)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := s.impl.Configure(ctx, r)
+	goResp, err := s.impl.Configure(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	ret, err := toproto.DestinationConfigureResponse(resp)
+	protoResp, err := toproto.DestinationConfigureResponse(goResp)
 	if err != nil {
 		return nil, err
 	}
-	return ret, nil
+	return protoResp, nil
 }
-func (s *destinationPluginServer) Start(ctx context.Context, req *connectorv1.Destination_Start_Request) (*connectorv1.Destination_Start_Response, error) {
-	r, err := fromproto.DestinationStartRequest(req)
+func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connectorv1.Destination_Start_Request) (*connectorv1.Destination_Start_Response, error) {
+	goReq, err := fromproto.DestinationStartRequest(protoReq)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := s.impl.Start(ctx, r)
+	goResp, err := s.impl.Start(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	ret, err := toproto.DestinationStartResponse(resp)
+	protoResp, err := toproto.DestinationStartResponse(goResp)
 	if err != nil {
 		return nil, err
 	}
-	return ret, nil
+	return protoResp, nil
+}
+func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv1.Destination_Stop_Request) (*connectorv1.Destination_Stop_Response, error) {
+	goReq, err := fromproto.DestinationStopRequest(protoReq)
+	if err != nil {
+		return nil, err
+	}
+	goResp, err := s.impl.Stop(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.DestinationStopResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
 }
 func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
@@ -95,21 +110,6 @@ func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunSe
 		return err
 	}
 	return nil
-}
-func (s *destinationPluginServer) Stop(ctx context.Context, req *connectorv1.Destination_Stop_Request) (*connectorv1.Destination_Stop_Response, error) {
-	r, err := fromproto.DestinationStopRequest(req)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := s.impl.Stop(ctx, r)
-	if err != nil {
-		return nil, err
-	}
-	ret, err := toproto.DestinationStopResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return ret, nil
 }
 
 type destinationRunStream struct {

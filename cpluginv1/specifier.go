@@ -16,7 +16,7 @@ package cpluginv1
 
 import "context"
 
-type SpecifierPluginServer interface {
+type SpecifierPlugin interface {
 	Specify(context.Context, SpecifierSpecifyRequest) (SpecifierSpecifyResponse, error)
 }
 

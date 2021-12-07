@@ -18,7 +18,7 @@ import (
 	"context"
 )
 
-type SourcePluginServer interface {
+type SourcePlugin interface {
 	Configure(context.Context, SourceConfigureRequest) (SourceConfigureResponse, error)
 	Start(context.Context, SourceStartRequest) (SourceStartResponse, error)
 	Run(context.Context, SourceRunStream) error

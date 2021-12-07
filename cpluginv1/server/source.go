@@ -29,10 +29,10 @@ import (
 // grpcSourcePlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
-// cpluginv1.SourcePluginServer.
+// cpluginv1.SourcePlugin.
 type grpcSourcePlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	SourcePluginServer func() cpluginv1.SourcePluginServer
+	SourcePluginServer func() cpluginv1.SourcePlugin
 }
 
 var _ plugin.Plugin = (*grpcSourcePlugin)(nil)
@@ -45,49 +45,64 @@ func (p *grpcSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc
 
 // GRPCServer registers the gRPC source plugin server with the gRPC server that
 // go-plugin is standing up.
-func (p *grpcSourcePlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
+func (p *grpcSourcePlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
 	connectorv1.RegisterSourcePluginServer(s, NewSourcePluginServer(p.SourcePluginServer()))
 	return nil
 }
 
-func NewSourcePluginServer(impl cpluginv1.SourcePluginServer) connectorv1.SourcePluginServer {
+func NewSourcePluginServer(impl cpluginv1.SourcePlugin) connectorv1.SourcePluginServer {
 	return &sourcePluginServer{impl: impl}
 }
 
 type sourcePluginServer struct {
 	connectorv1.UnimplementedSourcePluginServer
-	impl cpluginv1.SourcePluginServer
+	impl cpluginv1.SourcePlugin
 }
 
-func (s *sourcePluginServer) Configure(ctx context.Context, req *connectorv1.Source_Configure_Request) (*connectorv1.Source_Configure_Response, error) {
-	r, err := fromproto.SourceConfigureRequest(req)
+func (s *sourcePluginServer) Configure(ctx context.Context, protoReq *connectorv1.Source_Configure_Request) (*connectorv1.Source_Configure_Response, error) {
+	goReq, err := fromproto.SourceConfigureRequest(protoReq)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := s.impl.Configure(ctx, r)
+	goResp, err := s.impl.Configure(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	ret, err := toproto.SourceConfigureResponse(resp)
+	protoResp, err := toproto.SourceConfigureResponse(goResp)
 	if err != nil {
 		return nil, err
 	}
-	return ret, nil
+	return protoResp, nil
 }
-func (s *sourcePluginServer) Start(ctx context.Context, req *connectorv1.Source_Start_Request) (*connectorv1.Source_Start_Response, error) {
-	r, err := fromproto.SourceStartRequest(req)
+func (s *sourcePluginServer) Start(ctx context.Context, protoReq *connectorv1.Source_Start_Request) (*connectorv1.Source_Start_Response, error) {
+	goReq, err := fromproto.SourceStartRequest(protoReq)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := s.impl.Start(ctx, r)
+	goResp, err := s.impl.Start(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	ret, err := toproto.SourceStartResponse(resp)
+	protoResp, err := toproto.SourceStartResponse(goResp)
 	if err != nil {
 		return nil, err
 	}
-	return ret, nil
+	return protoResp, nil
+}
+func (s *sourcePluginServer) Stop(ctx context.Context, protoReq *connectorv1.Source_Stop_Request) (*connectorv1.Source_Stop_Response, error) {
+	goReq, err := fromproto.SourceStopRequest(protoReq)
+	if err != nil {
+		return nil, err
+	}
+	goResp, err := s.impl.Stop(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.SourceStopResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
 }
 func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
@@ -95,21 +110,6 @@ func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) erro
 		return err
 	}
 	return nil
-}
-func (s *sourcePluginServer) Stop(ctx context.Context, req *connectorv1.Source_Stop_Request) (*connectorv1.Source_Stop_Response, error) {
-	r, err := fromproto.SourceStopRequest(req)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := s.impl.Stop(ctx, r)
-	if err != nil {
-		return nil, err
-	}
-	ret, err := toproto.SourceStopResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return ret, nil
 }
 
 type sourceRunStream struct {
