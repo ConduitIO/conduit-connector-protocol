@@ -51,9 +51,7 @@ func Data(in cpluginv1.Data) (*cproto.Data, error) {
 	switch v := in.(type) {
 	case cpluginv1.RawData:
 		out.Data = &cproto.Data_RawData{
-			RawData: &cproto.RawData{
-				Raw: v,
-			},
+			RawData: v,
 		}
 	case cpluginv1.StructuredData:
 		content, err := structpb.NewStruct(v)

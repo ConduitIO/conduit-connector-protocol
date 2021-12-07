@@ -51,7 +51,7 @@ func Data(in *cproto.Data) (cpluginv1.Data, error) {
 
 	switch v := d.(type) {
 	case *cproto.Data_RawData:
-		return cpluginv1.RawData(v.RawData.Raw), nil
+		return cpluginv1.RawData(v.RawData), nil
 	case *cproto.Data_StructuredData:
 		return cpluginv1.StructuredData(v.StructuredData.AsMap()), nil
 	default:
