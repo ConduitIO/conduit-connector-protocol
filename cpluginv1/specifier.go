@@ -20,7 +20,18 @@ type SpecifierPluginServer interface {
 	Specify(context.Context, SpecifierSpecifyRequest) (SpecifierSpecifyResponse, error)
 }
 
-type SpecifierSpecifyRequest struct {
-	Config map[string]string
+type SpecifierSpecifyRequest struct {}
+type SpecifierSpecifyResponse struct{
+	Summary         string
+	Description     string
+	Version         string
+	Author          string
+	DestinationSpec map[string]SpecifierParameter
+	SourceSpec      map[string]SpecifierParameter
 }
-type SpecifierSpecifyResponse struct{}
+
+type SpecifierParameter struct {
+	Default     string
+	Required    bool
+	Description string
+}
