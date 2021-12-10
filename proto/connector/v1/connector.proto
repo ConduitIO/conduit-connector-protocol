@@ -105,8 +105,8 @@ message Specifier {
             string description = 2;
             string version = 3;
             string author = 4;
-            map<string, Parameter> destination_spec = 5;
-            map<string, Parameter> source_spec = 6;
+            map<string, Parameter> destination_params = 5;
+            map<string, Parameter> source_params = 6;
         }
     }
 

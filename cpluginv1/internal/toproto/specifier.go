@@ -38,23 +38,23 @@ func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*connector
 		return out, nil
 	}
 
-	sourceSpec, err := specMap(in.SourceSpec)
+	sourceParams, err := specMap(in.SourceParams)
 	if err != nil {
 		return nil, fmt.Errorf("error converting SourceSpec: %w", err)
 	}
 
-	destinationSpec, err := specMap(in.DestinationSpec)
+	destinationParams, err := specMap(in.DestinationParams)
 	if err != nil {
 		return nil, fmt.Errorf("error converting DestinationSpec: %w", err)
 	}
 
 	out := connectorv1.Specifier_Specify_Response{
-		Summary:         in.Summary,
-		Description:     in.Description,
-		Version:         in.Version,
-		Author:          in.Author,
-		DestinationSpec: destinationSpec,
-		SourceSpec:      sourceSpec,
+		Summary:           in.Summary,
+		Description:       in.Description,
+		Version:           in.Version,
+		Author:            in.Author,
+		DestinationParams: destinationParams,
+		SourceParams:      sourceParams,
 	}
 	return &out, nil
 }

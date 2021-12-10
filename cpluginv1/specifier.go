@@ -22,12 +22,12 @@ type SpecifierPlugin interface {
 
 type SpecifierSpecifyRequest struct{}
 type SpecifierSpecifyResponse struct {
-	Summary         string
-	Description     string
-	Version         string
-	Author          string
-	DestinationSpec map[string]SpecifierParameter
-	SourceSpec      map[string]SpecifierParameter
+	Summary           string
+	Description       string
+	Version           string
+	Author            string
+	DestinationParams map[string]SpecifierParameter
+	SourceParams      map[string]SpecifierParameter
 }
 
 type SpecifierParameter struct {
