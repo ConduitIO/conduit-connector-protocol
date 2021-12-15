@@ -18,7 +18,7 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
-	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
+	connectorv1 "go.buf.build/library/go-grpc/conduitio/conduit-plugin/connector/v1"
 )
 
 func SpecifierSpecifyRequest(in cpluginv1.SpecifierSpecifyRequest) (*connectorv1.Specifier_Specify_Request, error) {

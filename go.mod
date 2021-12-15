@@ -4,7 +4,8 @@ go 1.17
 
 require (
 	github.com/hashicorp/go-plugin v1.4.3
-	google.golang.org/grpc v1.43.0-dev.0.20211108191124-79e9c9571a19
+	go.buf.build/library/go-grpc/conduitio/conduit-plugin v1.4.4
+	google.golang.org/grpc v1.43.0
 	google.golang.org/protobuf v1.27.1
 )
 
