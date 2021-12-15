@@ -16,39 +16,12 @@ package server
 
 import (
 	"context"
-	"errors"
 
 	"github.com/conduitio/conduit-plugin/cpluginv1"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/fromproto"
 	"github.com/conduitio/conduit-plugin/cpluginv1/internal/toproto"
 	connectorv1 "github.com/conduitio/conduit-plugin/internal/connector/v1"
-	"github.com/hashicorp/go-plugin"
-	"google.golang.org/grpc"
 )
-
-// grpcSourcePlugin is an implementation of the
-// github.com/hashicorp/go-plugin#Plugin and
-// github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
-// cpluginv1.SourcePlugin.
-type grpcSourcePlugin struct {
-	plugin.NetRPCUnsupportedPlugin
-	SourcePluginServer func() cpluginv1.SourcePlugin
-}
-
-var _ plugin.Plugin = (*grpcSourcePlugin)(nil)
-
-// GRPCClient always returns an error; we're only implementing the server half
-// of the interface.
-func (p *grpcSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
-	return nil, errors.New("this package only implements gRPC servers")
-}
-
-// GRPCServer registers the gRPC source plugin server with the gRPC server that
-// go-plugin is standing up.
-func (p *grpcSourcePlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterSourcePluginServer(s, NewSourcePluginServer(p.SourcePluginServer()))
-	return nil
-}
 
 func NewSourcePluginServer(impl cpluginv1.SourcePlugin) connectorv1.SourcePluginServer {
 	return &sourcePluginServer{impl: impl}
