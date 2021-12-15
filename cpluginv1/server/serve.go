@@ -36,7 +36,7 @@ func Serve(
 			MagicCookieValue: "204e8e812c3a1bb73b838928c575b42a105dd2e9aa449be481bc4590486df53f",
 		},
 		Plugins: plugin.PluginSet{
-			"source": grpcSourcePlugin{factory: sourceFactory},
+			"source": GRPCSourcePlugin{Factory: sourceFactory},
 		},
 		GRPCServer: plugin.DefaultGRPCServer,
 	}
@@ -76,74 +76,74 @@ func WithDebug(ctx context.Context, config chan *plugin.ReattachConfig, closeCh 
 	})
 }
 
-// grpcSourcePlugin is an implementation of the
+// GRPCSourcePlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
 // SourcePlugin.
-type grpcSourcePlugin struct {
+type GRPCSourcePlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	factory func() cpluginv1.SourcePlugin
+	Factory func() cpluginv1.SourcePlugin
 }
 
-var _ plugin.Plugin = (*grpcSourcePlugin)(nil)
+var _ plugin.Plugin = (*GRPCSourcePlugin)(nil)
 
 // GRPCClient always returns an error; we're only implementing the server half
 // of the interface.
-func (p *grpcSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
+func (p *GRPCSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
 	return nil, errors.New("this package only implements gRPC servers")
 }
 
 // GRPCServer registers the gRPC source plugin server with the gRPC server that
 // go-plugin is standing up.
-func (p *grpcSourcePlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterSourcePluginServer(s, NewSourcePluginServer(p.factory()))
+func (p *GRPCSourcePlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
+	connectorv1.RegisterSourcePluginServer(s, NewSourcePluginServer(p.Factory()))
 	return nil
 }
 
-// grpcDestinationPlugin is an implementation of the
+// GRPCDestinationPlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
 // cpluginv1.DestinationPlugin.
-type grpcDestinationPlugin struct {
+type GRPCDestinationPlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	factory func() cpluginv1.DestinationPlugin
+	Factory func() cpluginv1.DestinationPlugin
 }
 
-var _ plugin.Plugin = (*grpcDestinationPlugin)(nil)
+var _ plugin.Plugin = (*GRPCDestinationPlugin)(nil)
 
 // GRPCClient always returns an error; we're only implementing the server half
 // of the interface.
-func (p *grpcDestinationPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
+func (p *GRPCDestinationPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
 	return nil, errors.New("this package only implements gRPC servers")
 }
 
 // GRPCServer registers the gRPC destination plugin server with the gRPC server
 // that go-plugin is standing up.
-func (p *grpcDestinationPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.factory()))
+func (p *GRPCDestinationPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
+	connectorv1.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.Factory()))
 	return nil
 }
 
-// grpcSpecifierPlugin is an implementation of the
+// GRPCSpecifierPlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
 // cpluginv1.SpecifierPlugin.
-type grpcSpecifierPlugin struct {
+type GRPCSpecifierPlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	factory func() cpluginv1.SpecifierPlugin
+	Factory func() cpluginv1.SpecifierPlugin
 }
 
-var _ plugin.Plugin = (*grpcSpecifierPlugin)(nil)
+var _ plugin.Plugin = (*GRPCSpecifierPlugin)(nil)
 
 // GRPCClient always returns an error; we're only implementing the server half
 // of the interface.
-func (p *grpcSpecifierPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
+func (p *GRPCSpecifierPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc.ClientConn) (interface{}, error) {
 	return nil, errors.New("this package only implements gRPC servers")
 }
 
 // GRPCServer registers the gRPC specifier plugin server with the gRPC server that
 // go-plugin is standing up.
-func (p *grpcSpecifierPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.factory()))
+func (p *GRPCSpecifierPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
+	connectorv1.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.Factory()))
 	return nil
 }
