@@ -1,4 +1,4 @@
-.PHONY: proto-generate proto-update proto-lint download install-tools
+.PHONY: proto-generate proto-update proto-lint download
 
 proto-generate:
 	cd proto && buf generate
