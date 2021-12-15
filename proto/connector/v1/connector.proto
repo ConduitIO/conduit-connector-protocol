@@ -25,6 +25,7 @@ service SourcePlugin {
     rpc Start(Source.Start.Request) returns (Source.Start.Response);
     rpc Run(stream Source.Run.Request) returns (stream Source.Run.Response);
     rpc Stop(Source.Stop.Request) returns (Source.Stop.Response);
+    rpc Teardown(Source.Teardown.Request) returns (Source.Teardown.Response);
 }
 
 service DestinationPlugin {
@@ -32,6 +33,7 @@ service DestinationPlugin {
     rpc Start(Destination.Start.Request) returns (Destination.Start.Response);
     rpc Run(stream Destination.Run.Request) returns (stream Destination.Run.Response);
     rpc Stop(Destination.Stop.Request) returns (Destination.Stop.Response);
+    rpc Teardown(Destination.Teardown.Request) returns (Destination.Teardown.Response);
 }
 
 service SpecifierPlugin {
@@ -66,6 +68,11 @@ message Source {
         message Request {}
         message Response {}
     }
+
+    message Teardown {
+        message Request {}
+        message Response {}
+    }
 }
 
 message Destination {
@@ -92,6 +99,11 @@ message Destination {
     }
 
     message Stop {
+        message Request {}
+        message Response {}
+    }
+
+    message Teardown {
         message Request {}
         message Response {}
     }

@@ -22,6 +22,7 @@ type SourcePluginClient interface {
 	Start(ctx context.Context, in *Source_Start_Request, opts ...grpc.CallOption) (*Source_Start_Response, error)
 	Run(ctx context.Context, opts ...grpc.CallOption) (SourcePlugin_RunClient, error)
 	Stop(ctx context.Context, in *Source_Stop_Request, opts ...grpc.CallOption) (*Source_Stop_Response, error)
+	Teardown(ctx context.Context, in *Source_Teardown_Request, opts ...grpc.CallOption) (*Source_Teardown_Response, error)
 }
 
 type sourcePluginClient struct {
@@ -90,6 +91,15 @@ func (c *sourcePluginClient) Stop(ctx context.Context, in *Source_Stop_Request, 
 	return out, nil
 }
 
+func (c *sourcePluginClient) Teardown(ctx context.Context, in *Source_Teardown_Request, opts ...grpc.CallOption) (*Source_Teardown_Response, error) {
+	out := new(Source_Teardown_Response)
+	err := c.cc.Invoke(ctx, "/connector.v1.SourcePlugin/Teardown", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SourcePluginServer is the server API for SourcePlugin service.
 // All implementations must embed UnimplementedSourcePluginServer
 // for forward compatibility
@@ -98,6 +108,7 @@ type SourcePluginServer interface {
 	Start(context.Context, *Source_Start_Request) (*Source_Start_Response, error)
 	Run(SourcePlugin_RunServer) error
 	Stop(context.Context, *Source_Stop_Request) (*Source_Stop_Response, error)
+	Teardown(context.Context, *Source_Teardown_Request) (*Source_Teardown_Response, error)
 	mustEmbedUnimplementedSourcePluginServer()
 }
 
@@ -116,6 +127,9 @@ func (UnimplementedSourcePluginServer) Run(SourcePlugin_RunServer) error {
 }
 func (UnimplementedSourcePluginServer) Stop(context.Context, *Source_Stop_Request) (*Source_Stop_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
+}
+func (UnimplementedSourcePluginServer) Teardown(context.Context, *Source_Teardown_Request) (*Source_Teardown_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Teardown not implemented")
 }
 func (UnimplementedSourcePluginServer) mustEmbedUnimplementedSourcePluginServer() {}
 
@@ -210,6 +224,24 @@ func _SourcePlugin_Stop_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SourcePlugin_Teardown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Source_Teardown_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SourcePluginServer).Teardown(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/connector.v1.SourcePlugin/Teardown",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SourcePluginServer).Teardown(ctx, req.(*Source_Teardown_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SourcePlugin_ServiceDesc is the grpc.ServiceDesc for SourcePlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +260,10 @@ var SourcePlugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Stop",
 			Handler:    _SourcePlugin_Stop_Handler,
+		},
+		{
+			MethodName: "Teardown",
+			Handler:    _SourcePlugin_Teardown_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -249,6 +285,7 @@ type DestinationPluginClient interface {
 	Start(ctx context.Context, in *Destination_Start_Request, opts ...grpc.CallOption) (*Destination_Start_Response, error)
 	Run(ctx context.Context, opts ...grpc.CallOption) (DestinationPlugin_RunClient, error)
 	Stop(ctx context.Context, in *Destination_Stop_Request, opts ...grpc.CallOption) (*Destination_Stop_Response, error)
+	Teardown(ctx context.Context, in *Destination_Teardown_Request, opts ...grpc.CallOption) (*Destination_Teardown_Response, error)
 }
 
 type destinationPluginClient struct {
@@ -317,6 +354,15 @@ func (c *destinationPluginClient) Stop(ctx context.Context, in *Destination_Stop
 	return out, nil
 }
 
+func (c *destinationPluginClient) Teardown(ctx context.Context, in *Destination_Teardown_Request, opts ...grpc.CallOption) (*Destination_Teardown_Response, error) {
+	out := new(Destination_Teardown_Response)
+	err := c.cc.Invoke(ctx, "/connector.v1.DestinationPlugin/Teardown", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DestinationPluginServer is the server API for DestinationPlugin service.
 // All implementations must embed UnimplementedDestinationPluginServer
 // for forward compatibility
@@ -325,6 +371,7 @@ type DestinationPluginServer interface {
 	Start(context.Context, *Destination_Start_Request) (*Destination_Start_Response, error)
 	Run(DestinationPlugin_RunServer) error
 	Stop(context.Context, *Destination_Stop_Request) (*Destination_Stop_Response, error)
+	Teardown(context.Context, *Destination_Teardown_Request) (*Destination_Teardown_Response, error)
 	mustEmbedUnimplementedDestinationPluginServer()
 }
 
@@ -343,6 +390,9 @@ func (UnimplementedDestinationPluginServer) Run(DestinationPlugin_RunServer) err
 }
 func (UnimplementedDestinationPluginServer) Stop(context.Context, *Destination_Stop_Request) (*Destination_Stop_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
+}
+func (UnimplementedDestinationPluginServer) Teardown(context.Context, *Destination_Teardown_Request) (*Destination_Teardown_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Teardown not implemented")
 }
 func (UnimplementedDestinationPluginServer) mustEmbedUnimplementedDestinationPluginServer() {}
 
@@ -437,6 +487,24 @@ func _DestinationPlugin_Stop_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DestinationPlugin_Teardown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Teardown_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DestinationPluginServer).Teardown(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/connector.v1.DestinationPlugin/Teardown",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DestinationPluginServer).Teardown(ctx, req.(*Destination_Teardown_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DestinationPlugin_ServiceDesc is the grpc.ServiceDesc for DestinationPlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -455,6 +523,10 @@ var DestinationPlugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Stop",
 			Handler:    _DestinationPlugin_Stop_Handler,
+		},
+		{
+			MethodName: "Teardown",
+			Handler:    _DestinationPlugin_Teardown_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -23,6 +23,7 @@ type DestinationPlugin interface {
 	Start(context.Context, DestinationStartRequest) (DestinationStartResponse, error)
 	Run(context.Context, DestinationRunStream) error
 	Stop(context.Context, DestinationStopRequest) (DestinationStopResponse, error)
+	Teardown(context.Context, DestinationTeardownRequest) (DestinationTeardownResponse, error)
 }
 
 type DestinationConfigureRequest struct {
@@ -47,3 +48,6 @@ type DestinationRunResponse struct {
 
 type DestinationStopRequest struct{}
 type DestinationStopResponse struct{}
+
+type DestinationTeardownRequest struct{}
+type DestinationTeardownResponse struct{}

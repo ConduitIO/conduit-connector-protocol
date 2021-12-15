@@ -25,7 +25,6 @@ func DestinationConfigureRequest(in *connectorv1.Destination_Configure_Request) 
 	}
 	return out, nil
 }
-
 func DestinationConfigureResponse(in *connectorv1.Destination_Configure_Response) (cpluginv1.DestinationConfigureResponse, error) {
 	return cpluginv1.DestinationConfigureResponse{}, nil
 }
@@ -33,7 +32,6 @@ func DestinationConfigureResponse(in *connectorv1.Destination_Configure_Response
 func DestinationStartRequest(in *connectorv1.Destination_Start_Request) (cpluginv1.DestinationStartRequest, error) {
 	return cpluginv1.DestinationStartRequest{}, nil
 }
-
 func DestinationStartResponse(in *connectorv1.Destination_Start_Response) (cpluginv1.DestinationStartResponse, error) {
 	return cpluginv1.DestinationStartResponse{}, nil
 }
@@ -48,7 +46,6 @@ func DestinationRunRequest(in *connectorv1.Destination_Run_Request) (cpluginv1.D
 	}
 	return out, nil
 }
-
 func DestinationRunResponse(in *connectorv1.Destination_Run_Response) (cpluginv1.DestinationRunResponse, error) {
 	out := cpluginv1.DestinationRunResponse{
 		AckPosition: in.AckPosition,
@@ -60,7 +57,13 @@ func DestinationRunResponse(in *connectorv1.Destination_Run_Response) (cpluginv1
 func DestinationStopRequest(in *connectorv1.Destination_Stop_Request) (cpluginv1.DestinationStopRequest, error) {
 	return cpluginv1.DestinationStopRequest{}, nil
 }
-
 func DestinationStopResponse(in *connectorv1.Destination_Stop_Response) (cpluginv1.DestinationStopResponse, error) {
 	return cpluginv1.DestinationStopResponse{}, nil
+}
+
+func DestinationTeardownRequest(in *connectorv1.Destination_Teardown_Request) (cpluginv1.DestinationTeardownRequest, error) {
+	return cpluginv1.DestinationTeardownRequest{}, nil
+}
+func DestinationTeardownResponse(in *connectorv1.Destination_Teardown_Response) (cpluginv1.DestinationTeardownResponse, error) {
+	return cpluginv1.DestinationTeardownResponse{}, nil
 }

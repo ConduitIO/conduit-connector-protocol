@@ -104,6 +104,21 @@ func (s *sourcePluginServer) Stop(ctx context.Context, protoReq *connectorv1.Sou
 	}
 	return protoResp, nil
 }
+func (s *sourcePluginServer) Teardown(ctx context.Context, protoReq *connectorv1.Source_Teardown_Request) (*connectorv1.Source_Teardown_Response, error) {
+	goReq, err := fromproto.SourceTeardownRequest(protoReq)
+	if err != nil {
+		return nil, err
+	}
+	goResp, err := s.impl.Teardown(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.SourceTeardownResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
+}
 func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
 	if err != nil {

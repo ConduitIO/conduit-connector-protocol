@@ -25,7 +25,6 @@ func SourceConfigureRequest(in *connectorv1.Source_Configure_Request) (cpluginv1
 	}
 	return out, nil
 }
-
 func SourceConfigureResponse(in *connectorv1.Source_Configure_Response) (cpluginv1.SourceConfigureResponse, error) {
 	return cpluginv1.SourceConfigureResponse{}, nil
 }
@@ -36,7 +35,6 @@ func SourceStartRequest(in *connectorv1.Source_Start_Request) (cpluginv1.SourceS
 	}
 	return out, nil
 }
-
 func SourceStartResponse(in *connectorv1.Source_Start_Response) (cpluginv1.SourceStartResponse, error) {
 	return cpluginv1.SourceStartResponse{}, nil
 }
@@ -47,7 +45,6 @@ func SourceRunRequest(in *connectorv1.Source_Run_Request) (cpluginv1.SourceRunRe
 	}
 	return out, nil
 }
-
 func SourceRunResponse(in *connectorv1.Source_Run_Response) (cpluginv1.SourceRunResponse, error) {
 	rec, err := Record(in.Record)
 	if err != nil {
@@ -63,7 +60,13 @@ func SourceRunResponse(in *connectorv1.Source_Run_Response) (cpluginv1.SourceRun
 func SourceStopRequest(in *connectorv1.Source_Stop_Request) (cpluginv1.SourceStopRequest, error) {
 	return cpluginv1.SourceStopRequest{}, nil
 }
-
 func SourceStopResponse(in *connectorv1.Source_Stop_Response) (cpluginv1.SourceStopResponse, error) {
 	return cpluginv1.SourceStopResponse{}, nil
+}
+
+func SourceTeardownRequest(in *connectorv1.Source_Teardown_Request) (cpluginv1.SourceTeardownRequest, error) {
+	return cpluginv1.SourceTeardownRequest{}, nil
+}
+func SourceTeardownResponse(in *connectorv1.Source_Teardown_Response) (cpluginv1.SourceTeardownResponse, error) {
+	return cpluginv1.SourceTeardownResponse{}, nil
 }

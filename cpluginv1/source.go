@@ -23,6 +23,7 @@ type SourcePlugin interface {
 	Start(context.Context, SourceStartRequest) (SourceStartResponse, error)
 	Run(context.Context, SourceRunStream) error
 	Stop(context.Context, SourceStopRequest) (SourceStopResponse, error)
+	Teardown(context.Context, SourceTeardownRequest) (SourceTeardownResponse, error)
 }
 
 type SourceConfigureRequest struct {
@@ -48,3 +49,6 @@ type SourceRunResponse struct {
 
 type SourceStopRequest struct{}
 type SourceStopResponse struct{}
+
+type SourceTeardownRequest struct{}
+type SourceTeardownResponse struct{}
