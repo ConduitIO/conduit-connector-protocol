@@ -36,7 +36,7 @@ func Serve(
 			MagicCookieValue: "204e8e812c3a1bb73b838928c575b42a105dd2e9aa449be481bc4590486df53f",
 		},
 		Plugins: plugin.PluginSet{
-			"source": GRPCSourcePlugin{Factory: sourceFactory},
+			"source": &GRPCSourcePlugin{Factory: sourceFactory},
 		},
 		GRPCServer: plugin.DefaultGRPCServer,
 	}

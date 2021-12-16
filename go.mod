@@ -3,7 +3,7 @@ module github.com/conduitio/conduit-plugin
 go 1.17
 
 require (
-	github.com/golang/mock v1.1.1
+	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-plugin v1.4.3
 	go.buf.build/library/go-grpc/conduitio/conduit-plugin v1.4.4
 	google.golang.org/grpc v1.43.0
