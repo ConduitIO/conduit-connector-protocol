@@ -69,9 +69,11 @@ func (s serveConfigFunc) ApplyServeOption(in *plugin.ServeConfig) error {
 // the passed options to populate the go-plugin ServeTestConfig.
 func WithDebug(ctx context.Context, config chan *plugin.ReattachConfig, closeCh chan struct{}) ServeOption {
 	return serveConfigFunc(func(in *plugin.ServeConfig) error {
-		in.Test.Context = ctx
-		in.Test.ReattachConfigCh = config
-		in.Test.CloseCh = closeCh
+		in.Test = &plugin.ServeTestConfig{
+			Context:          ctx,
+			ReattachConfigCh: config,
+			CloseCh:          closeCh,
+		}
 		return nil
 	})
 }
