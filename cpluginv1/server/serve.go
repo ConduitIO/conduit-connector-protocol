@@ -78,6 +78,15 @@ func WithDebug(ctx context.Context, config chan *plugin.ReattachConfig, closeCh 
 	})
 }
 
+func WithGRPCServerOptions(opt ...grpc.ServerOption) ServeOption {
+	return serveConfigFunc(func(in *plugin.ServeConfig) error {
+		in.GRPCServer = func(opts []grpc.ServerOption) *grpc.Server {
+			return plugin.DefaultGRPCServer(append(opts, opt...))
+		}
+		return nil
+	})
+}
+
 // GRPCSourcePlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
