@@ -25,8 +25,9 @@ import (
 )
 
 func Serve(
+	specifierFactory func() cpluginv1.SpecifierPlugin,
 	sourceFactory func() cpluginv1.SourcePlugin,
-	// TODO specifier, destination
+	destinationFactory func() cpluginv1.DestinationPlugin,
 	opts ...ServeOption,
 ) error {
 	serveConfig := &plugin.ServeConfig{
@@ -36,7 +37,9 @@ func Serve(
 			MagicCookieValue: "204e8e812c3a1bb73b838928c575b42a105dd2e9aa449be481bc4590486df53f",
 		},
 		Plugins: plugin.PluginSet{
-			"source": &GRPCSourcePlugin{Factory: sourceFactory},
+			"specifier":   &GRPCSpecifierPlugin{Factory: specifierFactory},
+			"source":      &GRPCSourcePlugin{Factory: sourceFactory},
+			"destination": &GRPCDestinationPlugin{Factory: destinationFactory},
 		},
 		GRPCServer: plugin.DefaultGRPCServer,
 	}
