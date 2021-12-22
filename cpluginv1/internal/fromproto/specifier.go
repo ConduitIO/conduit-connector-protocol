@@ -49,6 +49,7 @@ func SpecifierSpecifyResponse(in *connectorv1.Specifier_Specify_Response) (cplug
 	}
 
 	out := cpluginv1.SpecifierSpecifyResponse{
+		Name:              in.Name,
 		Summary:           in.Summary,
 		Description:       in.Description,
 		Version:           in.Version,

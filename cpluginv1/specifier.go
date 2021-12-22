@@ -24,6 +24,7 @@ type SpecifierPlugin interface {
 
 type SpecifierSpecifyRequest struct{}
 type SpecifierSpecifyResponse struct {
+	Name              string
 	Summary           string
 	Description       string
 	Version           string
