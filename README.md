@@ -44,3 +44,8 @@ To switch to locally generated protobuf code follow the following steps:
 - cd into the root of the project and run `go mod edit -replace go.buf.build/library/go-grpc/conduitio/conduit-plugin=./internal`
 
 Don't forget to revert the replace directive in the go.mod file before pushing your changes!
+
+## Ackgnowledgments
+
+We took inspiration for our plugin implementation from
+[hashicorp/terraform-plugin-go](https://github.com/hashicorp/terraform-plugin-go).
