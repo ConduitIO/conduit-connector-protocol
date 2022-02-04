@@ -46,6 +46,10 @@ func Record(record cpluginv1.Record) (*connectorv1.Record, error) {
 }
 
 func Data(in cpluginv1.Data) (*connectorv1.Data, error) {
+	if in == nil {
+		return nil, nil
+	}
+
 	var out connectorv1.Data
 
 	switch v := in.(type) {
