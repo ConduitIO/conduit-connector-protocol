@@ -17,10 +17,10 @@ package server
 import (
 	"context"
 
-	"github.com/conduitio/conduit-plugin/cpluginv1"
-	"github.com/conduitio/conduit-plugin/cpluginv1/internal/fromproto"
-	"github.com/conduitio/conduit-plugin/cpluginv1/internal/toproto"
-	connectorv1 "go.buf.build/library/go-grpc/conduitio/conduit-plugin/connector/v1"
+	"github.com/conduitio/connector-plugin/cpluginv1"
+	"github.com/conduitio/connector-plugin/cpluginv1/internal/fromproto"
+	"github.com/conduitio/connector-plugin/cpluginv1/internal/toproto"
+	connectorv1 "go.buf.build/library/go-grpc/conduitio/connector-plugin/connector/v1"
 )
 
 func NewSourcePluginServer(impl cpluginv1.SourcePlugin) connectorv1.SourcePluginServer {

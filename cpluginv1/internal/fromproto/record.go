@@ -18,8 +18,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/conduitio/conduit-plugin/cpluginv1"
-	connectorv1 "go.buf.build/library/go-grpc/conduitio/conduit-plugin/connector/v1"
+	"github.com/conduitio/connector-plugin/cpluginv1"
+	connectorv1 "go.buf.build/library/go-grpc/conduitio/connector-plugin/connector/v1"
 )
 
 func Record(record *connectorv1.Record) (cpluginv1.Record, error) {

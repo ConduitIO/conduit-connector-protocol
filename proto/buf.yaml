@@ -1,5 +1,5 @@
 version: v1
-name: buf.build/conduitio/conduit-plugin
+name: buf.build/conduitio/connector-plugin
 lint:
   service_suffix: Plugin
   use:

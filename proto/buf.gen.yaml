@@ -2,7 +2,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/conduitio/conduit-plugin/internal
+    default: github.com/conduitio/connector-plugin/internal
 plugins:
   - name: go
     out: ../internal
