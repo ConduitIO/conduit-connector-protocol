@@ -1,4 +1,4 @@
-# Conduit Plugin
+# Conduit Connector Plugin
 
 :warning: WORK IN PROGRESS :warning:
 
@@ -27,7 +27,7 @@ plugins:
 Then you can run this command to generate the code:
 
 ```shell
-buf generate buf.build/conduitio/conduit-plugin --template buf.gen.yaml
+buf generate buf.build/conduitio/connector-plugin --template buf.gen.yaml
 ```
 
 ## Local development
@@ -40,8 +40,8 @@ To switch to locally generated protobuf code follow the following steps:
 
 - run `cd proto && buf generate`
 - cd into the newly generated folder `internal` in the root of the project
-- create a go.mod file by running `go mod init github.com/conduitio/conduit-plugin/internal`
-- cd into the root of the project and run `go mod edit -replace go.buf.build/library/go-grpc/conduitio/conduit-plugin=./internal`
+- create a go.mod file by running `go mod init github.com/conduitio/connector-plugin/internal`
+- cd into the root of the project and run `go mod edit -replace go.buf.build/library/go-grpc/conduitio/connector-plugin=./internal`
 
 Don't forget to revert the replace directive in the go.mod file before pushing your changes!
 
