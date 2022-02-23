@@ -1,17 +1,25 @@
-# Conduit Connector Plugin
+# Conduit Connector Plugin Protocol
 
-:warning: WORK IN PROGRESS :warning:
+This repository contains the definition of the [Conduit](https://github.com/conduitio/conduit) plugin protocol in gRPC.
+It also contains a thin Go layer that hides the gRPC implementation details without adding any functionality on top.
 
-This repository contains the definition of the Conduit plugin. It is a thin layer that hides the gRPC implementation
-details without adding any functionality on top. This is NOT the plugin SDK.
+This repository is the only connection point between Conduit and a connector plugin.
 
-This repository is the only connection point between Conduit and one of its plugins.
+## Implementing a connector plugin in Go
+
+If you want to implement a Conduit connector plugin in Go, you should use the
+[Connector Plugin SDK](https://github.com/ConduitIO/connector-plugin-sdk). In this case you won't directly use the
+contents of this repository, since the SDK hides implementation details and provides utilities to make developing a
+connector as simple as possible.
+
+If you want to implement a connector plugin in any other language you will need to generate the protocol code yourself,
+this is explained in the next chapter.
 
 ## Generating code for other languages
 
-You can use [buf](https://buf.build/) to generate code for building a Conduit plugin in a language other than Go. To do
-that you need to create a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#create-a-bufgenyaml) file and configure
-the plugins for the language you want to use.
+You can use [buf](https://buf.build/) to generate code for building a Conduit plugin in virtually any major language. To
+do that you need to create a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#create-a-bufgenyaml) file and
+configure the plugins for the language you want to use.
 
 For example here is a `buf.gen.yaml` file that is configured to generate C++ and Java code:
 
@@ -45,7 +53,7 @@ To switch to locally generated protobuf code follow the following steps:
 
 Don't forget to revert the replace directive in the go.mod file before pushing your changes!
 
-## Ackgnowledgments
+## Acknowledgments
 
 We took inspiration for our plugin implementation from
 [hashicorp/terraform-plugin-go](https://github.com/hashicorp/terraform-plugin-go).
