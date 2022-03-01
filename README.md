@@ -1,7 +1,7 @@
 # Conduit Connector Plugin Protocol
 
 :information_source: **If you want to implement a Conduit connector in Go, you should use the
-[Connector Plugin SDK](https://github.com/ConduitIO/connector-plugin-sdk).**
+[Connector Plugin SDK](https://github.com/ConduitIO/conduit-plugin-sdk).**
 
 This repository contains the definition of the [Conduit](https://github.com/conduitio/conduit) plugin protocol in gRPC.
 It also contains a thin Go layer that hides the gRPC implementation details without adding any functionality on top.
@@ -10,7 +10,7 @@ This repository is the only connection point between Conduit and a connector plu
 
 ## Implementing a connector plugin in Go
 
-We provide a [Connector Plugin SDK](https://github.com/ConduitIO/connector-plugin-sdk) for writing plugins in Go. In
+We provide a [Connector Plugin SDK](https://github.com/ConduitIO/conduit-plugin-sdk) for writing plugins in Go. In
 this case you won't directly use the contents of this repository, instead the SDK hides implementation details and
 provides utilities to make developing a connector as simple as possible.
 
