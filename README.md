@@ -1,23 +1,23 @@
-# Conduit Connector Plugin Protocol
+# Conduit Plugin Protocol
 
 :information_source: **If you want to implement a Conduit connector in Go, you should use the
-[Connector Plugin SDK](https://github.com/ConduitIO/conduit-plugin-sdk).**
+[Plugin SDK](https://github.com/ConduitIO/conduit-plugin-sdk).**
 
 This repository contains the definition of the [Conduit](https://github.com/conduitio/conduit) plugin protocol in gRPC.
 It also contains a thin Go layer that hides the gRPC implementation details without adding any functionality on top.
 
 This repository is the only connection point between Conduit and a connector plugin.
 
-## Implementing a connector plugin in Go
+## Implementing a connector in Go
 
-We provide a [Connector Plugin SDK](https://github.com/ConduitIO/conduit-plugin-sdk) for writing plugins in Go. In
+We provide a [Plugin SDK](https://github.com/ConduitIO/conduit-plugin-sdk) for writing plugins in Go. In
 this case you won't directly use the contents of this repository, instead the SDK hides implementation details and
 provides utilities to make developing a connector as simple as possible.
 
-If you want to implement a connector plugin in any other language you will need to generate the protocol code yourself,
+If you want to implement a connector in any other language you will need to generate the protocol code yourself,
 this is explained in the next chapter.
 
-## Implementing a connector plugin in other languages
+## Implementing a connector in other languages
 
 You can use [buf](https://buf.build/) to generate code for building a Conduit plugin in virtually any major language. To
 do that you need to create a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#create-a-bufgenyaml) file and
