@@ -17,8 +17,8 @@ package fromproto
 import (
 	"fmt"
 
-	"github.com/conduitio/connector-plugin/cpluginv1"
-	connectorv1 "go.buf.build/library/go-grpc/conduitio/connector-plugin/connector/v1"
+	"github.com/conduitio/conduit-plugin-protocol/cpluginv1"
+	connectorv1 "go.buf.build/library/go-grpc/conduitio/conduit-plugin-protocol/connector/v1"
 )
 
 func SpecifierSpecifyRequest(in *connectorv1.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
