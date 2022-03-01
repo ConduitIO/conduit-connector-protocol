@@ -42,7 +42,7 @@ buf generate buf.build/conduitio/conduit-plugin-protocol --template buf.gen.yaml
 
 At this point you should have everything you need to start developing a plugin. Make sure to implement all gRPC
 services according to the documentation in the
-[proto definition](https://buf.build/conduitio/connector-plugin/file/main/connector/v1/connector.proto) and to follow
+[proto definition](https://buf.build/conduitio/conduit-plugin-protocol/file/main/connector/v1/connector.proto) and to follow
 the [go-plugin instructions](https://github.com/hashicorp/go-plugin/blob/master/docs/guide-plugin-write-non-go.md)
 about writing a plugin in a language other than Go.
 
