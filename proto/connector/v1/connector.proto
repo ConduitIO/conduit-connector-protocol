@@ -89,9 +89,10 @@ service DestinationPlugin {
   // successfully processed. The stream should still stay open in case Conduit
   // is able to recover from the error and the pipeline keeps running.
   rpc Run(stream Destination.Run.Request) returns (stream Destination.Run.Response);
-  // Stop signals to the plugin that no more records will be written to the
-  // stream. The plugin should flush any records that might be cached and not
-  // yet written to the 3rd party resource.
+  // Stop signals to the plugin that the record with the specified position is
+  // the last one and no more records will be written to the stream after it.
+  // Once the plugin receives the last record it should flush any records that
+  // might be cached and not yet written to the 3rd party resource.
   rpc Stop(Destination.Stop.Request) returns (Destination.Stop.Response);
   // Teardown signals to the plugin that there will be no more calls to any
   // other function. After Teardown returns, the plugin should be ready for a
@@ -186,7 +187,12 @@ message Destination {
   }
 
   message Stop {
-    message Request {}
+    message Request {
+      // This is the position of the last record that was sent into the stream.
+      // Conduit won't send any records after a record with this position is
+      // received.
+      bytes last_position = 1;
+    }
     message Response {}
   }
 
