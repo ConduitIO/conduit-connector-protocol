@@ -50,7 +50,9 @@ type SourceRunResponse struct {
 }
 
 type SourceStopRequest struct{}
-type SourceStopResponse struct{}
+type SourceStopResponse struct {
+	LastPosition []byte
+}
 
 type SourceTeardownRequest struct{}
 type SourceTeardownResponse struct{}
