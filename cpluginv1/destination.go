@@ -48,7 +48,9 @@ type DestinationRunResponse struct {
 	Error       string
 }
 
-type DestinationStopRequest struct{}
+type DestinationStopRequest struct {
+	LastPosition []byte
+}
 type DestinationStopResponse struct{}
 
 type DestinationTeardownRequest struct{}

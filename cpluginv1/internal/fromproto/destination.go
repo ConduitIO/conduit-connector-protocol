@@ -55,7 +55,10 @@ func DestinationRunResponse(in *connectorv1.Destination_Run_Response) (cpluginv1
 }
 
 func DestinationStopRequest(in *connectorv1.Destination_Stop_Request) (cpluginv1.DestinationStopRequest, error) {
-	return cpluginv1.DestinationStopRequest{}, nil
+	out := cpluginv1.DestinationStopRequest{
+		LastPosition: in.LastPosition,
+	}
+	return out, nil
 }
 func DestinationStopResponse(in *connectorv1.Destination_Stop_Response) (cpluginv1.DestinationStopResponse, error) {
 	return cpluginv1.DestinationStopResponse{}, nil
