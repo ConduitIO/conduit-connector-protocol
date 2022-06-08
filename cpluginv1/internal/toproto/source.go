@@ -61,7 +61,10 @@ func SourceStopRequest(in cpluginv1.SourceStopRequest) (*connectorv1.Source_Stop
 	return &connectorv1.Source_Stop_Request{}, nil
 }
 func SourceStopResponse(in cpluginv1.SourceStopResponse) (*connectorv1.Source_Stop_Response, error) {
-	return &connectorv1.Source_Stop_Response{}, nil
+	out := connectorv1.Source_Stop_Response{
+		LastPosition: in.LastPosition,
+	}
+	return &out, nil
 }
 
 func SourceTeardownRequest(in cpluginv1.SourceTeardownRequest) (*connectorv1.Source_Teardown_Request, error) {

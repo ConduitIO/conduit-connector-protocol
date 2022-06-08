@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate mockgen -destination=mock/destination.go -package=mock -mock_names=DestinationPlugin=DestinationPlugin . DestinationPlugin
+//go:generate mockgen -destination=mock/destination.go -package=mock -mock_names=DestinationPlugin=DestinationPlugin,DestinationRunStream=DestinationRunStream . DestinationPlugin,DestinationRunStream
 
 package cpluginv1
 
@@ -48,7 +48,9 @@ type DestinationRunResponse struct {
 	Error       string
 }
 
-type DestinationStopRequest struct{}
+type DestinationStopRequest struct {
+	LastPosition []byte
+}
 type DestinationStopResponse struct{}
 
 type DestinationTeardownRequest struct{}
