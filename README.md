@@ -2,7 +2,8 @@
 
 [![protobuf-docs](https://img.shields.io/badge/protobuf-docs-blue)](https://buf.build/conduitio/conduit-connector-protocol/docs/main:connector.v1)
 
-:information_source: **If you want to implement a Conduit connector in Go, you should use the
+> **Warning**  
+> **If you want to implement a Conduit connector in Go, you should use the
 [Connector SDK](https://github.com/ConduitIO/conduit-connector-sdk).**
 
 This repository contains the definition of the [Conduit](https://github.com/conduitio/conduit) connector protocol in gRPC.
