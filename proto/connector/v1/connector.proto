@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package connector.v1;
 
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 // Record represents a single data record produced by a source and/or consumed
 // by a destination connector.
