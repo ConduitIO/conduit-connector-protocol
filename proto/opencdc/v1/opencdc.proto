@@ -15,8 +15,8 @@ option (metadata_read_at) = "opencdc.readAt";
 // We are (ab)using custom file options to define constants.
 // See https://github.com/protocolbuffers/protobuf/issues/3520#issuecomment-323613839
 extend google.protobuf.FileOptions {
-  string metadata_created_at = 1000;
-  string metadata_read_at = 1001;
+  string metadata_created_at = 10000;
+  string metadata_read_at = 10001;
 }
 
 // Operation defines what triggered the creation of a record.

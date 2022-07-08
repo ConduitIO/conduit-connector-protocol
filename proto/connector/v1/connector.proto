@@ -2,7 +2,20 @@ syntax = "proto3";
 
 package connector.v1;
 
+import "google/protobuf/descriptor.proto";
 import "opencdc/v1/opencdc.proto";
+
+option (metadata_conduit_version) = "conduit.version";
+option (metadata_conduit_plugin_name) = "conduit.plugin.name";
+option (metadata_conduit_plugin_version) = "conduit.plugin.version";
+
+// We are (ab)using custom file options to define constants.
+// See https://github.com/protocolbuffers/protobuf/issues/3520#issuecomment-323613839
+extend google.protobuf.FileOptions {
+  string metadata_conduit_version = 20000;
+  string metadata_conduit_plugin_name = 20001;
+  string metadata_conduit_plugin_version = 20002;
+}
 
 // SourcePlugin is responsible for fetching records from 3rd party resources and
 // sending them to Conduit.
