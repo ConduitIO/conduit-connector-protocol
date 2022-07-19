@@ -19,39 +19,29 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-
-	connectorv1 "go.buf.build/library/go-grpc/conduitio/conduit-connector-protocol/connector/v1"
-	opencdcv1 "go.buf.build/library/go-grpc/conduitio/conduit-connector-protocol/opencdc/v1"
-	"google.golang.org/protobuf/proto"
 )
 
 var (
 	ErrMetadataValueNotFound = errors.New("metadata value not found")
+)
 
+const (
 	// MetadataCreatedAt is a Record.Metadata key for the time when the record
 	// was created in the 3rd party system. The expected format is a unix
 	// timestamp in nanoseconds.
-	MetadataCreatedAt string
+	MetadataCreatedAt = "opencdc.createdAt"
 	// MetadataReadAt is a Record.Metadata key for the time when the record was
 	// read from the 3rd party system. The expected format is a unix timestamp
 	// in nanoseconds.
-	MetadataReadAt string
+	MetadataReadAt = "opencdc.readAt"
 
 	// MetadataConduitPluginName is a Record.Metadata key for the name of the
 	// plugin that created this record.
-	MetadataConduitPluginName string
+	MetadataConduitPluginName = "conduit.plugin.name"
 	// MetadataConduitPluginVersion is a Record.Metadata key for the version of
 	// the plugin that created this record.
-	MetadataConduitPluginVersion string
+	MetadataConduitPluginVersion = "conduit.plugin.version"
 )
-
-func init() {
-	MetadataCreatedAt = proto.GetExtension(opencdcv1.File_opencdc_v1_opencdc_proto.Options(), opencdcv1.E_MetadataCreatedAt).(string)
-	MetadataReadAt = proto.GetExtension(opencdcv1.File_opencdc_v1_opencdc_proto.Options(), opencdcv1.E_MetadataReadAt).(string)
-
-	MetadataConduitPluginName = proto.GetExtension(connectorv1.File_connector_v1_connector_proto.Options(), connectorv1.E_MetadataConduitPluginName).(string)
-	MetadataConduitPluginVersion = proto.GetExtension(connectorv1.File_connector_v1_connector_proto.Options(), connectorv1.E_MetadataConduitPluginVersion).(string)
-}
 
 // GetMetadataCreatedAt parses the value for key MetadataCreatedAt as a unix
 // timestamp. If the value does not exist or the value is empty the function
