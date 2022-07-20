@@ -32,40 +32,40 @@ func _() {
 }
 
 func Record(record *opencdcv1.Record) (cpluginv1.Record, error) {
-	before, err := Entity(record.Before)
+	key, err := Data(record.Key)
 	if err != nil {
-		return cpluginv1.Record{}, fmt.Errorf("error converting before: %w", err)
+		return cpluginv1.Record{}, fmt.Errorf("error converting key: %w", err)
 	}
 
-	after, err := Entity(record.After)
+	payload, err := Change(record.Payload)
 	if err != nil {
-		return cpluginv1.Record{}, fmt.Errorf("error converting after: %w", err)
+		return cpluginv1.Record{}, fmt.Errorf("error converting payload: %w", err)
 	}
 
 	out := cpluginv1.Record{
 		Position:  record.Position,
 		Operation: cpluginv1.Operation(record.Operation),
 		Metadata:  record.Metadata,
-		Before:    before,
-		After:     after,
+		Key:       key,
+		Payload:   payload,
 	}
 	return out, nil
 }
 
-func Entity(in *opencdcv1.Entity) (cpluginv1.Entity, error) {
-	key, err := Data(in.Key)
+func Change(in *opencdcv1.Change) (cpluginv1.Change, error) {
+	before, err := Data(in.Before)
 	if err != nil {
-		return cpluginv1.Entity{}, fmt.Errorf("error converting key: %w", err)
+		return cpluginv1.Change{}, fmt.Errorf("error converting before: %w", err)
 	}
 
-	payload, err := Data(in.Payload)
+	after, err := Data(in.After)
 	if err != nil {
-		return cpluginv1.Entity{}, fmt.Errorf("error converting payload: %w", err)
+		return cpluginv1.Change{}, fmt.Errorf("error converting after: %w", err)
 	}
 
-	out := cpluginv1.Entity{
-		Key:     key,
-		Payload: payload,
+	out := cpluginv1.Change{
+		Before: before,
+		After:  after,
 	}
 	return out, nil
 }

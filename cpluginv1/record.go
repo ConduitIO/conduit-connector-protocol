@@ -27,13 +27,13 @@ type Record struct {
 	Position  []byte
 	Operation Operation
 	Metadata  map[string]string
-	Before    Entity
-	After     Entity
+	Key       Data
+	Payload   Change
 }
 
-type Entity struct {
-	Key     Data
-	Payload Data
+type Change struct {
+	Before Data
+	After  Data
 }
 
 type Data interface {
