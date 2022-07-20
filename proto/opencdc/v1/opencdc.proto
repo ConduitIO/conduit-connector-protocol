@@ -42,8 +42,8 @@ message Record {
   // possibilities: create, update, delete or snapshot. The first three
   // operations are encountered during normal CDC operation, while "snapshot" is
   // meant to represent records during an initial load. Depending on the
-  // operation, the record will contain either the state before the change,
-  // after the change, or both (see fields before and after).
+  // operation, the record will contain either the payload before the change,
+  // after the change, or both (see field payload).
   Operation operation = 2;
 
   // Metadata contains optional information related to the record. Although the
@@ -51,23 +51,22 @@ message Record {
   // metadata fields (see options prefixed with metadata_*).
   map<string, string> metadata = 3;
 
-  // Before contains the state of the entity before the operation occurred. This
-  // field will only be populated for operations "update" and "delete".
-  Entity before = 4;
-  // After contains the state of the entity after the operation occurred. This
-  // field will only be populated for operations "create", "update" and
-  // "snapshot".
-  Entity after = 5;
+  // Key represents a value that should identify the entity (e.g. database row).
+  Data key = 4;
+  // Payload holds the payload change (data before and after the operation
+  // occurred).
+  Change payload = 5;
 }
 
-// Entity represents the state of the entity at a specific point in time.
-message Entity {
-  // Key represents a value that should identify the entity (e.g. database row).
-  Data key = 1;
-  // Payload holds the actual data of the entity.
-  // If the key and payload both contain structured data it is preferable not to
-  // include the key data in the payload data.
-  Data payload = 2;
+// Change represents the data before and after the operation occurred.
+message Change {
+  // Before contains the data before the operation occurred. This field is
+  // optional and should only be populated for operations "update" and "delete"
+  // (if the system supports fetching the data before the operation).
+  Data before = 1;
+  // After contains the data after the operation occurred. This field should be
+  // populated for all operations except "delete".
+  Data after = 2;
 }
 
 // Data is used to represent the record key and payload. It can be either raw
