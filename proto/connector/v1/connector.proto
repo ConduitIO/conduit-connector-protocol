@@ -2,36 +2,17 @@ syntax = "proto3";
 
 package connector.v1;
 
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/struct.proto";
+import "google/protobuf/descriptor.proto";
+import "opencdc/v1/opencdc.proto";
 
-// Record represents a single data record produced by a source and/or consumed
-// by a destination connector.
-message Record {
-  // Position uniquely represents the record.
-  bytes position = 1;
-  // Metadata contains additional information regarding the record.
-  map<string, string> metadata = 2;
-  // Created at represents the time when the change occurred in the source
-  // system. If that's impossible to find out, then it should be the time the
-  // change was detected by the connector.
-  google.protobuf.Timestamp created_at = 3;
-  // Key represents a value that should be the same for records originating
-  // from the same source entry (e.g. same DB row).
-  Data key = 4;
-  // Payload holds the actual information that the record is transmitting.
-  Data payload = 5;
-}
+option (metadata_conduit_plugin_name) = "conduit.plugin.name";
+option (metadata_conduit_plugin_version) = "conduit.plugin.version";
 
-// Data is used to represent the record key and payload. It can be either raw
-// data (byte array) or structured data (struct).
-message Data {
-  oneof data {
-    // Raw data contains unstructured data in form of a byte array.
-    bytes raw_data = 1;
-    // Structured data contains data in form of a struct with fields.
-    google.protobuf.Struct structured_data = 2;
-  }
+// We are (ab)using custom file options to define constants.
+// See https://github.com/protocolbuffers/protobuf/issues/3520#issuecomment-323613839
+extend google.protobuf.FileOptions {
+  string metadata_conduit_plugin_name = 20000;
+  string metadata_conduit_plugin_version = 20001;
 }
 
 // SourcePlugin is responsible for fetching records from 3rd party resources and
@@ -132,9 +113,9 @@ message Source {
       bytes ack_position = 1;
     }
     message Response {
-      // Record contains the record read by the source from the 3rd party
-      // resource.
-      Record record = 1;
+      // Record contains the OpenCDC record read by the source from the 3rd
+      // party resource.
+      opencdc.v1.Record record = 1;
     }
   }
 
@@ -172,9 +153,9 @@ message Destination {
 
   message Run {
     message Request {
-      // Record contains the record that should be written to the 3rd
+      // Record contains the OpenCDC record that should be written to the 3rd
       // party resource.
-      Record record = 1;
+      opencdc.v1.Record record = 1;
     }
     message Response {
       // This is the position of the record that was processed.
