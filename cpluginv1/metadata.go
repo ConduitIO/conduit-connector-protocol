@@ -15,6 +15,17 @@
 package cpluginv1
 
 const (
+	// OpenCDCVersion is a constant that should be used as the value in the
+	// metadata field MetadataVersion. It ensures the OpenCDC format version can
+	// be easily identified in case the record gets marshaled into a different
+	// untyped format (e.g. JSON).
+	OpenCDCVersion = "v1"
+
+	// MetadataVersion is a Record.Metadata key for the version of the OpenCDC
+	// format (e.g. "v1"). This field exists to ensure the OpenCDC format
+	// version can be easily identified in case the record gets marshaled into a
+	// different untyped format (e.g. JSON).
+	MetadataVersion = "opencdc.version"
 	// MetadataCreatedAt is a Record.Metadata key for the time when the record
 	// was created in the 3rd party system. The expected format is a unix
 	// timestamp in nanoseconds.
