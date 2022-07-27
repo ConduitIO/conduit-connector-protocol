@@ -26,7 +26,7 @@ import (
 func TestMetadataConstants(t *testing.T) {
 	wantMapping := map[string]*protoimpl.ExtensionInfo{
 		OpenCDCVersion:               opencdcv1.E_OpencdcVersion,
-		MetadataVersion:              opencdcv1.E_MetadataVersion,
+		MetadataOpenCDCVersion:       opencdcv1.E_MetadataVersion,
 		MetadataCreatedAt:            opencdcv1.E_MetadataCreatedAt,
 		MetadataReadAt:               opencdcv1.E_MetadataReadAt,
 		MetadataConduitPluginName:    connectorv1.E_MetadataConduitPluginName,
