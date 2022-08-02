@@ -19,42 +19,68 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
-	connectorv1 "go.buf.build/library/go-grpc/conduitio/conduit-connector-protocol/connector/v1"
+	opencdcv1 "go.buf.build/grpc/go/conduitio/conduit-connector-protocol/opencdc/v1"
 	"google.golang.org/protobuf/types/known/structpb"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func Record(record cpluginv1.Record) (*connectorv1.Record, error) {
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	var cTypes [1]struct{}
+	_ = cTypes[int(cpluginv1.OperationCreate)-int(opencdcv1.Operation_OPERATION_CREATE)]
+	_ = cTypes[int(cpluginv1.OperationUpdate)-int(opencdcv1.Operation_OPERATION_UPDATE)]
+	_ = cTypes[int(cpluginv1.OperationDelete)-int(opencdcv1.Operation_OPERATION_DELETE)]
+	_ = cTypes[int(cpluginv1.OperationSnapshot)-int(opencdcv1.Operation_OPERATION_SNAPSHOT)]
+}
+
+func Record(record cpluginv1.Record) (*opencdcv1.Record, error) {
 	key, err := Data(record.Key)
 	if err != nil {
 		return nil, fmt.Errorf("error converting key: %w", err)
 	}
 
-	payload, err := Data(record.Payload)
+	payload, err := Change(record.Payload)
 	if err != nil {
 		return nil, fmt.Errorf("error converting payload: %w", err)
 	}
 
-	out := connectorv1.Record{
+	out := opencdcv1.Record{
 		Position:  record.Position,
+		Operation: opencdcv1.Operation(record.Operation),
 		Metadata:  record.Metadata,
-		CreatedAt: timestamppb.New(record.CreatedAt),
 		Key:       key,
 		Payload:   payload,
 	}
 	return &out, nil
 }
 
-func Data(in cpluginv1.Data) (*connectorv1.Data, error) {
+func Change(in cpluginv1.Change) (*opencdcv1.Change, error) {
+	before, err := Data(in.Before)
+	if err != nil {
+		return nil, fmt.Errorf("error converting before: %w", err)
+	}
+
+	after, err := Data(in.After)
+	if err != nil {
+		return nil, fmt.Errorf("error converting after: %w", err)
+	}
+
+	out := opencdcv1.Change{
+		Before: before,
+		After:  after,
+	}
+	return &out, nil
+}
+
+func Data(in cpluginv1.Data) (*opencdcv1.Data, error) {
 	if in == nil {
 		return nil, nil
 	}
 
-	var out connectorv1.Data
+	var out opencdcv1.Data
 
 	switch v := in.(type) {
 	case cpluginv1.RawData:
-		out.Data = &connectorv1.Data_RawData{
+		out.Data = &opencdcv1.Data_RawData{
 			RawData: v,
 		}
 	case cpluginv1.StructuredData:
@@ -62,7 +88,7 @@ func Data(in cpluginv1.Data) (*connectorv1.Data, error) {
 		if err != nil {
 			return nil, err
 		}
-		out.Data = &connectorv1.Data_StructuredData{
+		out.Data = &opencdcv1.Data_StructuredData{
 			StructuredData: content,
 		}
 	default:

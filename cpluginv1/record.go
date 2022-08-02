@@ -14,14 +14,26 @@
 
 package cpluginv1
 
-import "time"
+const (
+	OperationCreate Operation = iota + 1
+	OperationUpdate
+	OperationDelete
+	OperationSnapshot
+)
+
+type Operation int
 
 type Record struct {
 	Position  []byte
+	Operation Operation
 	Metadata  map[string]string
-	CreatedAt time.Time
 	Key       Data
-	Payload   Data
+	Payload   Change
+}
+
+type Change struct {
+	Before Data
+	After  Data
 }
 
 type Data interface {

@@ -19,40 +19,67 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
-	connectorv1 "go.buf.build/library/go-grpc/conduitio/conduit-connector-protocol/connector/v1"
+	opencdcv1 "go.buf.build/grpc/go/conduitio/conduit-connector-protocol/opencdc/v1"
 )
 
-func Record(record *connectorv1.Record) (cpluginv1.Record, error) {
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	var cTypes [1]struct{}
+	_ = cTypes[int(cpluginv1.OperationCreate)-int(opencdcv1.Operation_OPERATION_CREATE)]
+	_ = cTypes[int(cpluginv1.OperationUpdate)-int(opencdcv1.Operation_OPERATION_UPDATE)]
+	_ = cTypes[int(cpluginv1.OperationDelete)-int(opencdcv1.Operation_OPERATION_DELETE)]
+	_ = cTypes[int(cpluginv1.OperationSnapshot)-int(opencdcv1.Operation_OPERATION_SNAPSHOT)]
+}
+
+func Record(record *opencdcv1.Record) (cpluginv1.Record, error) {
 	key, err := Data(record.Key)
 	if err != nil {
 		return cpluginv1.Record{}, fmt.Errorf("error converting key: %w", err)
 	}
 
-	payload, err := Data(record.Payload)
+	payload, err := Change(record.Payload)
 	if err != nil {
 		return cpluginv1.Record{}, fmt.Errorf("error converting payload: %w", err)
 	}
 
 	out := cpluginv1.Record{
 		Position:  record.Position,
+		Operation: cpluginv1.Operation(record.Operation),
 		Metadata:  record.Metadata,
-		CreatedAt: record.CreatedAt.AsTime(),
 		Key:       key,
 		Payload:   payload,
 	}
 	return out, nil
 }
 
-func Data(in *connectorv1.Data) (cpluginv1.Data, error) {
+func Change(in *opencdcv1.Change) (cpluginv1.Change, error) {
+	before, err := Data(in.Before)
+	if err != nil {
+		return cpluginv1.Change{}, fmt.Errorf("error converting before: %w", err)
+	}
+
+	after, err := Data(in.After)
+	if err != nil {
+		return cpluginv1.Change{}, fmt.Errorf("error converting after: %w", err)
+	}
+
+	out := cpluginv1.Change{
+		Before: before,
+		After:  after,
+	}
+	return out, nil
+}
+
+func Data(in *opencdcv1.Data) (cpluginv1.Data, error) {
 	d := in.GetData()
 	if d == nil {
 		return nil, nil
 	}
 
 	switch v := d.(type) {
-	case *connectorv1.Data_RawData:
+	case *opencdcv1.Data_RawData:
 		return cpluginv1.RawData(v.RawData), nil
-	case *connectorv1.Data_StructuredData:
+	case *opencdcv1.Data_StructuredData:
 		return cpluginv1.StructuredData(v.StructuredData.AsMap()), nil
 	default:
 		return nil, errors.New("invalid Data type")
