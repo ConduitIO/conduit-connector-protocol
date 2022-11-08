@@ -37,4 +37,32 @@ type SpecifierParameter struct {
 	Default     string
 	Required    bool
 	Description string
+	Type        ParameterType
+	Validations []ParameterValidation
 }
+
+type ParameterValidation struct {
+	Type  ValidationType
+	Value string
+}
+
+type ValidationType int
+
+const (
+	ValidationTypeRequired ValidationType = iota + 1
+	ValidationTypeGreaterThan
+	ValidationTypeLessThan
+	ValidationTypeInclusion
+	ValidationTypeExclusion
+	ValidationTypeRegex
+)
+
+type ParameterType int
+
+const (
+	ParameterTypeString ParameterType = iota + 1
+	ParameterTypeNumber
+	ParameterTypeBool
+	ParameterTypeFile
+	ParameterTypeDuration
+)

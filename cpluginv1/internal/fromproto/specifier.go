@@ -21,6 +21,23 @@ import (
 	connectorv1 "go.buf.build/grpc/go/conduitio/conduit-connector-protocol/connector/v1"
 )
 
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	var vTypes [1]struct{}
+	_ = vTypes[int(cpluginv1.ValidationTypeRequired)-int(connectorv1.Specifier_Parameter_Validation_TYPE_REQUIRED)]
+	_ = vTypes[int(cpluginv1.ValidationTypeLessThan)-int(connectorv1.Specifier_Parameter_Validation_TYPE_LESS_THAN)]
+	_ = vTypes[int(cpluginv1.ValidationTypeGreaterThan)-int(connectorv1.Specifier_Parameter_Validation_TYPE_GREATER_THAN)]
+	_ = vTypes[int(cpluginv1.ValidationTypeInclusion)-int(connectorv1.Specifier_Parameter_Validation_TYPE_INCLUSION)]
+	_ = vTypes[int(cpluginv1.ValidationTypeExclusion)-int(connectorv1.Specifier_Parameter_Validation_TYPE_EXCLUSION)]
+	_ = vTypes[int(cpluginv1.ValidationTypeRegex)-int(connectorv1.Specifier_Parameter_Validation_TYPE_REGEX)]
+	// parameter types
+	_ = vTypes[int(cpluginv1.ParameterTypeString)-int(connectorv1.Specifier_Parameter_TYPE_STRING)]
+	_ = vTypes[int(cpluginv1.ParameterTypeNumber)-int(connectorv1.Specifier_Parameter_TYPE_NUMBER)]
+	_ = vTypes[int(cpluginv1.ParameterTypeBool)-int(connectorv1.Specifier_Parameter_TYPE_BOOL)]
+	_ = vTypes[int(cpluginv1.ParameterTypeFile)-int(connectorv1.Specifier_Parameter_TYPE_FILE)]
+	_ = vTypes[int(cpluginv1.ParameterTypeDuration)-int(connectorv1.Specifier_Parameter_TYPE_DURATION)]
+}
+
 func SpecifierSpecifyRequest(in *connectorv1.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
 	return cpluginv1.SpecifierSpecifyRequest{}, nil
 }
@@ -65,6 +82,19 @@ func SpecifierParameter(in *connectorv1.Specifier_Parameter) (cpluginv1.Specifie
 		Default:     in.Default,
 		Required:    in.Required,
 		Description: in.Description,
+		Type:        cpluginv1.ParameterType(in.Type),
+		Validations: SpecifierParameterValidations(in.Validations),
 	}
 	return out, nil
+}
+
+func SpecifierParameterValidations(in []*connectorv1.Specifier_Parameter_Validation) []cpluginv1.ParameterValidation {
+	out := make([]cpluginv1.ParameterValidation, 1)
+	for _, v := range in {
+		out = append(out, cpluginv1.ParameterValidation{
+			Type:  cpluginv1.ValidationType(v.Type),
+			Value: v.Value,
+		})
+	}
+	return out
 }
