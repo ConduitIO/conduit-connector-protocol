@@ -80,7 +80,7 @@ func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*connector
 func SpecifierParameter(in cpluginv1.SpecifierParameter) (*connectorv1.Specifier_Parameter, error) {
 	out := connectorv1.Specifier_Parameter{
 		Default:     in.Default,
-		Required:    in.Required,
+		Required:    in.Required, //nolint: staticcheck // still supported for now
 		Description: in.Description,
 		Type:        connectorv1.Specifier_Parameter_Type(in.Type),
 		Validations: SpecifierParameterValidations(in.Validations),
@@ -90,11 +90,11 @@ func SpecifierParameter(in cpluginv1.SpecifierParameter) (*connectorv1.Specifier
 
 func SpecifierParameterValidations(in []cpluginv1.ParameterValidation) []*connectorv1.Specifier_Parameter_Validation {
 	out := make([]*connectorv1.Specifier_Parameter_Validation, len(in))
-	for _, v := range in {
-		out = append(out, &connectorv1.Specifier_Parameter_Validation{
+	for i, v := range in {
+		out[i] = &connectorv1.Specifier_Parameter_Validation{
 			Type:  connectorv1.Specifier_Parameter_Validation_Type(v.Type),
 			Value: v.Value,
-		})
+		}
 	}
 	return out
 }
