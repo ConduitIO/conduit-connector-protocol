@@ -89,7 +89,7 @@ func SpecifierParameter(in cpluginv1.SpecifierParameter) (*connectorv1.Specifier
 }
 
 func SpecifierParameterValidations(in []cpluginv1.ParameterValidation) []*connectorv1.Specifier_Parameter_Validation {
-	out := make([]*connectorv1.Specifier_Parameter_Validation, 0)
+	out := make([]*connectorv1.Specifier_Parameter_Validation, len(in))
 	for _, v := range in {
 		out = append(out, &connectorv1.Specifier_Parameter_Validation{
 			Type:  connectorv1.Specifier_Parameter_Validation_Type(v.Type),

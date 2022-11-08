@@ -34,7 +34,8 @@ type SpecifierSpecifyResponse struct {
 }
 
 type SpecifierParameter struct {
-	Default     string
+	Default string
+	// Deprecated: Use ValidationTypeRequired instead.
 	Required    bool
 	Description string
 	Type        ParameterType
