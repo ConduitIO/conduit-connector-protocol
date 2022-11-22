@@ -241,14 +241,16 @@ message Specifier {
       TYPE_UNSPECIFIED = 0;
       // Parameter is a string.
       TYPE_STRING = 1;
-      // Parameter is a number.
-      TYPE_NUMBER = 2;
+      // Parameter is an integer.
+      TYPE_INT = 2;
+      // Parameter is a float.
+      TYPE_FLOAT = 3;
       // Parameter is a boolean.
-      TYPE_BOOL = 3;
+      TYPE_BOOL = 4;
       // Parameter is a file.
-      TYPE_FILE = 4;
+      TYPE_FILE = 5;
       // Parameter is a duration.
-      TYPE_DURATION = 5;
+      TYPE_DURATION = 6;
     }
 
     // Default is the default value of the parameter. If there is no default

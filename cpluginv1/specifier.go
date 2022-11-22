@@ -62,7 +62,8 @@ type ParameterType int
 
 const (
 	ParameterTypeString ParameterType = iota + 1
-	ParameterTypeNumber
+	ParameterTypeInt
+	ParameterTypeFloat
 	ParameterTypeBool
 	ParameterTypeFile
 	ParameterTypeDuration
