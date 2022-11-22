@@ -32,7 +32,8 @@ func _() {
 	_ = vTypes[int(cpluginv1.ValidationTypeRegex)-int(connectorv1.Specifier_Parameter_Validation_TYPE_REGEX)]
 	// parameter types
 	_ = vTypes[int(cpluginv1.ParameterTypeString)-int(connectorv1.Specifier_Parameter_TYPE_STRING)]
-	_ = vTypes[int(cpluginv1.ParameterTypeNumber)-int(connectorv1.Specifier_Parameter_TYPE_NUMBER)]
+	_ = vTypes[int(cpluginv1.ParameterTypeInt)-int(connectorv1.Specifier_Parameter_TYPE_INT)]
+	_ = vTypes[int(cpluginv1.ParameterTypeFloat)-int(connectorv1.Specifier_Parameter_TYPE_FLOAT)]
 	_ = vTypes[int(cpluginv1.ParameterTypeBool)-int(connectorv1.Specifier_Parameter_TYPE_BOOL)]
 	_ = vTypes[int(cpluginv1.ParameterTypeFile)-int(connectorv1.Specifier_Parameter_TYPE_FILE)]
 	_ = vTypes[int(cpluginv1.ParameterTypeDuration)-int(connectorv1.Specifier_Parameter_TYPE_DURATION)]
