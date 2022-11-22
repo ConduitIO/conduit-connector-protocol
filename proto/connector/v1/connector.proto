@@ -5,14 +5,18 @@ package connector.v1;
 import "google/protobuf/descriptor.proto";
 import "opencdc/v1/opencdc.proto";
 
-option (metadata_conduit_plugin_name) = "conduit.plugin.name";
-option (metadata_conduit_plugin_version) = "conduit.plugin.version";
+option (metadata_conduit_source_plugin_name) = "conduit.source.plugin.name";
+option (metadata_conduit_source_plugin_version) = "conduit.source.plugin.version";
+option (metadata_conduit_destination_plugin_name) = "conduit.destination.plugin.name";
+option (metadata_conduit_destination_plugin_version) = "conduit.destination.plugin.version";
 
 // We are (ab)using custom file options to define constants.
 // See https://github.com/protocolbuffers/protobuf/issues/3520#issuecomment-323613839
 extend google.protobuf.FileOptions {
-  string metadata_conduit_plugin_name = 20000;
-  string metadata_conduit_plugin_version = 20001;
+  string metadata_conduit_source_plugin_name = 20000;
+  string metadata_conduit_source_plugin_version = 20001;
+  string metadata_conduit_destination_plugin_name = 20002;
+  string metadata_conduit_destination_plugin_version = 20003;
 }
 
 // SourcePlugin is responsible for fetching records from 3rd party resources and
@@ -241,14 +245,16 @@ message Specifier {
       TYPE_UNSPECIFIED = 0;
       // Parameter is a string.
       TYPE_STRING = 1;
-      // Parameter is a number.
-      TYPE_NUMBER = 2;
+      // Parameter is an integer.
+      TYPE_INT = 2;
+      // Parameter is a float.
+      TYPE_FLOAT = 3;
       // Parameter is a boolean.
-      TYPE_BOOL = 3;
+      TYPE_BOOL = 4;
       // Parameter is a file.
-      TYPE_FILE = 4;
+      TYPE_FILE = 5;
       // Parameter is a duration.
-      TYPE_DURATION = 5;
+      TYPE_DURATION = 6;
     }
 
     // Default is the default value of the parameter. If there is no default
