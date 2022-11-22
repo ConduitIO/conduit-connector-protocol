@@ -35,10 +35,18 @@ const (
 	// in nanoseconds.
 	MetadataReadAt = "opencdc.readAt"
 
-	// MetadataConduitPluginName is a Record.Metadata key for the name of the
-	// plugin that created this record.
-	MetadataConduitPluginName = "conduit.plugin.name"
-	// MetadataConduitPluginVersion is a Record.Metadata key for the version of
-	// the plugin that created this record.
-	MetadataConduitPluginVersion = "conduit.plugin.version"
+	// MetadataConduitSourcePluginName is a Record.Metadata key for the name of
+	// the source plugin that created this record.
+	MetadataConduitSourcePluginName = "conduit.source.plugin.name"
+	// MetadataConduitSourcePluginVersion is a Record.Metadata key for the
+	// version of the source plugin that created this record.
+	MetadataConduitSourcePluginVersion = "conduit.source.plugin.version"
+	// MetadataConduitDestinationPluginName is a Record.Metadata key for the
+	// name of the destination plugin that has written this record
+	// (only available in records once they are written by a destination).
+	MetadataConduitDestinationPluginName = "conduit.destination.plugin.name"
+	// MetadataConduitDestinationPluginVersion is a Record.Metadata key for the
+	// version of the destination plugin that has written this record
+	// (only available in records once they are written by a destination).
+	MetadataConduitDestinationPluginVersion = "conduit.destination.plugin.version"
 )
