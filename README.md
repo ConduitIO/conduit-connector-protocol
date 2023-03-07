@@ -100,9 +100,9 @@ To switch to locally generated protobuf code follow the following steps:
 - run `cd proto && buf generate`
 - cd into the newly generated folder `internal` in the root of the project
 - create a go.mod file by
-  running `go mod init go.buf.build/grpc/go/conduitio/conduit-connector-protocol`
+  running `go mod init buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go`
 - cd into the root of the project and
-  run `go mod edit -replace go.buf.build/grpc/go/conduitio/conduit-connector-protocol=./internal`
+  run `go mod edit -replace buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go=./internal`
 
 Don't forget to revert the replace directive in the go.mod file before pushing
 your changes!
