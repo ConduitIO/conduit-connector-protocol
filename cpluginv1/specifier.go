@@ -34,7 +34,37 @@ type SpecifierSpecifyResponse struct {
 }
 
 type SpecifierParameter struct {
-	Default     string
+	Default string
+	// Deprecated: Use ValidationTypeRequired instead.
 	Required    bool
 	Description string
+	Type        ParameterType
+	Validations []ParameterValidation
 }
+
+type ParameterValidation struct {
+	Type  ValidationType
+	Value string
+}
+
+type ValidationType int
+
+const (
+	ValidationTypeRequired ValidationType = iota + 1
+	ValidationTypeGreaterThan
+	ValidationTypeLessThan
+	ValidationTypeInclusion
+	ValidationTypeExclusion
+	ValidationTypeRegex
+)
+
+type ParameterType int
+
+const (
+	ParameterTypeString ParameterType = iota + 1
+	ParameterTypeInt
+	ParameterTypeFloat
+	ParameterTypeBool
+	ParameterTypeFile
+	ParameterTypeDuration
+)

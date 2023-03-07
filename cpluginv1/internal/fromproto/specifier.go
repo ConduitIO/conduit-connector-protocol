@@ -15,56 +15,10 @@
 package fromproto
 
 import (
-	"fmt"
-
 	connectorv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/connector/v1"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
 )
 
 func SpecifierSpecifyRequest(in *connectorv1.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
 	return cpluginv1.SpecifierSpecifyRequest{}, nil
-}
-
-func SpecifierSpecifyResponse(in *connectorv1.Specifier_Specify_Response) (cpluginv1.SpecifierSpecifyResponse, error) {
-	specMap := func(in map[string]*connectorv1.Specifier_Parameter) (map[string]cpluginv1.SpecifierParameter, error) {
-		out := make(map[string]cpluginv1.SpecifierParameter, len(in))
-		var err error
-		for k, v := range in {
-			out[k], err = SpecifierParameter(v)
-			if err != nil {
-				return nil, fmt.Errorf("error converting SpecifierParameter %q: %w", k, err)
-			}
-		}
-		return out, nil
-	}
-
-	sourceParams, err := specMap(in.SourceParams)
-	if err != nil {
-		return cpluginv1.SpecifierSpecifyResponse{}, fmt.Errorf("error converting SourceSpec: %w", err)
-	}
-
-	destinationParams, err := specMap(in.DestinationParams)
-	if err != nil {
-		return cpluginv1.SpecifierSpecifyResponse{}, fmt.Errorf("error converting DestinationSpec: %w", err)
-	}
-
-	out := cpluginv1.SpecifierSpecifyResponse{
-		Name:              in.Name,
-		Summary:           in.Summary,
-		Description:       in.Description,
-		Version:           in.Version,
-		Author:            in.Author,
-		DestinationParams: destinationParams,
-		SourceParams:      sourceParams,
-	}
-	return out, nil
-}
-
-func SpecifierParameter(in *connectorv1.Specifier_Parameter) (cpluginv1.SpecifierParameter, error) {
-	out := cpluginv1.SpecifierParameter{
-		Default:     in.Default,
-		Required:    in.Required,
-		Description: in.Description,
-	}
-	return out, nil
 }
