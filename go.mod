@@ -7,7 +7,6 @@ require (
 	buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go v1.28.1-20221122161259-68f3642f66c0.4
 	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-plugin v1.4.3
-	go.buf.build/grpc/go/conduitio/conduit-connector-protocol v1.4.5
 	google.golang.org/grpc v1.53.0
 	google.golang.org/protobuf v1.28.1
 )
