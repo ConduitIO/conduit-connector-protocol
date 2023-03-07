@@ -17,18 +17,19 @@ package server
 import (
 	"context"
 
+	"buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go/connector/v1/connectorv1grpc"
 	connectorv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/connector/v1"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/toproto"
 )
 
-func NewSourcePluginServer(impl cpluginv1.SourcePlugin) connectorv1.SourcePluginServer {
+func NewSourcePluginServer(impl cpluginv1.SourcePlugin) connectorv1grpc.SourcePluginServer {
 	return &sourcePluginServer{impl: impl}
 }
 
 type sourcePluginServer struct {
-	connectorv1.UnimplementedSourcePluginServer
+	connectorv1grpc.UnimplementedSourcePluginServer
 	impl cpluginv1.SourcePlugin
 }
 
@@ -92,7 +93,7 @@ func (s *sourcePluginServer) Teardown(ctx context.Context, protoReq *connectorv1
 	}
 	return protoResp, nil
 }
-func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) error {
+func (s *sourcePluginServer) Run(stream connectorv1grpc.SourcePlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
 	if err != nil {
 		return err
@@ -101,7 +102,7 @@ func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) erro
 }
 
 type sourceRunStream struct {
-	impl connectorv1.SourcePlugin_RunServer
+	impl connectorv1grpc.SourcePlugin_RunServer
 }
 
 func (s *sourceRunStream) Send(in cpluginv1.SourceRunResponse) error {
