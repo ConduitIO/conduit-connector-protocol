@@ -12,7 +12,3 @@ plugins:
     out: ../internal
     opt:
       - paths=source_relative
-  - name: grpc-ecosystem/gateway
-    out: ../internal
-    opt:
-      - paths=source_relative
