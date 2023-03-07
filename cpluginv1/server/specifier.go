@@ -17,18 +17,19 @@ package server
 import (
 	"context"
 
+	"buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go/connector/v1/connectorv1grpc"
 	connectorv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/connector/v1"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/toproto"
 )
 
-func NewSpecifierPluginServer(impl cpluginv1.SpecifierPlugin) connectorv1.SpecifierPluginServer {
+func NewSpecifierPluginServer(impl cpluginv1.SpecifierPlugin) connectorv1grpc.SpecifierPluginServer {
 	return &specifierPluginServer{impl: impl}
 }
 
 type specifierPluginServer struct {
-	connectorv1.UnimplementedSpecifierPluginServer
+	connectorv1grpc.UnimplementedSpecifierPluginServer
 	impl cpluginv1.SpecifierPlugin
 }
 

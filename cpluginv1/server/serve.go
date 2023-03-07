@@ -15,10 +15,10 @@
 package server
 
 import (
-	connectorv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/connector/v1"
 	"context"
 	"errors"
 
+	"buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go/connector/v1/connectorv1grpc"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
@@ -110,7 +110,7 @@ func (p *GRPCSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc
 // GRPCServer registers the gRPC source plugin server with the gRPC server that
 // go-plugin is standing up.
 func (p *GRPCSourcePlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterSourcePluginServer(s, NewSourcePluginServer(p.Factory()))
+	connectorv1grpc.RegisterSourcePluginServer(s, NewSourcePluginServer(p.Factory()))
 	return nil
 }
 
@@ -134,7 +134,7 @@ func (p *GRPCDestinationPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, 
 // GRPCServer registers the gRPC destination plugin server with the gRPC server
 // that go-plugin is standing up.
 func (p *GRPCDestinationPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.Factory()))
+	connectorv1grpc.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.Factory()))
 	return nil
 }
 
@@ -158,6 +158,6 @@ func (p *GRPCSpecifierPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *g
 // GRPCServer registers the gRPC specifier plugin server with the gRPC server that
 // go-plugin is standing up.
 func (p *GRPCSpecifierPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.Factory()))
+	connectorv1grpc.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.Factory()))
 	return nil
 }
