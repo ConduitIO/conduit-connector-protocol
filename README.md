@@ -66,7 +66,8 @@ script that starts the connector. Here is an example for python:
 ```
 
 To run your connector as part of a Conduit pipeline you can create it using the
-connectors API and use the `standalone:connector-name` in the field `plugin`.
+connectors API and use the `standalone:connector-name` in the field `plugin`, where
+`connector-name` is the name of your connector as mentioned in the connector specification.
 
 Here is an example request to `POST /v1/connectors` (find more about
 the [Conduit API](https://github.com/conduitio/conduit#api)):
@@ -77,7 +78,7 @@ the [Conduit API](https://github.com/conduitio/conduit#api)):
   "plugin": "standalone:connector-name",
   "pipelineId": "...",
   "config": {
-    "name": "my-connector-1",
+    "name": "my-connector",
     "settings": {
       "my-key": "my-value"
     }
