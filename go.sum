@@ -1,7 +1,3 @@
-buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go v1.3.0-20230307130612-8c27b29b78bf.1 h1:vY5H/6yjOgJ2plLc5IADmRn109ifZrAeKXdK1QUKDXY=
-buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go v1.3.0-20230307130612-8c27b29b78bf.1/go.mod h1:0xfyF6kFl6i/2t9QvHhYmIVYogARTBB3Rz3yBot+yKw=
-buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go v1.28.1-20230307130612-8c27b29b78bf.4 h1:BZdv71cXKxA6b8mQGhWTvoZMyZlHwSHruPApN2CBxlk=
-buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go v1.28.1-20230307130612-8c27b29b78bf.4/go.mod h1:jRaNXirwyVij4ctpLbxoPvjdndVPeknM7mmhAQuZfxE=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=

@@ -3,8 +3,6 @@ module github.com/conduitio/conduit-connector-protocol
 go 1.17
 
 require (
-	buf.build/gen/go/conduitio/conduit-connector-protocol/grpc/go v1.3.0-20230307130612-8c27b29b78bf.1
-	buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go v1.28.1-20230307130612-8c27b29b78bf.4
 	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-plugin v1.4.3
 	google.golang.org/grpc v1.53.0
@@ -21,6 +19,7 @@ require (
 	github.com/mattn/go-isatty v0.0.10 // indirect
 	github.com/mitchellh/go-testing-interface v1.0.0 // indirect
 	github.com/oklog/run v1.0.0 // indirect
+	github.com/stretchr/testify v1.8.1 // indirect
 	golang.org/x/mod v0.7.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
