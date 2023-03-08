@@ -17,8 +17,8 @@ package cpluginv1
 import (
 	"testing"
 
-	connectorv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/connector/v1"
-	opencdcv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/opencdc/v1"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/gen/connector/v1"
+	opencdcv1 "github.com/conduitio/conduit-connector-protocol/proto/gen/opencdc/v1"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/runtime/protoimpl"
 )

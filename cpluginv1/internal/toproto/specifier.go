@@ -17,8 +17,8 @@ package toproto
 import (
 	"fmt"
 
-	connectorv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/connector/v1"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/gen/connector/v1"
 )
 
 func _() {

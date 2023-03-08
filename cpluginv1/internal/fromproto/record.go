@@ -18,8 +18,8 @@ import (
 	"errors"
 	"fmt"
 
-	opencdcv1 "buf.build/gen/go/conduitio/conduit-connector-protocol/protocolbuffers/go/opencdc/v1"
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
+	opencdcv1 "github.com/conduitio/conduit-connector-protocol/proto/gen/opencdc/v1"
 )
 
 func _() {
