@@ -71,7 +71,7 @@ script that starts the connector. Here is an example for python:
 #!/usr/bin/env python my-connector.py
 ```
 
-The compiled connector binary can be put in a `connectors` directory, which should
+The connector executable can be put in a `connectors` directory, which should
 be in the same directory as the Conduit binary. Here's an example:
 ```
 conduit
