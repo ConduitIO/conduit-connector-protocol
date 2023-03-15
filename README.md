@@ -99,7 +99,7 @@ about how Conduit discovers connectors.
 
 ## Development
 
-To switch generate protobuf code follow these steps run `cd proto && buf generate`.
+To generate protobuf code run `cd proto && buf generate`.
 
 ## Acknowledgments
 
