@@ -27,7 +27,7 @@ generate the protocol code yourself, this is explained in the next chapter.
 
 You can use [buf](https://buf.build/) to generate code for building a Conduit
 connector in virtually any major language. To do that you need to create
-a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#create-a-bufgenyaml)
+a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#31-create-a-bufgenyaml)
 file and configure the connectors for the language you want to use.
 
 For example here is a `buf.gen.yaml` file that is configured to generate C++ and
@@ -36,9 +36,9 @@ Java code:
 ```yaml
 version: v1
 plugins:
-  - name: cpp
+  - plugin: buf.build/protocolbuffers/go:v1.28.1
     out: gen/proto/cpp
-  - name: java
+  - plugin: buf.build/grpc/go:v1.2.0
     out: gen/proto/java
 ```
 
@@ -63,6 +63,14 @@ script that starts the connector. Here is an example for python:
 
 ```
 #!/usr/bin/env python my-connector.py
+```
+
+The compiled connector binary can be put in a `connectors` directory, which should
+be in the same directory as the Conduit binary. Here's an example:
+```
+conduit
+connectors/
+    my-connector.py
 ```
 
 To run your connector as part of a Conduit pipeline you can create it using the
