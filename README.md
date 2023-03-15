@@ -36,9 +36,15 @@ Java code:
 ```yaml
 version: v1
 plugins:
-  - plugin: buf.build/protocolbuffers/go:v1.28.1
+  # C++
+  - plugin: buf.build/grpc/cpp
     out: gen/proto/cpp
-  - plugin: buf.build/grpc/go:v1.2.0
+  - plugin: buf.build/protocolbuffers/cpp
+    out: gen/proto/cpp
+  # Java
+  - plugin: buf.build/grpc/java
+    out: gen/proto/java
+  - plugin: buf.build/protocolbuffers/java
     out: gen/proto/java
 ```
 
@@ -101,7 +107,7 @@ about how Conduit discovers connectors.
 
 To generate protobuf code run `cd proto && buf generate`.
 
-## Acknowledgments
+## Acknowledgment
 
 We took inspiration for our connector implementation from
 [hashicorp/terraform-plugin-go](https://github.com/hashicorp/terraform-plugin-go).
