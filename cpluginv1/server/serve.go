@@ -19,8 +19,8 @@ import (
 	"errors"
 
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 	"github.com/hashicorp/go-plugin"
-	connectorv1 "go.buf.build/grpc/go/conduitio/conduit-connector-protocol/connector/v1"
 	"google.golang.org/grpc"
 )
 

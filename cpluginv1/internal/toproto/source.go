@@ -16,7 +16,7 @@ package toproto
 
 import (
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
-	connectorv1 "go.buf.build/grpc/go/conduitio/conduit-connector-protocol/connector/v1"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
 
 func SourceConfigureResponse(in cpluginv1.SourceConfigureResponse) (*connectorv1.Source_Configure_Response, error) {

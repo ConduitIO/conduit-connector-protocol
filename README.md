@@ -11,8 +11,7 @@ the [Conduit](https://github.com/conduitio/conduit) connector protocol in gRPC.
 It also contains a thin Go layer that hides the gRPC implementation details
 without adding any functionality on top.
 
-This repository is the only connection point between Conduit and a connector
-connector.
+This repository is the only connection point between Conduit and a connector.
 
 ## Implementing a connector in Go
 
@@ -28,7 +27,7 @@ generate the protocol code yourself, this is explained in the next chapter.
 
 You can use [buf](https://buf.build/) to generate code for building a Conduit
 connector in virtually any major language. To do that you need to create
-a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#create-a-bufgenyaml)
+a [`buf.gen.yaml`](https://docs.buf.build/generate/usage#31-create-a-bufgenyaml)
 file and configure the connectors for the language you want to use.
 
 For example here is a `buf.gen.yaml` file that is configured to generate C++ and
@@ -37,9 +36,15 @@ Java code:
 ```yaml
 version: v1
 plugins:
-  - name: cpp
+  # C++
+  - plugin: buf.build/grpc/cpp
     out: gen/proto/cpp
-  - name: java
+  - plugin: buf.build/protocolbuffers/cpp
+    out: gen/proto/cpp
+  # Java
+  - plugin: buf.build/grpc/java
+    out: gen/proto/java
+  - plugin: buf.build/protocolbuffers/java
     out: gen/proto/java
 ```
 
@@ -66,9 +71,17 @@ script that starts the connector. Here is an example for python:
 #!/usr/bin/env python my-connector.py
 ```
 
+The connector executable can be put in a `connectors` directory, which should
+be in the same directory as the Conduit binary. Here's an example:
+```
+conduit
+connectors/
+    my-connector.py
+```
+
 To run your connector as part of a Conduit pipeline you can create it using the
-connectors API and specify the path to the compiled connector binary in the
-field `plugin`.
+connectors API and use the `standalone:connector-name` in the field `plugin`, where
+`connector-name` is the name of your connector as mentioned in the connector specification.
 
 Here is an example request to `POST /v1/connectors` (find more about
 the [Conduit API](https://github.com/conduitio/conduit#api)):
@@ -76,7 +89,7 @@ the [Conduit API](https://github.com/conduitio/conduit#api)):
 ```json
 {
   "type": "TYPE_SOURCE",
-  "plugin": "/path/to/compiled/connector/binary",
+  "plugin": "standalone:connector-name",
   "pipelineId": "...",
   "config": {
     "name": "my-connector",
@@ -87,28 +100,14 @@ the [Conduit API](https://github.com/conduitio/conduit#api)):
 }
 ```
 
-## Local development
+Click [here](https://github.com/ConduitIO/conduit/blob/main/docs/connector_discovery.md) to learn more 
+about how Conduit discovers connectors.
 
-We are
-using [buf remote generation](https://docs.buf.build/bsr/remote-generation/overview)
-of protobuf code. When developing locally we don't want to push a new version of
-the proto files every time we make a change, that's why in that case we can
-switch to locally generated protobuf code.
+## Development
 
-To switch to locally generated protobuf code follow the following steps:
+To generate protobuf code run `cd proto && buf generate`.
 
-- run `cd proto && buf generate`
-- cd into the newly generated folder `internal` in the root of the project
-- create a go.mod file by
-  running `go mod init go.buf.build/grpc/go/conduitio/conduit-connector-protocol`
-- cd into the root of the project and
-  run `go mod edit -replace go.buf.build/grpc/go/conduitio/conduit-connector-protocol=./internal`
-
-Don't forget to revert the replace directive in the go.mod file before pushing
-your changes!
-
-## Acknowledgments
+## Acknowledgment
 
 We took inspiration for our connector implementation from
-[hashicorp/terraform-plugin-go](https://github.com/hashicorp/terraform-plugin-go)
-.
+[hashicorp/terraform-plugin-go](https://github.com/hashicorp/terraform-plugin-go).

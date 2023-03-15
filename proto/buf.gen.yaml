@@ -2,13 +2,13 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: go.buf.build/grpc/go/conduitio/conduit-connector-protocol
+    default: "github.com/conduitio/conduit-connector-protocol/proto"
 plugins:
-  - name: go
-    out: ../internal
+  - plugin: buf.build/protocolbuffers/go:v1.29.0
+    out: .
     opt:
       - paths=source_relative
-  - name: go-grpc
-    out: ../internal
+  - plugin: buf.build/grpc/go:v1.3.0
+    out: .
     opt:
       - paths=source_relative
