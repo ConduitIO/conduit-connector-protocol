@@ -16,7 +16,7 @@ package fromproto
 
 import (
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
-	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/gen/connector/v1"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
 
 func DestinationConfigureRequest(in *connectorv1.Destination_Configure_Request) (cpluginv1.DestinationConfigureRequest, error) {

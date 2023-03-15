@@ -6,7 +6,7 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-plugin v1.4.3
 	google.golang.org/grpc v1.53.0
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.29.0
 )
 
 require (

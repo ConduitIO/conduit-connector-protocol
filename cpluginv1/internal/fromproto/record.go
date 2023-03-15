@@ -19,7 +19,7 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
-	opencdcv1 "github.com/conduitio/conduit-connector-protocol/proto/gen/opencdc/v1"
+	opencdcv1 "github.com/conduitio/conduit-connector-protocol/proto/opencdc/v1"
 )
 
 func _() {

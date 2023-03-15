@@ -18,7 +18,7 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
-	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/gen/connector/v1"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
 
 func _() {
