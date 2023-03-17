@@ -81,7 +81,7 @@ func SpecifierSpecifyResponse(in cpluginv1.SpecifierSpecifyResponse) (*connector
 func SpecifierParameter(in cpluginv1.SpecifierParameter) (*connectorv1.Specifier_Parameter, error) {
 	out := connectorv1.Specifier_Parameter{
 		Default:     in.Default,
-		Required:    in.Required, //nolint: staticcheck // still supported for now
+		Required:    in.Required, //nolint:staticcheck // still supported for now
 		Description: in.Description,
 		Type:        connectorv1.Specifier_Parameter_Type(in.Type),
 		Validations: SpecifierParameterValidations(in.Validations),

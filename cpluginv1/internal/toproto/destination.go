@@ -42,3 +42,13 @@ func DestinationStopResponse(in cpluginv1.DestinationStopResponse) (*connectorv1
 func DestinationTeardownResponse(in cpluginv1.DestinationTeardownResponse) (*connectorv1.Destination_Teardown_Response, error) {
 	return &connectorv1.Destination_Teardown_Response{}, nil
 }
+
+func DestinationLifecycleOnCreatedResponse(in cpluginv1.DestinationLifecycleOnCreatedResponse) (*connectorv1.Destination_Lifecycle_OnCreated_Response, error) {
+	return &connectorv1.Destination_Lifecycle_OnCreated_Response{}, nil
+}
+func DestinationLifecycleOnUpdatedResponse(in cpluginv1.DestinationLifecycleOnUpdatedResponse) (*connectorv1.Destination_Lifecycle_OnUpdated_Response, error) {
+	return &connectorv1.Destination_Lifecycle_OnUpdated_Response{}, nil
+}
+func DestinationLifecycleOnDeletedResponse(in cpluginv1.DestinationLifecycleOnDeletedResponse) (*connectorv1.Destination_Lifecycle_OnDeleted_Response, error) {
+	return &connectorv1.Destination_Lifecycle_OnDeleted_Response{}, nil
+}

@@ -51,3 +51,23 @@ func DestinationStopRequest(in *connectorv1.Destination_Stop_Request) (cpluginv1
 func DestinationTeardownRequest(in *connectorv1.Destination_Teardown_Request) (cpluginv1.DestinationTeardownRequest, error) {
 	return cpluginv1.DestinationTeardownRequest{}, nil
 }
+
+func DestinationLifecycleOnCreatedRequest(in *connectorv1.Destination_Lifecycle_OnCreated_Request) (cpluginv1.DestinationLifecycleOnCreatedRequest, error) {
+	out := cpluginv1.DestinationLifecycleOnCreatedRequest{
+		Config: in.Config,
+	}
+	return out, nil
+}
+func DestinationLifecycleOnUpdatedRequest(in *connectorv1.Destination_Lifecycle_OnUpdated_Request) (cpluginv1.DestinationLifecycleOnUpdatedRequest, error) {
+	out := cpluginv1.DestinationLifecycleOnUpdatedRequest{
+		ConfigBefore: in.ConfigBefore,
+		ConfigAfter:  in.ConfigAfter,
+	}
+	return out, nil
+}
+func DestinationLifecycleOnDeletedRequest(in *connectorv1.Destination_Lifecycle_OnDeleted_Request) (cpluginv1.DestinationLifecycleOnDeletedRequest, error) {
+	out := cpluginv1.DestinationLifecycleOnDeletedRequest{
+		Config: in.Config,
+	}
+	return out, nil
+}

@@ -50,6 +50,51 @@ func (mr *DestinationPluginMockRecorder) Configure(arg0, arg1 interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Configure", reflect.TypeOf((*DestinationPlugin)(nil).Configure), arg0, arg1)
 }
 
+// LifecycleOnCreated mocks base method.
+func (m *DestinationPlugin) LifecycleOnCreated(arg0 context.Context, arg1 cpluginv1.DestinationLifecycleOnCreatedRequest) (cpluginv1.DestinationLifecycleOnCreatedResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LifecycleOnCreated", arg0, arg1)
+	ret0, _ := ret[0].(cpluginv1.DestinationLifecycleOnCreatedResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LifecycleOnCreated indicates an expected call of LifecycleOnCreated.
+func (mr *DestinationPluginMockRecorder) LifecycleOnCreated(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LifecycleOnCreated", reflect.TypeOf((*DestinationPlugin)(nil).LifecycleOnCreated), arg0, arg1)
+}
+
+// LifecycleOnDeleted mocks base method.
+func (m *DestinationPlugin) LifecycleOnDeleted(arg0 context.Context, arg1 cpluginv1.DestinationLifecycleOnDeletedRequest) (cpluginv1.DestinationLifecycleOnDeletedResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LifecycleOnDeleted", arg0, arg1)
+	ret0, _ := ret[0].(cpluginv1.DestinationLifecycleOnDeletedResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LifecycleOnDeleted indicates an expected call of LifecycleOnDeleted.
+func (mr *DestinationPluginMockRecorder) LifecycleOnDeleted(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LifecycleOnDeleted", reflect.TypeOf((*DestinationPlugin)(nil).LifecycleOnDeleted), arg0, arg1)
+}
+
+// LifecycleOnUpdated mocks base method.
+func (m *DestinationPlugin) LifecycleOnUpdated(arg0 context.Context, arg1 cpluginv1.DestinationLifecycleOnUpdatedRequest) (cpluginv1.DestinationLifecycleOnUpdatedResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LifecycleOnUpdated", arg0, arg1)
+	ret0, _ := ret[0].(cpluginv1.DestinationLifecycleOnUpdatedResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LifecycleOnUpdated indicates an expected call of LifecycleOnUpdated.
+func (mr *DestinationPluginMockRecorder) LifecycleOnUpdated(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LifecycleOnUpdated", reflect.TypeOf((*DestinationPlugin)(nil).LifecycleOnUpdated), arg0, arg1)
+}
+
 // Run mocks base method.
 func (m *DestinationPlugin) Run(arg0 context.Context, arg1 cpluginv1.DestinationRunStream) error {
 	m.ctrl.T.Helper()
