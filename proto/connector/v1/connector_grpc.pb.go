@@ -19,11 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SourcePlugin_Configure_FullMethodName = "/connector.v1.SourcePlugin/Configure"
-	SourcePlugin_Start_FullMethodName     = "/connector.v1.SourcePlugin/Start"
-	SourcePlugin_Run_FullMethodName       = "/connector.v1.SourcePlugin/Run"
-	SourcePlugin_Stop_FullMethodName      = "/connector.v1.SourcePlugin/Stop"
-	SourcePlugin_Teardown_FullMethodName  = "/connector.v1.SourcePlugin/Teardown"
+	SourcePlugin_Configure_FullMethodName          = "/connector.v1.SourcePlugin/Configure"
+	SourcePlugin_Start_FullMethodName              = "/connector.v1.SourcePlugin/Start"
+	SourcePlugin_Run_FullMethodName                = "/connector.v1.SourcePlugin/Run"
+	SourcePlugin_Stop_FullMethodName               = "/connector.v1.SourcePlugin/Stop"
+	SourcePlugin_Teardown_FullMethodName           = "/connector.v1.SourcePlugin/Teardown"
+	SourcePlugin_LifecycleOnCreated_FullMethodName = "/connector.v1.SourcePlugin/LifecycleOnCreated"
+	SourcePlugin_LifecycleOnUpdated_FullMethodName = "/connector.v1.SourcePlugin/LifecycleOnUpdated"
+	SourcePlugin_LifecycleOnDeleted_FullMethodName = "/connector.v1.SourcePlugin/LifecycleOnDeleted"
 )
 
 // SourcePluginClient is the client API for SourcePlugin service.
@@ -62,6 +65,24 @@ type SourcePluginClient interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(ctx context.Context, in *Source_Teardown_Request, opts ...grpc.CallOption) (*Source_Teardown_Response, error)
+	// LifecycleOnCreated is called after Configure and before Start when the
+	// connector is run for the first time. This call will be skipped if a
+	// connector was already started before. This method can be used to do some
+	// initialization that needs to happen only once in the lifetime of a
+	// connector (e.g. create a replication slot). Anything that the connector
+	// creates in this method is considered to be owned by this connector and
+	// should be cleaned up in LifecycleOnDeleted.
+	LifecycleOnCreated(ctx context.Context, in *Source_Lifecycle_OnCreated_Request, opts ...grpc.CallOption) (*Source_Lifecycle_OnCreated_Response, error)
+	// LifecycleOnUpdated is called after Configure and before Start when the
+	// connector configuration has changed since the last run. This call will be
+	// skipped if the connector configuration did not change. It can be used to
+	// update anything that was initialized in LifecycleOnCreated, in case the
+	// configuration change affects it.
+	LifecycleOnUpdated(ctx context.Context, in *Source_Lifecycle_OnUpdated_Request, opts ...grpc.CallOption) (*Source_Lifecycle_OnUpdated_Response, error)
+	// LifecycleOnDeleted is called when the connector was deleted. It will be the
+	// only method that is called in that case. This method can be used to clean
+	// up anything that was initialized in LifecycleOnCreated.
+	LifecycleOnDeleted(ctx context.Context, in *Source_Lifecycle_OnDeleted_Request, opts ...grpc.CallOption) (*Source_Lifecycle_OnDeleted_Response, error)
 }
 
 type sourcePluginClient struct {
@@ -139,6 +160,33 @@ func (c *sourcePluginClient) Teardown(ctx context.Context, in *Source_Teardown_R
 	return out, nil
 }
 
+func (c *sourcePluginClient) LifecycleOnCreated(ctx context.Context, in *Source_Lifecycle_OnCreated_Request, opts ...grpc.CallOption) (*Source_Lifecycle_OnCreated_Response, error) {
+	out := new(Source_Lifecycle_OnCreated_Response)
+	err := c.cc.Invoke(ctx, SourcePlugin_LifecycleOnCreated_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sourcePluginClient) LifecycleOnUpdated(ctx context.Context, in *Source_Lifecycle_OnUpdated_Request, opts ...grpc.CallOption) (*Source_Lifecycle_OnUpdated_Response, error) {
+	out := new(Source_Lifecycle_OnUpdated_Response)
+	err := c.cc.Invoke(ctx, SourcePlugin_LifecycleOnUpdated_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sourcePluginClient) LifecycleOnDeleted(ctx context.Context, in *Source_Lifecycle_OnDeleted_Request, opts ...grpc.CallOption) (*Source_Lifecycle_OnDeleted_Response, error) {
+	out := new(Source_Lifecycle_OnDeleted_Response)
+	err := c.cc.Invoke(ctx, SourcePlugin_LifecycleOnDeleted_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SourcePluginServer is the server API for SourcePlugin service.
 // All implementations must embed UnimplementedSourcePluginServer
 // for forward compatibility
@@ -175,6 +223,24 @@ type SourcePluginServer interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(context.Context, *Source_Teardown_Request) (*Source_Teardown_Response, error)
+	// LifecycleOnCreated is called after Configure and before Start when the
+	// connector is run for the first time. This call will be skipped if a
+	// connector was already started before. This method can be used to do some
+	// initialization that needs to happen only once in the lifetime of a
+	// connector (e.g. create a replication slot). Anything that the connector
+	// creates in this method is considered to be owned by this connector and
+	// should be cleaned up in LifecycleOnDeleted.
+	LifecycleOnCreated(context.Context, *Source_Lifecycle_OnCreated_Request) (*Source_Lifecycle_OnCreated_Response, error)
+	// LifecycleOnUpdated is called after Configure and before Start when the
+	// connector configuration has changed since the last run. This call will be
+	// skipped if the connector configuration did not change. It can be used to
+	// update anything that was initialized in LifecycleOnCreated, in case the
+	// configuration change affects it.
+	LifecycleOnUpdated(context.Context, *Source_Lifecycle_OnUpdated_Request) (*Source_Lifecycle_OnUpdated_Response, error)
+	// LifecycleOnDeleted is called when the connector was deleted. It will be the
+	// only method that is called in that case. This method can be used to clean
+	// up anything that was initialized in LifecycleOnCreated.
+	LifecycleOnDeleted(context.Context, *Source_Lifecycle_OnDeleted_Request) (*Source_Lifecycle_OnDeleted_Response, error)
 	mustEmbedUnimplementedSourcePluginServer()
 }
 
@@ -196,6 +262,15 @@ func (UnimplementedSourcePluginServer) Stop(context.Context, *Source_Stop_Reques
 }
 func (UnimplementedSourcePluginServer) Teardown(context.Context, *Source_Teardown_Request) (*Source_Teardown_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Teardown not implemented")
+}
+func (UnimplementedSourcePluginServer) LifecycleOnCreated(context.Context, *Source_Lifecycle_OnCreated_Request) (*Source_Lifecycle_OnCreated_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LifecycleOnCreated not implemented")
+}
+func (UnimplementedSourcePluginServer) LifecycleOnUpdated(context.Context, *Source_Lifecycle_OnUpdated_Request) (*Source_Lifecycle_OnUpdated_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LifecycleOnUpdated not implemented")
+}
+func (UnimplementedSourcePluginServer) LifecycleOnDeleted(context.Context, *Source_Lifecycle_OnDeleted_Request) (*Source_Lifecycle_OnDeleted_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LifecycleOnDeleted not implemented")
 }
 func (UnimplementedSourcePluginServer) mustEmbedUnimplementedSourcePluginServer() {}
 
@@ -308,6 +383,60 @@ func _SourcePlugin_Teardown_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SourcePlugin_LifecycleOnCreated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Source_Lifecycle_OnCreated_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SourcePluginServer).LifecycleOnCreated(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SourcePlugin_LifecycleOnCreated_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SourcePluginServer).LifecycleOnCreated(ctx, req.(*Source_Lifecycle_OnCreated_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SourcePlugin_LifecycleOnUpdated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Source_Lifecycle_OnUpdated_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SourcePluginServer).LifecycleOnUpdated(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SourcePlugin_LifecycleOnUpdated_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SourcePluginServer).LifecycleOnUpdated(ctx, req.(*Source_Lifecycle_OnUpdated_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SourcePlugin_LifecycleOnDeleted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Source_Lifecycle_OnDeleted_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SourcePluginServer).LifecycleOnDeleted(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SourcePlugin_LifecycleOnDeleted_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SourcePluginServer).LifecycleOnDeleted(ctx, req.(*Source_Lifecycle_OnDeleted_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SourcePlugin_ServiceDesc is the grpc.ServiceDesc for SourcePlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -331,6 +460,18 @@ var SourcePlugin_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "Teardown",
 			Handler:    _SourcePlugin_Teardown_Handler,
 		},
+		{
+			MethodName: "LifecycleOnCreated",
+			Handler:    _SourcePlugin_LifecycleOnCreated_Handler,
+		},
+		{
+			MethodName: "LifecycleOnUpdated",
+			Handler:    _SourcePlugin_LifecycleOnUpdated_Handler,
+		},
+		{
+			MethodName: "LifecycleOnDeleted",
+			Handler:    _SourcePlugin_LifecycleOnDeleted_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -344,11 +485,14 @@ var SourcePlugin_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	DestinationPlugin_Configure_FullMethodName = "/connector.v1.DestinationPlugin/Configure"
-	DestinationPlugin_Start_FullMethodName     = "/connector.v1.DestinationPlugin/Start"
-	DestinationPlugin_Run_FullMethodName       = "/connector.v1.DestinationPlugin/Run"
-	DestinationPlugin_Stop_FullMethodName      = "/connector.v1.DestinationPlugin/Stop"
-	DestinationPlugin_Teardown_FullMethodName  = "/connector.v1.DestinationPlugin/Teardown"
+	DestinationPlugin_Configure_FullMethodName          = "/connector.v1.DestinationPlugin/Configure"
+	DestinationPlugin_Start_FullMethodName              = "/connector.v1.DestinationPlugin/Start"
+	DestinationPlugin_Run_FullMethodName                = "/connector.v1.DestinationPlugin/Run"
+	DestinationPlugin_Stop_FullMethodName               = "/connector.v1.DestinationPlugin/Stop"
+	DestinationPlugin_Teardown_FullMethodName           = "/connector.v1.DestinationPlugin/Teardown"
+	DestinationPlugin_LifecycleOnCreated_FullMethodName = "/connector.v1.DestinationPlugin/LifecycleOnCreated"
+	DestinationPlugin_LifecycleOnUpdated_FullMethodName = "/connector.v1.DestinationPlugin/LifecycleOnUpdated"
+	DestinationPlugin_LifecycleOnDeleted_FullMethodName = "/connector.v1.DestinationPlugin/LifecycleOnDeleted"
 )
 
 // DestinationPluginClient is the client API for DestinationPlugin service.
@@ -380,6 +524,24 @@ type DestinationPluginClient interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(ctx context.Context, in *Destination_Teardown_Request, opts ...grpc.CallOption) (*Destination_Teardown_Response, error)
+	// LifecycleOnCreated is called after Configure and before Start when the
+	// connector is run for the first time. This call will be skipped if a
+	// connector was already started before. This method can be used to do some
+	// initialization that needs to happen only once in the lifetime of a
+	// connector (e.g. create a bucket). Anything that the connector creates in
+	// this method is considered to be owned by this connector and should be
+	// cleaned up in LifecycleOnDeleted.
+	LifecycleOnCreated(ctx context.Context, in *Destination_Lifecycle_OnCreated_Request, opts ...grpc.CallOption) (*Destination_Lifecycle_OnCreated_Response, error)
+	// LifecycleOnUpdated is called after Configure and before Start when the
+	// connector configuration has changed since the last run. This call will be
+	// skipped if the connector configuration did not change. It can be used to
+	// update anything that was initialized in LifecycleOnCreated, in case the
+	// configuration change affects it.
+	LifecycleOnUpdated(ctx context.Context, in *Destination_Lifecycle_OnUpdated_Request, opts ...grpc.CallOption) (*Destination_Lifecycle_OnUpdated_Response, error)
+	// LifecycleOnDeleted is called when the connector was deleted. It will be the
+	// only method that is called in that case. This method can be used to clean
+	// up anything that was initialized in LifecycleOnCreated.
+	LifecycleOnDeleted(ctx context.Context, in *Destination_Lifecycle_OnDeleted_Request, opts ...grpc.CallOption) (*Destination_Lifecycle_OnDeleted_Response, error)
 }
 
 type destinationPluginClient struct {
@@ -457,6 +619,33 @@ func (c *destinationPluginClient) Teardown(ctx context.Context, in *Destination_
 	return out, nil
 }
 
+func (c *destinationPluginClient) LifecycleOnCreated(ctx context.Context, in *Destination_Lifecycle_OnCreated_Request, opts ...grpc.CallOption) (*Destination_Lifecycle_OnCreated_Response, error) {
+	out := new(Destination_Lifecycle_OnCreated_Response)
+	err := c.cc.Invoke(ctx, DestinationPlugin_LifecycleOnCreated_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *destinationPluginClient) LifecycleOnUpdated(ctx context.Context, in *Destination_Lifecycle_OnUpdated_Request, opts ...grpc.CallOption) (*Destination_Lifecycle_OnUpdated_Response, error) {
+	out := new(Destination_Lifecycle_OnUpdated_Response)
+	err := c.cc.Invoke(ctx, DestinationPlugin_LifecycleOnUpdated_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *destinationPluginClient) LifecycleOnDeleted(ctx context.Context, in *Destination_Lifecycle_OnDeleted_Request, opts ...grpc.CallOption) (*Destination_Lifecycle_OnDeleted_Response, error) {
+	out := new(Destination_Lifecycle_OnDeleted_Response)
+	err := c.cc.Invoke(ctx, DestinationPlugin_LifecycleOnDeleted_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DestinationPluginServer is the server API for DestinationPlugin service.
 // All implementations must embed UnimplementedDestinationPluginServer
 // for forward compatibility
@@ -486,6 +675,24 @@ type DestinationPluginServer interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(context.Context, *Destination_Teardown_Request) (*Destination_Teardown_Response, error)
+	// LifecycleOnCreated is called after Configure and before Start when the
+	// connector is run for the first time. This call will be skipped if a
+	// connector was already started before. This method can be used to do some
+	// initialization that needs to happen only once in the lifetime of a
+	// connector (e.g. create a bucket). Anything that the connector creates in
+	// this method is considered to be owned by this connector and should be
+	// cleaned up in LifecycleOnDeleted.
+	LifecycleOnCreated(context.Context, *Destination_Lifecycle_OnCreated_Request) (*Destination_Lifecycle_OnCreated_Response, error)
+	// LifecycleOnUpdated is called after Configure and before Start when the
+	// connector configuration has changed since the last run. This call will be
+	// skipped if the connector configuration did not change. It can be used to
+	// update anything that was initialized in LifecycleOnCreated, in case the
+	// configuration change affects it.
+	LifecycleOnUpdated(context.Context, *Destination_Lifecycle_OnUpdated_Request) (*Destination_Lifecycle_OnUpdated_Response, error)
+	// LifecycleOnDeleted is called when the connector was deleted. It will be the
+	// only method that is called in that case. This method can be used to clean
+	// up anything that was initialized in LifecycleOnCreated.
+	LifecycleOnDeleted(context.Context, *Destination_Lifecycle_OnDeleted_Request) (*Destination_Lifecycle_OnDeleted_Response, error)
 	mustEmbedUnimplementedDestinationPluginServer()
 }
 
@@ -507,6 +714,15 @@ func (UnimplementedDestinationPluginServer) Stop(context.Context, *Destination_S
 }
 func (UnimplementedDestinationPluginServer) Teardown(context.Context, *Destination_Teardown_Request) (*Destination_Teardown_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Teardown not implemented")
+}
+func (UnimplementedDestinationPluginServer) LifecycleOnCreated(context.Context, *Destination_Lifecycle_OnCreated_Request) (*Destination_Lifecycle_OnCreated_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LifecycleOnCreated not implemented")
+}
+func (UnimplementedDestinationPluginServer) LifecycleOnUpdated(context.Context, *Destination_Lifecycle_OnUpdated_Request) (*Destination_Lifecycle_OnUpdated_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LifecycleOnUpdated not implemented")
+}
+func (UnimplementedDestinationPluginServer) LifecycleOnDeleted(context.Context, *Destination_Lifecycle_OnDeleted_Request) (*Destination_Lifecycle_OnDeleted_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LifecycleOnDeleted not implemented")
 }
 func (UnimplementedDestinationPluginServer) mustEmbedUnimplementedDestinationPluginServer() {}
 
@@ -619,6 +835,60 @@ func _DestinationPlugin_Teardown_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DestinationPlugin_LifecycleOnCreated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Lifecycle_OnCreated_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DestinationPluginServer).LifecycleOnCreated(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DestinationPlugin_LifecycleOnCreated_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DestinationPluginServer).LifecycleOnCreated(ctx, req.(*Destination_Lifecycle_OnCreated_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DestinationPlugin_LifecycleOnUpdated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Lifecycle_OnUpdated_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DestinationPluginServer).LifecycleOnUpdated(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DestinationPlugin_LifecycleOnUpdated_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DestinationPluginServer).LifecycleOnUpdated(ctx, req.(*Destination_Lifecycle_OnUpdated_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DestinationPlugin_LifecycleOnDeleted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Lifecycle_OnDeleted_Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DestinationPluginServer).LifecycleOnDeleted(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DestinationPlugin_LifecycleOnDeleted_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DestinationPluginServer).LifecycleOnDeleted(ctx, req.(*Destination_Lifecycle_OnDeleted_Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DestinationPlugin_ServiceDesc is the grpc.ServiceDesc for DestinationPlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -641,6 +911,18 @@ var DestinationPlugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Teardown",
 			Handler:    _DestinationPlugin_Teardown_Handler,
+		},
+		{
+			MethodName: "LifecycleOnCreated",
+			Handler:    _DestinationPlugin_LifecycleOnCreated_Handler,
+		},
+		{
+			MethodName: "LifecycleOnUpdated",
+			Handler:    _DestinationPlugin_LifecycleOnUpdated_Handler,
+		},
+		{
+			MethodName: "LifecycleOnDeleted",
+			Handler:    _DestinationPlugin_LifecycleOnDeleted_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
