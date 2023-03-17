@@ -187,7 +187,7 @@ message Source {
       message Request {
         // This is the connector configuration that was also passed to
         // Configure, therefore it's already validated.
-        map<string, string> config_after = 1;
+        map<string, string> config = 1;
       }
       message Response {}
     }
@@ -208,7 +208,7 @@ message Source {
         // This is the old connector configuration that was used the last time
         // the connector was running. It was valid at that time, since it passed
         // through the Configure function.
-        map<string, string> config_before = 1;
+        map<string, string> config = 1;
       }
       message Response {}
     }
@@ -265,7 +265,7 @@ message Destination {
       message Request {
         // This is the connector configuration that was also passed to
         // Configure, therefore it's already validated.
-        map<string, string> config_after = 1;
+        map<string, string> config = 1;
       }
       message Response {}
     }
@@ -286,7 +286,7 @@ message Destination {
         // This is the old connector configuration that was used the last time
         // the connector was running. It was valid at that time, since it passed
         // through the Configure function.
-        map<string, string> config_before = 1;
+        map<string, string> config = 1;
       }
       message Response {}
     }

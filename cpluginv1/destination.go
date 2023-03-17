@@ -61,7 +61,7 @@ type DestinationTeardownRequest struct{}
 type DestinationTeardownResponse struct{}
 
 type DestinationLifecycleOnCreatedRequest struct {
-	ConfigAfter map[string]string
+	Config map[string]string
 }
 type DestinationLifecycleOnCreatedResponse struct{}
 
@@ -72,6 +72,6 @@ type DestinationLifecycleOnUpdatedRequest struct {
 type DestinationLifecycleOnUpdatedResponse struct{}
 
 type DestinationLifecycleOnDeletedRequest struct {
-	ConfigBefore map[string]string
+	Config map[string]string
 }
 type DestinationLifecycleOnDeletedResponse struct{}

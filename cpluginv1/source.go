@@ -62,7 +62,7 @@ type SourceTeardownRequest struct{}
 type SourceTeardownResponse struct{}
 
 type SourceLifecycleOnCreatedRequest struct {
-	ConfigAfter map[string]string
+	Config map[string]string
 }
 type SourceLifecycleOnCreatedResponse struct{}
 
@@ -73,6 +73,6 @@ type SourceLifecycleOnUpdatedRequest struct {
 type SourceLifecycleOnUpdatedResponse struct{}
 
 type SourceLifecycleOnDeletedRequest struct {
-	ConfigBefore map[string]string
+	Config map[string]string
 }
 type SourceLifecycleOnDeletedResponse struct{}

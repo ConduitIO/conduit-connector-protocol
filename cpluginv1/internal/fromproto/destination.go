@@ -54,7 +54,7 @@ func DestinationTeardownRequest(in *connectorv1.Destination_Teardown_Request) (c
 
 func DestinationLifecycleOnCreatedRequest(in *connectorv1.Destination_Lifecycle_OnCreated_Request) (cpluginv1.DestinationLifecycleOnCreatedRequest, error) {
 	out := cpluginv1.DestinationLifecycleOnCreatedRequest{
-		ConfigAfter: in.ConfigAfter,
+		Config: in.Config,
 	}
 	return out, nil
 }
@@ -67,7 +67,7 @@ func DestinationLifecycleOnUpdatedRequest(in *connectorv1.Destination_Lifecycle_
 }
 func DestinationLifecycleOnDeletedRequest(in *connectorv1.Destination_Lifecycle_OnDeleted_Request) (cpluginv1.DestinationLifecycleOnDeletedRequest, error) {
 	out := cpluginv1.DestinationLifecycleOnDeletedRequest{
-		ConfigBefore: in.ConfigBefore,
+		Config: in.Config,
 	}
 	return out, nil
 }

@@ -50,7 +50,7 @@ func SourceTeardownRequest(in *connectorv1.Source_Teardown_Request) (cpluginv1.S
 
 func SourceLifecycleOnCreatedRequest(in *connectorv1.Source_Lifecycle_OnCreated_Request) (cpluginv1.SourceLifecycleOnCreatedRequest, error) {
 	out := cpluginv1.SourceLifecycleOnCreatedRequest{
-		ConfigAfter: in.ConfigAfter,
+		Config: in.Config,
 	}
 	return out, nil
 }
@@ -63,7 +63,7 @@ func SourceLifecycleOnUpdatedRequest(in *connectorv1.Source_Lifecycle_OnUpdated_
 }
 func SourceLifecycleOnDeletedRequest(in *connectorv1.Source_Lifecycle_OnDeleted_Request) (cpluginv1.SourceLifecycleOnDeletedRequest, error) {
 	out := cpluginv1.SourceLifecycleOnDeletedRequest{
-		ConfigBefore: in.ConfigBefore,
+		Config: in.Config,
 	}
 	return out, nil
 }
