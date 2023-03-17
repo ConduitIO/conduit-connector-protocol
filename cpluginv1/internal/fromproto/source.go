@@ -47,3 +47,23 @@ func SourceStopRequest(in *connectorv1.Source_Stop_Request) (cpluginv1.SourceSto
 func SourceTeardownRequest(in *connectorv1.Source_Teardown_Request) (cpluginv1.SourceTeardownRequest, error) {
 	return cpluginv1.SourceTeardownRequest{}, nil
 }
+
+func SourceLifecycleOnCreatedRequest(in *connectorv1.Source_Lifecycle_OnCreated_Request) (cpluginv1.SourceLifecycleOnCreatedRequest, error) {
+	out := cpluginv1.SourceLifecycleOnCreatedRequest{
+		ConfigAfter: in.ConfigAfter,
+	}
+	return out, nil
+}
+func SourceLifecycleOnUpdatedRequest(in *connectorv1.Source_Lifecycle_OnUpdated_Request) (cpluginv1.SourceLifecycleOnUpdatedRequest, error) {
+	out := cpluginv1.SourceLifecycleOnUpdatedRequest{
+		ConfigBefore: in.ConfigBefore,
+		ConfigAfter:  in.ConfigAfter,
+	}
+	return out, nil
+}
+func SourceLifecycleOnDeletedRequest(in *connectorv1.Source_Lifecycle_OnDeleted_Request) (cpluginv1.SourceLifecycleOnDeletedRequest, error) {
+	out := cpluginv1.SourceLifecycleOnDeletedRequest{
+		ConfigBefore: in.ConfigBefore,
+	}
+	return out, nil
+}

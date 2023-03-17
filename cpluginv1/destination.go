@@ -26,6 +26,10 @@ type DestinationPlugin interface {
 	Run(context.Context, DestinationRunStream) error
 	Stop(context.Context, DestinationStopRequest) (DestinationStopResponse, error)
 	Teardown(context.Context, DestinationTeardownRequest) (DestinationTeardownResponse, error)
+
+	LifecycleOnCreated(context.Context, DestinationLifecycleOnCreatedRequest) (DestinationLifecycleOnCreatedResponse, error)
+	LifecycleOnUpdated(context.Context, DestinationLifecycleOnUpdatedRequest) (DestinationLifecycleOnUpdatedResponse, error)
+	LifecycleOnDeleted(context.Context, DestinationLifecycleOnDeletedRequest) (DestinationLifecycleOnDeletedResponse, error)
 }
 
 type DestinationConfigureRequest struct {
@@ -55,3 +59,19 @@ type DestinationStopResponse struct{}
 
 type DestinationTeardownRequest struct{}
 type DestinationTeardownResponse struct{}
+
+type DestinationLifecycleOnCreatedRequest struct {
+	ConfigAfter map[string]string
+}
+type DestinationLifecycleOnCreatedResponse struct{}
+
+type DestinationLifecycleOnUpdatedRequest struct {
+	ConfigBefore map[string]string
+	ConfigAfter  map[string]string
+}
+type DestinationLifecycleOnUpdatedResponse struct{}
+
+type DestinationLifecycleOnDeletedRequest struct {
+	ConfigBefore map[string]string
+}
+type DestinationLifecycleOnDeletedResponse struct{}

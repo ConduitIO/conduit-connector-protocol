@@ -26,6 +26,10 @@ type SourcePlugin interface {
 	Run(context.Context, SourceRunStream) error
 	Stop(context.Context, SourceStopRequest) (SourceStopResponse, error)
 	Teardown(context.Context, SourceTeardownRequest) (SourceTeardownResponse, error)
+
+	LifecycleOnCreated(context.Context, SourceLifecycleOnCreatedRequest) (SourceLifecycleOnCreatedResponse, error)
+	LifecycleOnUpdated(context.Context, SourceLifecycleOnUpdatedRequest) (SourceLifecycleOnUpdatedResponse, error)
+	LifecycleOnDeleted(context.Context, SourceLifecycleOnDeletedRequest) (SourceLifecycleOnDeletedResponse, error)
 }
 
 type SourceConfigureRequest struct {
@@ -56,3 +60,19 @@ type SourceStopResponse struct {
 
 type SourceTeardownRequest struct{}
 type SourceTeardownResponse struct{}
+
+type SourceLifecycleOnCreatedRequest struct {
+	ConfigAfter map[string]string
+}
+type SourceLifecycleOnCreatedResponse struct{}
+
+type SourceLifecycleOnUpdatedRequest struct {
+	ConfigBefore map[string]string
+	ConfigAfter  map[string]string
+}
+type SourceLifecycleOnUpdatedResponse struct{}
+
+type SourceLifecycleOnDeletedRequest struct {
+	ConfigBefore map[string]string
+}
+type SourceLifecycleOnDeletedResponse struct{}

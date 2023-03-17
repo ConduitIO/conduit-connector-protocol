@@ -62,6 +62,13 @@ func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connector
 	}
 	return protoResp, nil
 }
+func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunServer) error {
+	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv1.Destination_Stop_Request) (*connectorv1.Destination_Stop_Response, error) {
 	goReq, err := fromproto.DestinationStopRequest(protoReq)
 	if err != nil {
@@ -92,12 +99,50 @@ func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connec
 	}
 	return protoResp, nil
 }
-func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunServer) error {
-	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
+func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnCreated_Request) (*connectorv1.Destination_Lifecycle_OnCreated_Response, error) {
+	goReq, err := fromproto.DestinationLifecycleOnCreatedRequest(protoReq)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	goResp, err := s.impl.LifecycleOnCreated(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.DestinationLifecycleOnCreatedResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
+}
+func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnUpdated_Request) (*connectorv1.Destination_Lifecycle_OnUpdated_Response, error) {
+	goReq, err := fromproto.DestinationLifecycleOnUpdatedRequest(protoReq)
+	if err != nil {
+		return nil, err
+	}
+	goResp, err := s.impl.LifecycleOnUpdated(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.DestinationLifecycleOnUpdatedResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
+}
+func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnDeleted_Request) (*connectorv1.Destination_Lifecycle_OnDeleted_Response, error) {
+	goReq, err := fromproto.DestinationLifecycleOnDeletedRequest(protoReq)
+	if err != nil {
+		return nil, err
+	}
+	goResp, err := s.impl.LifecycleOnDeleted(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.DestinationLifecycleOnDeletedResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
 }
 
 type destinationRunStream struct {

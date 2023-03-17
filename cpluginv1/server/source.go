@@ -62,6 +62,13 @@ func (s *sourcePluginServer) Start(ctx context.Context, protoReq *connectorv1.So
 	}
 	return protoResp, nil
 }
+func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) error {
+	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func (s *sourcePluginServer) Stop(ctx context.Context, protoReq *connectorv1.Source_Stop_Request) (*connectorv1.Source_Stop_Response, error) {
 	goReq, err := fromproto.SourceStopRequest(protoReq)
 	if err != nil {
@@ -92,12 +99,50 @@ func (s *sourcePluginServer) Teardown(ctx context.Context, protoReq *connectorv1
 	}
 	return protoResp, nil
 }
-func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) error {
-	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
+func (s *sourcePluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv1.Source_Lifecycle_OnCreated_Request) (*connectorv1.Source_Lifecycle_OnCreated_Response, error) {
+	goReq, err := fromproto.SourceLifecycleOnCreatedRequest(protoReq)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	goResp, err := s.impl.LifecycleOnCreated(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.SourceLifecycleOnCreatedResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
+}
+func (s *sourcePluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv1.Source_Lifecycle_OnUpdated_Request) (*connectorv1.Source_Lifecycle_OnUpdated_Response, error) {
+	goReq, err := fromproto.SourceLifecycleOnUpdatedRequest(protoReq)
+	if err != nil {
+		return nil, err
+	}
+	goResp, err := s.impl.LifecycleOnUpdated(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.SourceLifecycleOnUpdatedResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
+}
+func (s *sourcePluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv1.Source_Lifecycle_OnDeleted_Request) (*connectorv1.Source_Lifecycle_OnDeleted_Response, error) {
+	goReq, err := fromproto.SourceLifecycleOnDeletedRequest(protoReq)
+	if err != nil {
+		return nil, err
+	}
+	goResp, err := s.impl.LifecycleOnDeleted(ctx, goReq)
+	if err != nil {
+		return nil, err
+	}
+	protoResp, err := toproto.SourceLifecycleOnDeletedResponse(goResp)
+	if err != nil {
+		return nil, err
+	}
+	return protoResp, nil
 }
 
 type sourceRunStream struct {

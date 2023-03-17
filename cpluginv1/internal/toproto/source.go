@@ -49,3 +49,13 @@ func SourceStopResponse(in cpluginv1.SourceStopResponse) (*connectorv1.Source_St
 func SourceTeardownResponse(in cpluginv1.SourceTeardownResponse) (*connectorv1.Source_Teardown_Response, error) {
 	return &connectorv1.Source_Teardown_Response{}, nil
 }
+
+func SourceLifecycleOnCreatedResponse(in cpluginv1.SourceLifecycleOnCreatedResponse) (*connectorv1.Source_Lifecycle_OnCreated_Response, error) {
+	return &connectorv1.Source_Lifecycle_OnCreated_Response{}, nil
+}
+func SourceLifecycleOnUpdatedResponse(in cpluginv1.SourceLifecycleOnUpdatedResponse) (*connectorv1.Source_Lifecycle_OnUpdated_Response, error) {
+	return &connectorv1.Source_Lifecycle_OnUpdated_Response{}, nil
+}
+func SourceLifecycleOnDeletedResponse(in cpluginv1.SourceLifecycleOnDeletedResponse) (*connectorv1.Source_Lifecycle_OnDeleted_Response, error) {
+	return &connectorv1.Source_Lifecycle_OnDeleted_Response{}, nil
+}
