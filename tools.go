@@ -17,5 +17,5 @@
 package main
 
 import (
-	_ "github.com/golang/mock/mockgen"
+	_ "go.uber.org/mock/mockgen"
 )

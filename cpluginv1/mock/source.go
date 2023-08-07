@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	cpluginv1 "github.com/conduitio/conduit-connector-protocol/cpluginv1"
-	gomock "github.com/golang/mock/gomock"
+	gomock "go.uber.org/mock/gomock"
 )
 
 // SourcePlugin is a mock of SourcePlugin interface.

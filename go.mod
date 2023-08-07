@@ -3,8 +3,8 @@ module github.com/conduitio/conduit-connector-protocol
 go 1.20
 
 require (
-	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-plugin v1.4.3
+	go.uber.org/mock v0.2.0
 	google.golang.org/grpc v1.53.0
 	google.golang.org/protobuf v1.29.1
 )
