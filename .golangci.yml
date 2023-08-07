@@ -1,4 +1,10 @@
 linters-settings:
+  depguard:
+    rules:
+      main:
+        deny:
+          - pkg: github.com/golang/mock
+            desc: github.com/golang/mock is deprecated, use go.uber.org/mock instead
   gofmt:
     simplify: false
   govet:
@@ -23,7 +29,7 @@ linters:
   disable-all: true
   enable:
     - bodyclose
-    # - depguard
+    - depguard
     - dogsled
     - durationcheck
     - errcheck

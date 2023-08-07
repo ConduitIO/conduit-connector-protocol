@@ -19,11 +19,11 @@ import (
 	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
 
-func SourceConfigureResponse(in cpluginv1.SourceConfigureResponse) (*connectorv1.Source_Configure_Response, error) {
+func SourceConfigureResponse(_ cpluginv1.SourceConfigureResponse) (*connectorv1.Source_Configure_Response, error) {
 	return &connectorv1.Source_Configure_Response{}, nil
 }
 
-func SourceStartResponse(in cpluginv1.SourceStartResponse) (*connectorv1.Source_Start_Response, error) {
+func SourceStartResponse(_ cpluginv1.SourceStartResponse) (*connectorv1.Source_Start_Response, error) {
 	return &connectorv1.Source_Start_Response{}, nil
 }
 
@@ -46,16 +46,16 @@ func SourceStopResponse(in cpluginv1.SourceStopResponse) (*connectorv1.Source_St
 	return &out, nil
 }
 
-func SourceTeardownResponse(in cpluginv1.SourceTeardownResponse) (*connectorv1.Source_Teardown_Response, error) {
+func SourceTeardownResponse(_ cpluginv1.SourceTeardownResponse) (*connectorv1.Source_Teardown_Response, error) {
 	return &connectorv1.Source_Teardown_Response{}, nil
 }
 
-func SourceLifecycleOnCreatedResponse(in cpluginv1.SourceLifecycleOnCreatedResponse) (*connectorv1.Source_Lifecycle_OnCreated_Response, error) {
+func SourceLifecycleOnCreatedResponse(_ cpluginv1.SourceLifecycleOnCreatedResponse) (*connectorv1.Source_Lifecycle_OnCreated_Response, error) {
 	return &connectorv1.Source_Lifecycle_OnCreated_Response{}, nil
 }
-func SourceLifecycleOnUpdatedResponse(in cpluginv1.SourceLifecycleOnUpdatedResponse) (*connectorv1.Source_Lifecycle_OnUpdated_Response, error) {
+func SourceLifecycleOnUpdatedResponse(_ cpluginv1.SourceLifecycleOnUpdatedResponse) (*connectorv1.Source_Lifecycle_OnUpdated_Response, error) {
 	return &connectorv1.Source_Lifecycle_OnUpdated_Response{}, nil
 }
-func SourceLifecycleOnDeletedResponse(in cpluginv1.SourceLifecycleOnDeletedResponse) (*connectorv1.Source_Lifecycle_OnDeleted_Response, error) {
+func SourceLifecycleOnDeletedResponse(_ cpluginv1.SourceLifecycleOnDeletedResponse) (*connectorv1.Source_Lifecycle_OnDeleted_Response, error) {
 	return &connectorv1.Source_Lifecycle_OnDeleted_Response{}, nil
 }

@@ -26,7 +26,7 @@ func DestinationConfigureRequest(in *connectorv1.Destination_Configure_Request) 
 	return out, nil
 }
 
-func DestinationStartRequest(in *connectorv1.Destination_Start_Request) (cpluginv1.DestinationStartRequest, error) {
+func DestinationStartRequest(_ *connectorv1.Destination_Start_Request) (cpluginv1.DestinationStartRequest, error) {
 	return cpluginv1.DestinationStartRequest{}, nil
 }
 
@@ -48,7 +48,7 @@ func DestinationStopRequest(in *connectorv1.Destination_Stop_Request) (cpluginv1
 	return out, nil
 }
 
-func DestinationTeardownRequest(in *connectorv1.Destination_Teardown_Request) (cpluginv1.DestinationTeardownRequest, error) {
+func DestinationTeardownRequest(_ *connectorv1.Destination_Teardown_Request) (cpluginv1.DestinationTeardownRequest, error) {
 	return cpluginv1.DestinationTeardownRequest{}, nil
 }
 

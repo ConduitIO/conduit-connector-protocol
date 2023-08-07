@@ -19,11 +19,11 @@ import (
 	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
 
-func DestinationConfigureResponse(in cpluginv1.DestinationConfigureResponse) (*connectorv1.Destination_Configure_Response, error) {
+func DestinationConfigureResponse(_ cpluginv1.DestinationConfigureResponse) (*connectorv1.Destination_Configure_Response, error) {
 	return &connectorv1.Destination_Configure_Response{}, nil
 }
 
-func DestinationStartResponse(in cpluginv1.DestinationStartResponse) (*connectorv1.Destination_Start_Response, error) {
+func DestinationStartResponse(_ cpluginv1.DestinationStartResponse) (*connectorv1.Destination_Start_Response, error) {
 	return &connectorv1.Destination_Start_Response{}, nil
 }
 
@@ -35,20 +35,20 @@ func DestinationRunResponse(in cpluginv1.DestinationRunResponse) (*connectorv1.D
 	return &out, nil
 }
 
-func DestinationStopResponse(in cpluginv1.DestinationStopResponse) (*connectorv1.Destination_Stop_Response, error) {
+func DestinationStopResponse(_ cpluginv1.DestinationStopResponse) (*connectorv1.Destination_Stop_Response, error) {
 	return &connectorv1.Destination_Stop_Response{}, nil
 }
 
-func DestinationTeardownResponse(in cpluginv1.DestinationTeardownResponse) (*connectorv1.Destination_Teardown_Response, error) {
+func DestinationTeardownResponse(_ cpluginv1.DestinationTeardownResponse) (*connectorv1.Destination_Teardown_Response, error) {
 	return &connectorv1.Destination_Teardown_Response{}, nil
 }
 
-func DestinationLifecycleOnCreatedResponse(in cpluginv1.DestinationLifecycleOnCreatedResponse) (*connectorv1.Destination_Lifecycle_OnCreated_Response, error) {
+func DestinationLifecycleOnCreatedResponse(_ cpluginv1.DestinationLifecycleOnCreatedResponse) (*connectorv1.Destination_Lifecycle_OnCreated_Response, error) {
 	return &connectorv1.Destination_Lifecycle_OnCreated_Response{}, nil
 }
-func DestinationLifecycleOnUpdatedResponse(in cpluginv1.DestinationLifecycleOnUpdatedResponse) (*connectorv1.Destination_Lifecycle_OnUpdated_Response, error) {
+func DestinationLifecycleOnUpdatedResponse(_ cpluginv1.DestinationLifecycleOnUpdatedResponse) (*connectorv1.Destination_Lifecycle_OnUpdated_Response, error) {
 	return &connectorv1.Destination_Lifecycle_OnUpdated_Response{}, nil
 }
-func DestinationLifecycleOnDeletedResponse(in cpluginv1.DestinationLifecycleOnDeletedResponse) (*connectorv1.Destination_Lifecycle_OnDeleted_Response, error) {
+func DestinationLifecycleOnDeletedResponse(_ cpluginv1.DestinationLifecycleOnDeletedResponse) (*connectorv1.Destination_Lifecycle_OnDeleted_Response, error) {
 	return &connectorv1.Destination_Lifecycle_OnDeleted_Response{}, nil
 }
