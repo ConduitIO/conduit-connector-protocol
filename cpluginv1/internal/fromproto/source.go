@@ -40,11 +40,11 @@ func SourceRunRequest(in *connectorv1.Source_Run_Request) (cpluginv1.SourceRunRe
 	return out, nil
 }
 
-func SourceStopRequest(in *connectorv1.Source_Stop_Request) (cpluginv1.SourceStopRequest, error) {
+func SourceStopRequest(_ *connectorv1.Source_Stop_Request) (cpluginv1.SourceStopRequest, error) {
 	return cpluginv1.SourceStopRequest{}, nil
 }
 
-func SourceTeardownRequest(in *connectorv1.Source_Teardown_Request) (cpluginv1.SourceTeardownRequest, error) {
+func SourceTeardownRequest(_ *connectorv1.Source_Teardown_Request) (cpluginv1.SourceTeardownRequest, error) {
 	return cpluginv1.SourceTeardownRequest{}, nil
 }
 

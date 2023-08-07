@@ -39,7 +39,7 @@ func _() {
 	_ = vTypes[int(cpluginv1.ParameterTypeDuration)-int(connectorv1.Specifier_Parameter_TYPE_DURATION)]
 }
 
-func SpecifierSpecifyRequest(in cpluginv1.SpecifierSpecifyRequest) (*connectorv1.Specifier_Specify_Request, error) {
+func SpecifierSpecifyRequest(_ cpluginv1.SpecifierSpecifyRequest) (*connectorv1.Specifier_Specify_Request, error) {
 	return &connectorv1.Specifier_Specify_Request{}, nil
 }
 
