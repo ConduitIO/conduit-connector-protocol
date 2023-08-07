@@ -17,5 +17,6 @@
 package main
 
 import (
+	_ "github.com/bufbuild/buf/cmd/buf"
 	_ "go.uber.org/mock/mockgen"
 )
