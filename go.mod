@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/bufbuild/buf v1.26.1
-	github.com/hashicorp/go-plugin v1.4.10
+	github.com/hashicorp/go-plugin v1.5.0
 	go.uber.org/mock v0.2.0
 	google.golang.org/grpc v1.57.0
 	google.golang.org/protobuf v1.31.0
