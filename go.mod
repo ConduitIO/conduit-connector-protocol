@@ -3,7 +3,7 @@ module github.com/conduitio/conduit-connector-protocol
 go 1.20
 
 require (
-	github.com/bufbuild/buf v1.27.1
+	github.com/bufbuild/buf v1.27.2
 	github.com/hashicorp/go-plugin v1.5.2
 	go.uber.org/mock v0.3.0
 	google.golang.org/grpc v1.59.0
@@ -39,7 +39,7 @@ require (
 	github.com/hashicorp/yamux v0.1.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jdx/go-netrc v1.0.0 // indirect
-	github.com/klauspost/compress v1.17.1 // indirect
+	github.com/klauspost/compress v1.17.2 // indirect
 	github.com/klauspost/pgzip v1.2.6 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
