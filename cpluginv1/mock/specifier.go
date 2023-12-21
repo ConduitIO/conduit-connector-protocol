@@ -5,6 +5,7 @@
 //
 //	mockgen -destination=mock/specifier.go -package=mock -mock_names=SpecifierPlugin=SpecifierPlugin . SpecifierPlugin
 //
+
 // Package mock is a generated GoMock package.
 package mock
 
