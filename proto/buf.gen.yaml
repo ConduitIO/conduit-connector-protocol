@@ -3,8 +3,10 @@ managed:
   enabled: true
   go_package_prefix:
     default: "github.com/conduitio/conduit-connector-protocol/proto"
+    except:
+      - buf.build/conduitio/conduit-commons
 plugins:
-  - plugin: buf.build/protocolbuffers/go:v1.29.1
+  - plugin: buf.build/protocolbuffers/go:v1.32.0
     out: .
     opt:
       - paths=source_relative
