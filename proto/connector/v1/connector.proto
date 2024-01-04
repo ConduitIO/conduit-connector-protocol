@@ -5,6 +5,8 @@ package connector.v1;
 import "google/protobuf/descriptor.proto";
 import "opencdc/v1/opencdc.proto";
 
+option go_package = "github.com/conduitio/conduit-connector-protocol/proto/connector/v1";
+
 option (metadata_conduit_destination_plugin_name) = "conduit.destination.plugin.name";
 option (metadata_conduit_destination_plugin_version) = "conduit.destination.plugin.version";
 option (metadata_conduit_source_plugin_name) = "conduit.source.plugin.name";

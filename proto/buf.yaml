@@ -1,5 +1,7 @@
 version: v1
 name: buf.build/conduitio/conduit-connector-protocol
+deps:
+  - buf.build/conduitio/conduit-commons
 lint:
   service_suffix: Plugin
   use:
