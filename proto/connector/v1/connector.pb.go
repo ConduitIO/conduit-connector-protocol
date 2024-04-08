@@ -10,7 +10,7 @@ import (
 	v1 "github.com/conduitio/conduit-commons/proto/opencdc/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	descriptorpb "google.golang.org/protobuf/types/descriptorpb"
+	_ "google.golang.org/protobuf/types/descriptorpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -2706,53 +2706,6 @@ func (x *Specifier_Parameter_Validation) GetValue() string {
 	return ""
 }
 
-var file_connector_v1_connector_proto_extTypes = []protoimpl.ExtensionInfo{
-	{
-		ExtendedType:  (*descriptorpb.FileOptions)(nil),
-		ExtensionType: (*string)(nil),
-		Field:         20000,
-		Name:          "connector.v1.metadata_conduit_source_plugin_name",
-		Tag:           "bytes,20000,opt,name=metadata_conduit_source_plugin_name",
-		Filename:      "connector/v1/connector.proto",
-	},
-	{
-		ExtendedType:  (*descriptorpb.FileOptions)(nil),
-		ExtensionType: (*string)(nil),
-		Field:         20001,
-		Name:          "connector.v1.metadata_conduit_source_plugin_version",
-		Tag:           "bytes,20001,opt,name=metadata_conduit_source_plugin_version",
-		Filename:      "connector/v1/connector.proto",
-	},
-	{
-		ExtendedType:  (*descriptorpb.FileOptions)(nil),
-		ExtensionType: (*string)(nil),
-		Field:         20002,
-		Name:          "connector.v1.metadata_conduit_destination_plugin_name",
-		Tag:           "bytes,20002,opt,name=metadata_conduit_destination_plugin_name",
-		Filename:      "connector/v1/connector.proto",
-	},
-	{
-		ExtendedType:  (*descriptorpb.FileOptions)(nil),
-		ExtensionType: (*string)(nil),
-		Field:         20003,
-		Name:          "connector.v1.metadata_conduit_destination_plugin_version",
-		Tag:           "bytes,20003,opt,name=metadata_conduit_destination_plugin_version",
-		Filename:      "connector/v1/connector.proto",
-	},
-}
-
-// Extension fields to descriptorpb.FileOptions.
-var (
-	// optional string metadata_conduit_source_plugin_name = 20000;
-	E_MetadataConduitSourcePluginName = &file_connector_v1_connector_proto_extTypes[0]
-	// optional string metadata_conduit_source_plugin_version = 20001;
-	E_MetadataConduitSourcePluginVersion = &file_connector_v1_connector_proto_extTypes[1]
-	// optional string metadata_conduit_destination_plugin_name = 20002;
-	E_MetadataConduitDestinationPluginName = &file_connector_v1_connector_proto_extTypes[2]
-	// optional string metadata_conduit_destination_plugin_version = 20003;
-	E_MetadataConduitDestinationPluginVersion = &file_connector_v1_connector_proto_extTypes[3]
-)
-
 var File_connector_v1_connector_proto protoreflect.FileDescriptor
 
 var file_connector_v1_connector_proto_rawDesc = []byte{
@@ -3105,45 +3058,7 @@ var file_connector_v1_connector_proto_rawDesc = []byte{
 	0x69, 0x65, 0x72, 0x2e, 0x53, 0x70, 0x65, 0x63, 0x69, 0x66, 0x79, 0x2e, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x2e,
 	0x76, 0x31, 0x2e, 0x53, 0x70, 0x65, 0x63, 0x69, 0x66, 0x69, 0x65, 0x72, 0x2e, 0x53, 0x70, 0x65,
-	0x63, 0x69, 0x66, 0x79, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x3a, 0x6c, 0x0a,
-	0x23, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x5f, 0x63, 0x6f, 0x6e, 0x64, 0x75, 0x69,
-	0x74, 0x5f, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x5f,
-	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6f,
-	0x6e, 0x73, 0x18, 0xa0, 0x9c, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x1f, 0x6d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0x43, 0x6f, 0x6e, 0x64, 0x75, 0x69, 0x74, 0x53, 0x6f, 0x75, 0x72, 0x63,
-	0x65, 0x50, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x3a, 0x72, 0x0a, 0x26, 0x6d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x5f, 0x63, 0x6f, 0x6e, 0x64, 0x75, 0x69, 0x74, 0x5f,
-	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x5f, 0x76, 0x65,
-	0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x4f, 0x70, 0x74, 0x69,
-	0x6f, 0x6e, 0x73, 0x18, 0xa1, 0x9c, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x22, 0x6d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0x43, 0x6f, 0x6e, 0x64, 0x75, 0x69, 0x74, 0x53, 0x6f, 0x75, 0x72,
-	0x63, 0x65, 0x50, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x3a,
-	0x76, 0x0a, 0x28, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x5f, 0x63, 0x6f, 0x6e, 0x64,
-	0x75, 0x69, 0x74, 0x5f, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
-	0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x2e, 0x67, 0x6f,
-	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x46, 0x69,
-	0x6c, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0xa2, 0x9c, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x24, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x43, 0x6f, 0x6e, 0x64, 0x75,
-	0x69, 0x74, 0x44, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x50, 0x6c, 0x75,
-	0x67, 0x69, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x3a, 0x7c, 0x0a, 0x2b, 0x6d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x5f, 0x63, 0x6f, 0x6e, 0x64, 0x75, 0x69, 0x74, 0x5f, 0x64, 0x65, 0x73, 0x74,
-	0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x5f, 0x76,
-	0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x4f, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x73, 0x18, 0xa3, 0x9c, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x27, 0x6d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x43, 0x6f, 0x6e, 0x64, 0x75, 0x69, 0x74, 0x44, 0x65, 0x73,
-	0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x50, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x56, 0x65,
-	0x72, 0x73, 0x69, 0x6f, 0x6e, 0x42, 0xcb, 0x02, 0x82, 0xe2, 0x09, 0x1a, 0x63, 0x6f, 0x6e, 0x64,
-	0x75, 0x69, 0x74, 0x2e, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x2e, 0x70, 0x6c, 0x75, 0x67, 0x69,
-	0x6e, 0x2e, 0x6e, 0x61, 0x6d, 0x65, 0x8a, 0xe2, 0x09, 0x1d, 0x63, 0x6f, 0x6e, 0x64, 0x75, 0x69,
-	0x74, 0x2e, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x2e, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x2e,
-	0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x92, 0xe2, 0x09, 0x1f, 0x63, 0x6f, 0x6e, 0x64, 0x75,
-	0x69, 0x74, 0x2e, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70,
-	0x6c, 0x75, 0x67, 0x69, 0x6e, 0x2e, 0x6e, 0x61, 0x6d, 0x65, 0x9a, 0xe2, 0x09, 0x22, 0x63, 0x6f,
-	0x6e, 0x64, 0x75, 0x69, 0x74, 0x2e, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x2e, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x2e, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e,
+	0x63, 0x69, 0x66, 0x79, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xc3, 0x01,
 	0x0a, 0x10, 0x63, 0x6f, 0x6d, 0x2e, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x2e,
 	0x76, 0x31, 0x42, 0x0e, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x50, 0x72, 0x6f,
 	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x4e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
@@ -3247,7 +3162,6 @@ var file_connector_v1_connector_proto_goTypes = []interface{}{
 	nil,                                    // 70: connector.v1.Specifier.Specify.Response.SourceParamsEntry
 	(*Specifier_Parameter_Validation)(nil), // 71: connector.v1.Specifier.Parameter.Validation
 	(*v1.Record)(nil),                      // 72: opencdc.v1.Record
-	(*descriptorpb.FileOptions)(nil),       // 73: google.protobuf.FileOptions
 }
 var file_connector_v1_connector_proto_depIdxs = []int32{
 	13, // 0: connector.v1.Source.Configure.Request.config:type_name -> connector.v1.Source.Configure.Request.ConfigEntry
@@ -3269,48 +3183,44 @@ var file_connector_v1_connector_proto_depIdxs = []int32{
 	66, // 16: connector.v1.Specifier.Specify.Response.DestinationParamsEntry.value:type_name -> connector.v1.Specifier.Parameter
 	66, // 17: connector.v1.Specifier.Specify.Response.SourceParamsEntry.value:type_name -> connector.v1.Specifier.Parameter
 	1,  // 18: connector.v1.Specifier.Parameter.Validation.type:type_name -> connector.v1.Specifier.Parameter.Validation.Type
-	73, // 19: connector.v1.metadata_conduit_source_plugin_name:extendee -> google.protobuf.FileOptions
-	73, // 20: connector.v1.metadata_conduit_source_plugin_version:extendee -> google.protobuf.FileOptions
-	73, // 21: connector.v1.metadata_conduit_destination_plugin_name:extendee -> google.protobuf.FileOptions
-	73, // 22: connector.v1.metadata_conduit_destination_plugin_version:extendee -> google.protobuf.FileOptions
-	11, // 23: connector.v1.SourcePlugin.Configure:input_type -> connector.v1.Source.Configure.Request
-	14, // 24: connector.v1.SourcePlugin.Start:input_type -> connector.v1.Source.Start.Request
-	16, // 25: connector.v1.SourcePlugin.Run:input_type -> connector.v1.Source.Run.Request
-	18, // 26: connector.v1.SourcePlugin.Stop:input_type -> connector.v1.Source.Stop.Request
-	20, // 27: connector.v1.SourcePlugin.Teardown:input_type -> connector.v1.Source.Teardown.Request
-	25, // 28: connector.v1.SourcePlugin.LifecycleOnCreated:input_type -> connector.v1.Source.Lifecycle.OnCreated.Request
-	28, // 29: connector.v1.SourcePlugin.LifecycleOnUpdated:input_type -> connector.v1.Source.Lifecycle.OnUpdated.Request
-	32, // 30: connector.v1.SourcePlugin.LifecycleOnDeleted:input_type -> connector.v1.Source.Lifecycle.OnDeleted.Request
-	41, // 31: connector.v1.DestinationPlugin.Configure:input_type -> connector.v1.Destination.Configure.Request
-	44, // 32: connector.v1.DestinationPlugin.Start:input_type -> connector.v1.Destination.Start.Request
-	46, // 33: connector.v1.DestinationPlugin.Run:input_type -> connector.v1.Destination.Run.Request
-	48, // 34: connector.v1.DestinationPlugin.Stop:input_type -> connector.v1.Destination.Stop.Request
-	50, // 35: connector.v1.DestinationPlugin.Teardown:input_type -> connector.v1.Destination.Teardown.Request
-	55, // 36: connector.v1.DestinationPlugin.LifecycleOnCreated:input_type -> connector.v1.Destination.Lifecycle.OnCreated.Request
-	58, // 37: connector.v1.DestinationPlugin.LifecycleOnUpdated:input_type -> connector.v1.Destination.Lifecycle.OnUpdated.Request
-	62, // 38: connector.v1.DestinationPlugin.LifecycleOnDeleted:input_type -> connector.v1.Destination.Lifecycle.OnDeleted.Request
-	67, // 39: connector.v1.SpecifierPlugin.Specify:input_type -> connector.v1.Specifier.Specify.Request
-	12, // 40: connector.v1.SourcePlugin.Configure:output_type -> connector.v1.Source.Configure.Response
-	15, // 41: connector.v1.SourcePlugin.Start:output_type -> connector.v1.Source.Start.Response
-	17, // 42: connector.v1.SourcePlugin.Run:output_type -> connector.v1.Source.Run.Response
-	19, // 43: connector.v1.SourcePlugin.Stop:output_type -> connector.v1.Source.Stop.Response
-	21, // 44: connector.v1.SourcePlugin.Teardown:output_type -> connector.v1.Source.Teardown.Response
-	26, // 45: connector.v1.SourcePlugin.LifecycleOnCreated:output_type -> connector.v1.Source.Lifecycle.OnCreated.Response
-	29, // 46: connector.v1.SourcePlugin.LifecycleOnUpdated:output_type -> connector.v1.Source.Lifecycle.OnUpdated.Response
-	33, // 47: connector.v1.SourcePlugin.LifecycleOnDeleted:output_type -> connector.v1.Source.Lifecycle.OnDeleted.Response
-	42, // 48: connector.v1.DestinationPlugin.Configure:output_type -> connector.v1.Destination.Configure.Response
-	45, // 49: connector.v1.DestinationPlugin.Start:output_type -> connector.v1.Destination.Start.Response
-	47, // 50: connector.v1.DestinationPlugin.Run:output_type -> connector.v1.Destination.Run.Response
-	49, // 51: connector.v1.DestinationPlugin.Stop:output_type -> connector.v1.Destination.Stop.Response
-	51, // 52: connector.v1.DestinationPlugin.Teardown:output_type -> connector.v1.Destination.Teardown.Response
-	56, // 53: connector.v1.DestinationPlugin.LifecycleOnCreated:output_type -> connector.v1.Destination.Lifecycle.OnCreated.Response
-	59, // 54: connector.v1.DestinationPlugin.LifecycleOnUpdated:output_type -> connector.v1.Destination.Lifecycle.OnUpdated.Response
-	63, // 55: connector.v1.DestinationPlugin.LifecycleOnDeleted:output_type -> connector.v1.Destination.Lifecycle.OnDeleted.Response
-	68, // 56: connector.v1.SpecifierPlugin.Specify:output_type -> connector.v1.Specifier.Specify.Response
-	40, // [40:57] is the sub-list for method output_type
-	23, // [23:40] is the sub-list for method input_type
-	23, // [23:23] is the sub-list for extension type_name
-	19, // [19:23] is the sub-list for extension extendee
+	11, // 19: connector.v1.SourcePlugin.Configure:input_type -> connector.v1.Source.Configure.Request
+	14, // 20: connector.v1.SourcePlugin.Start:input_type -> connector.v1.Source.Start.Request
+	16, // 21: connector.v1.SourcePlugin.Run:input_type -> connector.v1.Source.Run.Request
+	18, // 22: connector.v1.SourcePlugin.Stop:input_type -> connector.v1.Source.Stop.Request
+	20, // 23: connector.v1.SourcePlugin.Teardown:input_type -> connector.v1.Source.Teardown.Request
+	25, // 24: connector.v1.SourcePlugin.LifecycleOnCreated:input_type -> connector.v1.Source.Lifecycle.OnCreated.Request
+	28, // 25: connector.v1.SourcePlugin.LifecycleOnUpdated:input_type -> connector.v1.Source.Lifecycle.OnUpdated.Request
+	32, // 26: connector.v1.SourcePlugin.LifecycleOnDeleted:input_type -> connector.v1.Source.Lifecycle.OnDeleted.Request
+	41, // 27: connector.v1.DestinationPlugin.Configure:input_type -> connector.v1.Destination.Configure.Request
+	44, // 28: connector.v1.DestinationPlugin.Start:input_type -> connector.v1.Destination.Start.Request
+	46, // 29: connector.v1.DestinationPlugin.Run:input_type -> connector.v1.Destination.Run.Request
+	48, // 30: connector.v1.DestinationPlugin.Stop:input_type -> connector.v1.Destination.Stop.Request
+	50, // 31: connector.v1.DestinationPlugin.Teardown:input_type -> connector.v1.Destination.Teardown.Request
+	55, // 32: connector.v1.DestinationPlugin.LifecycleOnCreated:input_type -> connector.v1.Destination.Lifecycle.OnCreated.Request
+	58, // 33: connector.v1.DestinationPlugin.LifecycleOnUpdated:input_type -> connector.v1.Destination.Lifecycle.OnUpdated.Request
+	62, // 34: connector.v1.DestinationPlugin.LifecycleOnDeleted:input_type -> connector.v1.Destination.Lifecycle.OnDeleted.Request
+	67, // 35: connector.v1.SpecifierPlugin.Specify:input_type -> connector.v1.Specifier.Specify.Request
+	12, // 36: connector.v1.SourcePlugin.Configure:output_type -> connector.v1.Source.Configure.Response
+	15, // 37: connector.v1.SourcePlugin.Start:output_type -> connector.v1.Source.Start.Response
+	17, // 38: connector.v1.SourcePlugin.Run:output_type -> connector.v1.Source.Run.Response
+	19, // 39: connector.v1.SourcePlugin.Stop:output_type -> connector.v1.Source.Stop.Response
+	21, // 40: connector.v1.SourcePlugin.Teardown:output_type -> connector.v1.Source.Teardown.Response
+	26, // 41: connector.v1.SourcePlugin.LifecycleOnCreated:output_type -> connector.v1.Source.Lifecycle.OnCreated.Response
+	29, // 42: connector.v1.SourcePlugin.LifecycleOnUpdated:output_type -> connector.v1.Source.Lifecycle.OnUpdated.Response
+	33, // 43: connector.v1.SourcePlugin.LifecycleOnDeleted:output_type -> connector.v1.Source.Lifecycle.OnDeleted.Response
+	42, // 44: connector.v1.DestinationPlugin.Configure:output_type -> connector.v1.Destination.Configure.Response
+	45, // 45: connector.v1.DestinationPlugin.Start:output_type -> connector.v1.Destination.Start.Response
+	47, // 46: connector.v1.DestinationPlugin.Run:output_type -> connector.v1.Destination.Run.Response
+	49, // 47: connector.v1.DestinationPlugin.Stop:output_type -> connector.v1.Destination.Stop.Response
+	51, // 48: connector.v1.DestinationPlugin.Teardown:output_type -> connector.v1.Destination.Teardown.Response
+	56, // 49: connector.v1.DestinationPlugin.LifecycleOnCreated:output_type -> connector.v1.Destination.Lifecycle.OnCreated.Response
+	59, // 50: connector.v1.DestinationPlugin.LifecycleOnUpdated:output_type -> connector.v1.Destination.Lifecycle.OnUpdated.Response
+	63, // 51: connector.v1.DestinationPlugin.LifecycleOnDeleted:output_type -> connector.v1.Destination.Lifecycle.OnDeleted.Response
+	68, // 52: connector.v1.SpecifierPlugin.Specify:output_type -> connector.v1.Specifier.Specify.Response
+	36, // [36:53] is the sub-list for method output_type
+	19, // [19:36] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
 	0,  // [0:19] is the sub-list for field type_name
 }
 
@@ -4024,14 +3934,13 @@ func file_connector_v1_connector_proto_init() {
 			RawDescriptor: file_connector_v1_connector_proto_rawDesc,
 			NumEnums:      2,
 			NumMessages:   70,
-			NumExtensions: 4,
+			NumExtensions: 0,
 			NumServices:   3,
 		},
 		GoTypes:           file_connector_v1_connector_proto_goTypes,
 		DependencyIndexes: file_connector_v1_connector_proto_depIdxs,
 		EnumInfos:         file_connector_v1_connector_proto_enumTypes,
 		MessageInfos:      file_connector_v1_connector_proto_msgTypes,
-		ExtensionInfos:    file_connector_v1_connector_proto_extTypes,
 	}.Build()
 	File_connector_v1_connector_proto = out.File
 	file_connector_v1_connector_proto_rawDesc = nil
