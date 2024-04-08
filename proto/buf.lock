@@ -4,5 +4,5 @@ deps:
   - remote: buf.build
     owner: conduitio
     repository: conduit-commons
-    commit: de2e1a18c9e042119dedd69b852efc21
-    digest: shake256:1275ac9a7d437cc6b48bd6ff2e9edc59f0450a8f9ab6050f49fb9949e231b7f4d91debfd42b09fc29d9e4aed1b9904266a46a46f7a5676218b53aafb7efe211d
+    commit: fd3a3704c63444498997546906c8e0ca
+    digest: shake256:4b819ecb4ba98a52f37f2a02c8c08943730e6576949a72c1c9c72fb8ad9ae81f8f274b4f8d9a015d8cefe62d1625bdc93ca55fb4c96695e52966ac83f1556af8
