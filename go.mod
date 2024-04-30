@@ -9,7 +9,7 @@ require (
 	github.com/hashicorp/go-plugin v1.6.0
 	go.uber.org/mock v0.4.0
 	google.golang.org/grpc v1.63.2
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.34.0
 )
 
 require (
