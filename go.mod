@@ -6,7 +6,7 @@ require (
 	github.com/bufbuild/buf v1.31.0
 	github.com/conduitio/conduit-commons v0.2.0
 	github.com/golangci/golangci-lint v1.58.1
-	github.com/hashicorp/go-plugin v1.6.0
+	github.com/hashicorp/go-plugin v1.6.1
 	go.uber.org/mock v0.4.0
 	google.golang.org/grpc v1.63.2
 	google.golang.org/protobuf v1.34.1
