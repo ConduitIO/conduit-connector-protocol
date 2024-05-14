@@ -1,4 +1,4 @@
-// Copyright © 2022 Meroxa, Inc.
+// Copyright © 2024 Meroxa, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
 package fromproto
 
 import (
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1" //nolint:staticcheck // Backwards compatibility
-	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2"
+	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func SpecifierSpecifyRequest(_ *connectorv1.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
-	return cpluginv1.SpecifierSpecifyRequest{}, nil
+func SpecifierSpecifyRequest(_ *connectorv2.Specifier_Specify_Request) (cpluginv2.SpecifierSpecifyRequest, error) {
+	return cpluginv2.SpecifierSpecifyRequest{}, nil
 }

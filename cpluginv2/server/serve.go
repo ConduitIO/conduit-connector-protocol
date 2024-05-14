@@ -1,4 +1,4 @@
-// Copyright © 2022 Meroxa, Inc.
+// Copyright © 2024 Meroxa, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,22 +18,21 @@ import (
 	"context"
 	"errors"
 
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1" //nolint:staticcheck // Backwards compatibility
-	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2"
+	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
 
-// Deprecated: cpluginv1 is deprecated. Use cpluginv2 instead.
 func Serve(
-	specifierFactory func() cpluginv1.SpecifierPlugin,
-	sourceFactory func() cpluginv1.SourcePlugin,
-	destinationFactory func() cpluginv1.DestinationPlugin,
+	specifierFactory func() cpluginv2.SpecifierPlugin,
+	sourceFactory func() cpluginv2.SourcePlugin,
+	destinationFactory func() cpluginv2.DestinationPlugin,
 	opts ...ServeOption,
 ) error {
 	serveConfig := &plugin.ServeConfig{
 		HandshakeConfig: plugin.HandshakeConfig{
-			ProtocolVersion:  1,
+			ProtocolVersion:  2,
 			MagicCookieKey:   "CONDUIT_PLUGIN_MAGIC_COOKIE",
 			MagicCookieValue: "204e8e812c3a1bb73b838928c575b42a105dd2e9aa449be481bc4590486df53f",
 		},
@@ -97,7 +96,7 @@ func WithGRPCServerOptions(opt ...grpc.ServerOption) ServeOption {
 // SourcePlugin.
 type GRPCSourcePlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	Factory func() cpluginv1.SourcePlugin
+	Factory func() cpluginv2.SourcePlugin
 }
 
 var _ plugin.Plugin = (*GRPCSourcePlugin)(nil)
@@ -111,17 +110,17 @@ func (p *GRPCSourcePlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *grpc
 // GRPCServer registers the gRPC source plugin server with the gRPC server that
 // go-plugin is standing up.
 func (p *GRPCSourcePlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterSourcePluginServer(s, NewSourcePluginServer(p.Factory()))
+	connectorv2.RegisterSourcePluginServer(s, NewSourcePluginServer(p.Factory()))
 	return nil
 }
 
 // GRPCDestinationPlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
-// cpluginv1.DestinationPlugin.
+// cpluginv2.DestinationPlugin.
 type GRPCDestinationPlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	Factory func() cpluginv1.DestinationPlugin
+	Factory func() cpluginv2.DestinationPlugin
 }
 
 var _ plugin.Plugin = (*GRPCDestinationPlugin)(nil)
@@ -135,17 +134,17 @@ func (p *GRPCDestinationPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, 
 // GRPCServer registers the gRPC destination plugin server with the gRPC server
 // that go-plugin is standing up.
 func (p *GRPCDestinationPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.Factory()))
+	connectorv2.RegisterDestinationPluginServer(s, NewDestinationPluginServer(p.Factory()))
 	return nil
 }
 
 // GRPCSpecifierPlugin is an implementation of the
 // github.com/hashicorp/go-plugin#Plugin and
 // github.com/hashicorp/go-plugin#GRPCPlugin interfaces, it's using
-// cpluginv1.SpecifierPlugin.
+// cpluginv2.SpecifierPlugin.
 type GRPCSpecifierPlugin struct {
 	plugin.NetRPCUnsupportedPlugin
-	Factory func() cpluginv1.SpecifierPlugin
+	Factory func() cpluginv2.SpecifierPlugin
 }
 
 var _ plugin.Plugin = (*GRPCSpecifierPlugin)(nil)
@@ -159,6 +158,6 @@ func (p *GRPCSpecifierPlugin) GRPCClient(context.Context, *plugin.GRPCBroker, *g
 // GRPCServer registers the gRPC specifier plugin server with the gRPC server that
 // go-plugin is standing up.
 func (p *GRPCSpecifierPlugin) GRPCServer(_ *plugin.GRPCBroker, s *grpc.Server) error {
-	connectorv1.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.Factory()))
+	connectorv2.RegisterSpecifierPluginServer(s, NewSpecifierPluginServer(p.Factory()))
 	return nil
 }

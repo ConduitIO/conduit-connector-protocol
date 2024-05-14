@@ -17,7 +17,7 @@ package toproto
 import (
 	"fmt"
 
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv1" //nolint:staticcheck // Backwards compatibility
 	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
 

@@ -1,4 +1,4 @@
-// Copyright © 2022 Meroxa, Inc.
+// Copyright © 2024 Meroxa, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,22 +17,22 @@ package server
 import (
 	"context"
 
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1" //nolint:staticcheck // Backwards compatibility
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/toproto"
-	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2/internal/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2/internal/toproto"
+	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func NewSpecifierPluginServer(impl cpluginv1.SpecifierPlugin) connectorv1.SpecifierPluginServer {
+func NewSpecifierPluginServer(impl cpluginv2.SpecifierPlugin) connectorv2.SpecifierPluginServer {
 	return &specifierPluginServer{impl: impl}
 }
 
 type specifierPluginServer struct {
-	connectorv1.UnimplementedSpecifierPluginServer
-	impl cpluginv1.SpecifierPlugin
+	connectorv2.UnimplementedSpecifierPluginServer
+	impl cpluginv2.SpecifierPlugin
 }
 
-func (s specifierPluginServer) Specify(ctx context.Context, protoReq *connectorv1.Specifier_Specify_Request) (*connectorv1.Specifier_Specify_Response, error) {
+func (s specifierPluginServer) Specify(ctx context.Context, protoReq *connectorv2.Specifier_Specify_Request) (*connectorv2.Specifier_Specify_Response, error) {
 	goReq, err := fromproto.SpecifierSpecifyRequest(protoReq)
 	if err != nil {
 		return nil, err

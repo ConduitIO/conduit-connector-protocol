@@ -1,4 +1,4 @@
-// Copyright © 2022 Meroxa, Inc.
+// Copyright © 2024 Meroxa, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package fromproto
-
-import (
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1" //nolint:staticcheck // Backwards compatibility
-	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
-)
-
-func SpecifierSpecifyRequest(_ *connectorv1.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
-	return cpluginv1.SpecifierSpecifyRequest{}, nil
-}
+// Deprecated: cpluginv1 is deprecated. Use cpluginv2 instead.
+package cpluginv1

@@ -1,4 +1,4 @@
-// Copyright © 2022 Meroxa, Inc.
+// Copyright © 2024 Meroxa, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,22 +17,22 @@ package server
 import (
 	"context"
 
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1" //nolint:staticcheck // Backwards compatibility
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/cpluginv1/internal/toproto"
-	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2/internal/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv2/internal/toproto"
+	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func NewDestinationPluginServer(impl cpluginv1.DestinationPlugin) connectorv1.DestinationPluginServer {
+func NewDestinationPluginServer(impl cpluginv2.DestinationPlugin) connectorv2.DestinationPluginServer {
 	return &destinationPluginServer{impl: impl}
 }
 
 type destinationPluginServer struct {
-	connectorv1.UnimplementedDestinationPluginServer
-	impl cpluginv1.DestinationPlugin
+	connectorv2.UnimplementedDestinationPluginServer
+	impl cpluginv2.DestinationPlugin
 }
 
-func (s *destinationPluginServer) Configure(ctx context.Context, protoReq *connectorv1.Destination_Configure_Request) (*connectorv1.Destination_Configure_Response, error) {
+func (s *destinationPluginServer) Configure(ctx context.Context, protoReq *connectorv2.Destination_Configure_Request) (*connectorv2.Destination_Configure_Response, error) {
 	goReq, err := fromproto.DestinationConfigureRequest(protoReq)
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (s *destinationPluginServer) Configure(ctx context.Context, protoReq *conne
 	}
 	return protoResp, nil
 }
-func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connectorv1.Destination_Start_Request) (*connectorv1.Destination_Start_Response, error) {
+func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connectorv2.Destination_Start_Request) (*connectorv2.Destination_Start_Response, error) {
 	goReq, err := fromproto.DestinationStartRequest(protoReq)
 	if err != nil {
 		return nil, err
@@ -62,14 +62,14 @@ func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connector
 	}
 	return protoResp, nil
 }
-func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunServer) error {
+func (s *destinationPluginServer) Run(stream connectorv2.DestinationPlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv1.Destination_Stop_Request) (*connectorv1.Destination_Stop_Response, error) {
+func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv2.Destination_Stop_Request) (*connectorv2.Destination_Stop_Response, error) {
 	goReq, err := fromproto.DestinationStopRequest(protoReq)
 	if err != nil {
 		return nil, err
@@ -84,7 +84,7 @@ func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv
 	}
 	return protoResp, nil
 }
-func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connectorv1.Destination_Teardown_Request) (*connectorv1.Destination_Teardown_Response, error) {
+func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connectorv2.Destination_Teardown_Request) (*connectorv2.Destination_Teardown_Response, error) {
 	goReq, err := fromproto.DestinationTeardownRequest(protoReq)
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connec
 	}
 	return protoResp, nil
 }
-func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnCreated_Request) (*connectorv1.Destination_Lifecycle_OnCreated_Response, error) {
+func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnCreated_Request) (*connectorv2.Destination_Lifecycle_OnCreated_Response, error) {
 	goReq, err := fromproto.DestinationLifecycleOnCreatedRequest(protoReq)
 	if err != nil {
 		return nil, err
@@ -114,7 +114,7 @@ func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoR
 	}
 	return protoResp, nil
 }
-func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnUpdated_Request) (*connectorv1.Destination_Lifecycle_OnUpdated_Response, error) {
+func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnUpdated_Request) (*connectorv2.Destination_Lifecycle_OnUpdated_Response, error) {
 	goReq, err := fromproto.DestinationLifecycleOnUpdatedRequest(protoReq)
 	if err != nil {
 		return nil, err
@@ -129,7 +129,7 @@ func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoR
 	}
 	return protoResp, nil
 }
-func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnDeleted_Request) (*connectorv1.Destination_Lifecycle_OnDeleted_Response, error) {
+func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnDeleted_Request) (*connectorv2.Destination_Lifecycle_OnDeleted_Response, error) {
 	goReq, err := fromproto.DestinationLifecycleOnDeletedRequest(protoReq)
 	if err != nil {
 		return nil, err
@@ -146,10 +146,10 @@ func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoR
 }
 
 type destinationRunStream struct {
-	impl connectorv1.DestinationPlugin_RunServer
+	impl connectorv2.DestinationPlugin_RunServer
 }
 
-func (s *destinationRunStream) Send(in cpluginv1.DestinationRunResponse) error {
+func (s *destinationRunStream) Send(in cpluginv2.DestinationRunResponse) error {
 	out, err := toproto.DestinationRunResponse(in)
 	if err != nil {
 		return err
@@ -157,14 +157,14 @@ func (s *destinationRunStream) Send(in cpluginv1.DestinationRunResponse) error {
 	return s.impl.Send(out)
 }
 
-func (s *destinationRunStream) Recv() (cpluginv1.DestinationRunRequest, error) {
+func (s *destinationRunStream) Recv() (cpluginv2.DestinationRunRequest, error) {
 	in, err := s.impl.Recv()
 	if err != nil {
-		return cpluginv1.DestinationRunRequest{}, err
+		return cpluginv2.DestinationRunRequest{}, err
 	}
 	out, err := fromproto.DestinationRunRequest(in)
 	if err != nil {
-		return cpluginv1.DestinationRunRequest{}, err
+		return cpluginv2.DestinationRunRequest{}, err
 	}
 	return out, nil
 }
