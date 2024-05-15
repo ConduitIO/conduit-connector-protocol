@@ -19,36 +19,35 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func DestinationConfigureResponse(_ cpluginv2.DestinationConfigureResponse) (*connectorv2.Destination_Configure_Response, error) {
-	return &connectorv2.Destination_Configure_Response{}, nil
+func DestinationConfigureResponse(_ cpluginv2.DestinationConfigureResponse) *connectorv2.Destination_Configure_Response {
+	return &connectorv2.Destination_Configure_Response{}
 }
 
-func DestinationStartResponse(_ cpluginv2.DestinationStartResponse) (*connectorv2.Destination_Start_Response, error) {
-	return &connectorv2.Destination_Start_Response{}, nil
+func DestinationStartResponse(_ cpluginv2.DestinationStartResponse) *connectorv2.Destination_Start_Response {
+	return &connectorv2.Destination_Start_Response{}
 }
 
-func DestinationRunResponse(in cpluginv2.DestinationRunResponse) (*connectorv2.Destination_Run_Response, error) {
-	out := connectorv2.Destination_Run_Response{
+func DestinationRunResponse(in cpluginv2.DestinationRunResponse) *connectorv2.Destination_Run_Response {
+	return &connectorv2.Destination_Run_Response{
 		AckPosition: in.AckPosition,
 		Error:       in.Error,
 	}
-	return &out, nil
 }
 
-func DestinationStopResponse(_ cpluginv2.DestinationStopResponse) (*connectorv2.Destination_Stop_Response, error) {
-	return &connectorv2.Destination_Stop_Response{}, nil
+func DestinationStopResponse(_ cpluginv2.DestinationStopResponse) *connectorv2.Destination_Stop_Response {
+	return &connectorv2.Destination_Stop_Response{}
 }
 
-func DestinationTeardownResponse(_ cpluginv2.DestinationTeardownResponse) (*connectorv2.Destination_Teardown_Response, error) {
-	return &connectorv2.Destination_Teardown_Response{}, nil
+func DestinationTeardownResponse(_ cpluginv2.DestinationTeardownResponse) *connectorv2.Destination_Teardown_Response {
+	return &connectorv2.Destination_Teardown_Response{}
 }
 
-func DestinationLifecycleOnCreatedResponse(_ cpluginv2.DestinationLifecycleOnCreatedResponse) (*connectorv2.Destination_Lifecycle_OnCreated_Response, error) {
-	return &connectorv2.Destination_Lifecycle_OnCreated_Response{}, nil
+func DestinationLifecycleOnCreatedResponse(_ cpluginv2.DestinationLifecycleOnCreatedResponse) *connectorv2.Destination_Lifecycle_OnCreated_Response {
+	return &connectorv2.Destination_Lifecycle_OnCreated_Response{}
 }
-func DestinationLifecycleOnUpdatedResponse(_ cpluginv2.DestinationLifecycleOnUpdatedResponse) (*connectorv2.Destination_Lifecycle_OnUpdated_Response, error) {
-	return &connectorv2.Destination_Lifecycle_OnUpdated_Response{}, nil
+func DestinationLifecycleOnUpdatedResponse(_ cpluginv2.DestinationLifecycleOnUpdatedResponse) *connectorv2.Destination_Lifecycle_OnUpdated_Response {
+	return &connectorv2.Destination_Lifecycle_OnUpdated_Response{}
 }
-func DestinationLifecycleOnDeletedResponse(_ cpluginv2.DestinationLifecycleOnDeletedResponse) (*connectorv2.Destination_Lifecycle_OnDeleted_Response, error) {
-	return &connectorv2.Destination_Lifecycle_OnDeleted_Response{}, nil
+func DestinationLifecycleOnDeletedResponse(_ cpluginv2.DestinationLifecycleOnDeletedResponse) *connectorv2.Destination_Lifecycle_OnDeleted_Response {
+	return &connectorv2.Destination_Lifecycle_OnDeleted_Response{}
 }

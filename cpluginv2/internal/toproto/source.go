@@ -20,12 +20,12 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func SourceConfigureResponse(_ cpluginv2.SourceConfigureResponse) (*connectorv2.Source_Configure_Response, error) {
-	return &connectorv2.Source_Configure_Response{}, nil
+func SourceConfigureResponse(_ cpluginv2.SourceConfigureResponse) *connectorv2.Source_Configure_Response {
+	return &connectorv2.Source_Configure_Response{}
 }
 
-func SourceStartResponse(_ cpluginv2.SourceStartResponse) (*connectorv2.Source_Start_Response, error) {
-	return &connectorv2.Source_Start_Response{}, nil
+func SourceStartResponse(_ cpluginv2.SourceStartResponse) *connectorv2.Source_Start_Response {
+	return &connectorv2.Source_Start_Response{}
 }
 
 func SourceRunResponse(in cpluginv2.SourceRunResponse) (*connectorv2.Source_Run_Response, error) {
@@ -40,23 +40,22 @@ func SourceRunResponse(in cpluginv2.SourceRunResponse) (*connectorv2.Source_Run_
 	return &out, nil
 }
 
-func SourceStopResponse(in cpluginv2.SourceStopResponse) (*connectorv2.Source_Stop_Response, error) {
-	out := connectorv2.Source_Stop_Response{
+func SourceStopResponse(in cpluginv2.SourceStopResponse) *connectorv2.Source_Stop_Response {
+	return &connectorv2.Source_Stop_Response{
 		LastPosition: in.LastPosition,
 	}
-	return &out, nil
 }
 
-func SourceTeardownResponse(_ cpluginv2.SourceTeardownResponse) (*connectorv2.Source_Teardown_Response, error) {
-	return &connectorv2.Source_Teardown_Response{}, nil
+func SourceTeardownResponse(_ cpluginv2.SourceTeardownResponse) *connectorv2.Source_Teardown_Response {
+	return &connectorv2.Source_Teardown_Response{}
 }
 
-func SourceLifecycleOnCreatedResponse(_ cpluginv2.SourceLifecycleOnCreatedResponse) (*connectorv2.Source_Lifecycle_OnCreated_Response, error) {
-	return &connectorv2.Source_Lifecycle_OnCreated_Response{}, nil
+func SourceLifecycleOnCreatedResponse(_ cpluginv2.SourceLifecycleOnCreatedResponse) *connectorv2.Source_Lifecycle_OnCreated_Response {
+	return &connectorv2.Source_Lifecycle_OnCreated_Response{}
 }
-func SourceLifecycleOnUpdatedResponse(_ cpluginv2.SourceLifecycleOnUpdatedResponse) (*connectorv2.Source_Lifecycle_OnUpdated_Response, error) {
-	return &connectorv2.Source_Lifecycle_OnUpdated_Response{}, nil
+func SourceLifecycleOnUpdatedResponse(_ cpluginv2.SourceLifecycleOnUpdatedResponse) *connectorv2.Source_Lifecycle_OnUpdated_Response {
+	return &connectorv2.Source_Lifecycle_OnUpdated_Response{}
 }
-func SourceLifecycleOnDeletedResponse(_ cpluginv2.SourceLifecycleOnDeletedResponse) (*connectorv2.Source_Lifecycle_OnDeleted_Response, error) {
-	return &connectorv2.Source_Lifecycle_OnDeleted_Response{}, nil
+func SourceLifecycleOnDeletedResponse(_ cpluginv2.SourceLifecycleOnDeletedResponse) *connectorv2.Source_Lifecycle_OnDeleted_Response {
+	return &connectorv2.Source_Lifecycle_OnDeleted_Response{}
 }

@@ -121,8 +121,7 @@ func TestSourceStopResponse(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := SourceStopResponse(have)
-	is.NoErr(err)
+	got := SourceStopResponse(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,

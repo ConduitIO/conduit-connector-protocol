@@ -20,15 +20,14 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func DestinationConfigureRequest(in *connectorv2.Destination_Configure_Request) (cpluginv2.DestinationConfigureRequest, error) {
-	out := cpluginv2.DestinationConfigureRequest{
+func DestinationConfigureRequest(in *connectorv2.Destination_Configure_Request) cpluginv2.DestinationConfigureRequest {
+	return cpluginv2.DestinationConfigureRequest{
 		Config: in.Config,
 	}
-	return out, nil
 }
 
-func DestinationStartRequest(_ *connectorv2.Destination_Start_Request) (cpluginv2.DestinationStartRequest, error) {
-	return cpluginv2.DestinationStartRequest{}, nil
+func DestinationStartRequest(_ *connectorv2.Destination_Start_Request) cpluginv2.DestinationStartRequest {
+	return cpluginv2.DestinationStartRequest{}
 }
 
 func DestinationRunRequest(in *connectorv2.Destination_Run_Request) (cpluginv2.DestinationRunRequest, error) {
@@ -37,39 +36,34 @@ func DestinationRunRequest(in *connectorv2.Destination_Run_Request) (cpluginv2.D
 	if err != nil {
 		return cpluginv2.DestinationRunRequest{}, err
 	}
-	out := cpluginv2.DestinationRunRequest{
+	return cpluginv2.DestinationRunRequest{
 		Record: rec,
-	}
-	return out, nil
+	}, nil
 }
 
-func DestinationStopRequest(in *connectorv2.Destination_Stop_Request) (cpluginv2.DestinationStopRequest, error) {
-	out := cpluginv2.DestinationStopRequest{
+func DestinationStopRequest(in *connectorv2.Destination_Stop_Request) cpluginv2.DestinationStopRequest {
+	return cpluginv2.DestinationStopRequest{
 		LastPosition: in.LastPosition,
 	}
-	return out, nil
 }
 
-func DestinationTeardownRequest(_ *connectorv2.Destination_Teardown_Request) (cpluginv2.DestinationTeardownRequest, error) {
-	return cpluginv2.DestinationTeardownRequest{}, nil
+func DestinationTeardownRequest(_ *connectorv2.Destination_Teardown_Request) cpluginv2.DestinationTeardownRequest {
+	return cpluginv2.DestinationTeardownRequest{}
 }
 
-func DestinationLifecycleOnCreatedRequest(in *connectorv2.Destination_Lifecycle_OnCreated_Request) (cpluginv2.DestinationLifecycleOnCreatedRequest, error) {
-	out := cpluginv2.DestinationLifecycleOnCreatedRequest{
+func DestinationLifecycleOnCreatedRequest(in *connectorv2.Destination_Lifecycle_OnCreated_Request) cpluginv2.DestinationLifecycleOnCreatedRequest {
+	return cpluginv2.DestinationLifecycleOnCreatedRequest{
 		Config: in.Config,
 	}
-	return out, nil
 }
-func DestinationLifecycleOnUpdatedRequest(in *connectorv2.Destination_Lifecycle_OnUpdated_Request) (cpluginv2.DestinationLifecycleOnUpdatedRequest, error) {
-	out := cpluginv2.DestinationLifecycleOnUpdatedRequest{
+func DestinationLifecycleOnUpdatedRequest(in *connectorv2.Destination_Lifecycle_OnUpdated_Request) cpluginv2.DestinationLifecycleOnUpdatedRequest {
+	return cpluginv2.DestinationLifecycleOnUpdatedRequest{
 		ConfigBefore: in.ConfigBefore,
 		ConfigAfter:  in.ConfigAfter,
 	}
-	return out, nil
 }
-func DestinationLifecycleOnDeletedRequest(in *connectorv2.Destination_Lifecycle_OnDeleted_Request) (cpluginv2.DestinationLifecycleOnDeletedRequest, error) {
-	out := cpluginv2.DestinationLifecycleOnDeletedRequest{
+func DestinationLifecycleOnDeletedRequest(in *connectorv2.Destination_Lifecycle_OnDeleted_Request) cpluginv2.DestinationLifecycleOnDeletedRequest {
+	return cpluginv2.DestinationLifecycleOnDeletedRequest{
 		Config: in.Config,
 	}
-	return out, nil
 }

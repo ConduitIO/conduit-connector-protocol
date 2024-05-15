@@ -84,8 +84,7 @@ func TestSpecifierSpecifyResponse(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := SpecifierSpecifyResponse(have)
-	is.NoErr(err)
+	got := SpecifierSpecifyResponse(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,

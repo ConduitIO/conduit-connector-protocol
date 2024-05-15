@@ -33,17 +33,11 @@ type specifierPluginServer struct {
 }
 
 func (s specifierPluginServer) Specify(ctx context.Context, protoReq *connectorv2.Specifier_Specify_Request) (*connectorv2.Specifier_Specify_Response, error) {
-	goReq, err := fromproto.SpecifierSpecifyRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.SpecifierSpecifyRequest(protoReq)
 	goResp, err := s.impl.Specify(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.SpecifierSpecifyResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.SpecifierSpecifyResponse(goResp)
 	return protoResp, nil
 }

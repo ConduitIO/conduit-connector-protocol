@@ -33,33 +33,21 @@ type destinationPluginServer struct {
 }
 
 func (s *destinationPluginServer) Configure(ctx context.Context, protoReq *connectorv2.Destination_Configure_Request) (*connectorv2.Destination_Configure_Response, error) {
-	goReq, err := fromproto.DestinationConfigureRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.DestinationConfigureRequest(protoReq)
 	goResp, err := s.impl.Configure(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.DestinationConfigureResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.DestinationConfigureResponse(goResp)
 	return protoResp, nil
 }
 func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connectorv2.Destination_Start_Request) (*connectorv2.Destination_Start_Response, error) {
-	goReq, err := fromproto.DestinationStartRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.DestinationStartRequest(protoReq)
 	goResp, err := s.impl.Start(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.DestinationStartResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.DestinationStartResponse(goResp)
 	return protoResp, nil
 }
 func (s *destinationPluginServer) Run(stream connectorv2.DestinationPlugin_RunServer) error {
@@ -70,78 +58,48 @@ func (s *destinationPluginServer) Run(stream connectorv2.DestinationPlugin_RunSe
 	return nil
 }
 func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv2.Destination_Stop_Request) (*connectorv2.Destination_Stop_Response, error) {
-	goReq, err := fromproto.DestinationStopRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.DestinationStopRequest(protoReq)
 	goResp, err := s.impl.Stop(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.DestinationStopResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.DestinationStopResponse(goResp)
 	return protoResp, nil
 }
 func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connectorv2.Destination_Teardown_Request) (*connectorv2.Destination_Teardown_Response, error) {
-	goReq, err := fromproto.DestinationTeardownRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.DestinationTeardownRequest(protoReq)
 	goResp, err := s.impl.Teardown(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.DestinationTeardownResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.DestinationTeardownResponse(goResp)
 	return protoResp, nil
 }
 func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnCreated_Request) (*connectorv2.Destination_Lifecycle_OnCreated_Response, error) {
-	goReq, err := fromproto.DestinationLifecycleOnCreatedRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.DestinationLifecycleOnCreatedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnCreated(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.DestinationLifecycleOnCreatedResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.DestinationLifecycleOnCreatedResponse(goResp)
 	return protoResp, nil
 }
 func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnUpdated_Request) (*connectorv2.Destination_Lifecycle_OnUpdated_Response, error) {
-	goReq, err := fromproto.DestinationLifecycleOnUpdatedRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.DestinationLifecycleOnUpdatedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnUpdated(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.DestinationLifecycleOnUpdatedResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.DestinationLifecycleOnUpdatedResponse(goResp)
 	return protoResp, nil
 }
 func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnDeleted_Request) (*connectorv2.Destination_Lifecycle_OnDeleted_Response, error) {
-	goReq, err := fromproto.DestinationLifecycleOnDeletedRequest(protoReq)
-	if err != nil {
-		return nil, err
-	}
+	goReq := fromproto.DestinationLifecycleOnDeletedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnDeleted(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp, err := toproto.DestinationLifecycleOnDeletedResponse(goResp)
-	if err != nil {
-		return nil, err
-	}
+	protoResp := toproto.DestinationLifecycleOnDeletedResponse(goResp)
 	return protoResp, nil
 }
 
@@ -150,10 +108,7 @@ type destinationRunStream struct {
 }
 
 func (s *destinationRunStream) Send(in cpluginv2.DestinationRunResponse) error {
-	out, err := toproto.DestinationRunResponse(in)
-	if err != nil {
-		return err
-	}
+	out := toproto.DestinationRunResponse(in)
 	return s.impl.Send(out)
 }
 

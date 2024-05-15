@@ -19,6 +19,6 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func SpecifierSpecifyRequest(_ *connectorv2.Specifier_Specify_Request) (cpluginv2.SpecifierSpecifyRequest, error) {
-	return cpluginv2.SpecifierSpecifyRequest{}, nil
+func SpecifierSpecifyRequest(_ *connectorv2.Specifier_Specify_Request) cpluginv2.SpecifierSpecifyRequest {
+	return cpluginv2.SpecifierSpecifyRequest{}
 }

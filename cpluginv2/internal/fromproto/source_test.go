@@ -37,8 +37,7 @@ func TestSourceConfigureRequest(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := SourceConfigureRequest(have)
-	is.NoErr(err)
+	got := SourceConfigureRequest(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
@@ -56,8 +55,7 @@ func TestSourceStartRequest(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := SourceStartRequest(have)
-	is.NoErr(err)
+	got := SourceStartRequest(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
@@ -75,8 +73,7 @@ func TestSourceRunRequest(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := SourceRunRequest(have)
-	is.NoErr(err)
+	got := SourceRunRequest(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,

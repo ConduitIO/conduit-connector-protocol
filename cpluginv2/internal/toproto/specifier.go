@@ -20,14 +20,14 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func SpecifierSpecifyResponse(in cpluginv2.SpecifierSpecifyResponse) (*connectorv2.Specifier_Specify_Response, error) {
+func SpecifierSpecifyResponse(in cpluginv2.SpecifierSpecifyResponse) *connectorv2.Specifier_Specify_Response {
 	sourceParams := make(map[string]*configv1.Parameter, len(in.SourceParams))
 	in.SourceParams.ToProto(sourceParams)
 
 	destinationParams := make(map[string]*configv1.Parameter, len(in.DestinationParams))
 	in.DestinationParams.ToProto(destinationParams)
 
-	out := connectorv2.Specifier_Specify_Response{
+	return &connectorv2.Specifier_Specify_Response{
 		Name:              in.Name,
 		Summary:           in.Summary,
 		Description:       in.Description,
@@ -36,5 +36,4 @@ func SpecifierSpecifyResponse(in cpluginv2.SpecifierSpecifyResponse) (*connector
 		DestinationParams: destinationParams,
 		SourceParams:      sourceParams,
 	}
-	return &out, nil
 }

@@ -101,8 +101,7 @@ func TestDestinationConfigureRequest(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := DestinationConfigureRequest(have)
-	is.NoErr(err)
+	got := DestinationConfigureRequest(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
@@ -140,8 +139,7 @@ func TestDestinationStopRequest(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := DestinationStopRequest(have)
-	is.NoErr(err)
+	got := DestinationStopRequest(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,

@@ -19,51 +19,45 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func SourceConfigureRequest(in *connectorv2.Source_Configure_Request) (cpluginv2.SourceConfigureRequest, error) {
-	out := cpluginv2.SourceConfigureRequest{
+func SourceConfigureRequest(in *connectorv2.Source_Configure_Request) cpluginv2.SourceConfigureRequest {
+	return cpluginv2.SourceConfigureRequest{
 		Config: in.Config,
 	}
-	return out, nil
 }
 
-func SourceStartRequest(in *connectorv2.Source_Start_Request) (cpluginv2.SourceStartRequest, error) {
-	out := cpluginv2.SourceStartRequest{
+func SourceStartRequest(in *connectorv2.Source_Start_Request) cpluginv2.SourceStartRequest {
+	return cpluginv2.SourceStartRequest{
 		Position: in.Position,
 	}
-	return out, nil
 }
 
-func SourceRunRequest(in *connectorv2.Source_Run_Request) (cpluginv2.SourceRunRequest, error) {
-	out := cpluginv2.SourceRunRequest{
+func SourceRunRequest(in *connectorv2.Source_Run_Request) cpluginv2.SourceRunRequest {
+	return cpluginv2.SourceRunRequest{
 		AckPosition: in.AckPosition,
 	}
-	return out, nil
 }
 
-func SourceStopRequest(_ *connectorv2.Source_Stop_Request) (cpluginv2.SourceStopRequest, error) {
-	return cpluginv2.SourceStopRequest{}, nil
+func SourceStopRequest(_ *connectorv2.Source_Stop_Request) cpluginv2.SourceStopRequest {
+	return cpluginv2.SourceStopRequest{}
 }
 
-func SourceTeardownRequest(_ *connectorv2.Source_Teardown_Request) (cpluginv2.SourceTeardownRequest, error) {
-	return cpluginv2.SourceTeardownRequest{}, nil
+func SourceTeardownRequest(_ *connectorv2.Source_Teardown_Request) cpluginv2.SourceTeardownRequest {
+	return cpluginv2.SourceTeardownRequest{}
 }
 
-func SourceLifecycleOnCreatedRequest(in *connectorv2.Source_Lifecycle_OnCreated_Request) (cpluginv2.SourceLifecycleOnCreatedRequest, error) {
-	out := cpluginv2.SourceLifecycleOnCreatedRequest{
+func SourceLifecycleOnCreatedRequest(in *connectorv2.Source_Lifecycle_OnCreated_Request) cpluginv2.SourceLifecycleOnCreatedRequest {
+	return cpluginv2.SourceLifecycleOnCreatedRequest{
 		Config: in.Config,
 	}
-	return out, nil
 }
-func SourceLifecycleOnUpdatedRequest(in *connectorv2.Source_Lifecycle_OnUpdated_Request) (cpluginv2.SourceLifecycleOnUpdatedRequest, error) {
-	out := cpluginv2.SourceLifecycleOnUpdatedRequest{
+func SourceLifecycleOnUpdatedRequest(in *connectorv2.Source_Lifecycle_OnUpdated_Request) cpluginv2.SourceLifecycleOnUpdatedRequest {
+	return cpluginv2.SourceLifecycleOnUpdatedRequest{
 		ConfigBefore: in.ConfigBefore,
 		ConfigAfter:  in.ConfigAfter,
 	}
-	return out, nil
 }
-func SourceLifecycleOnDeletedRequest(in *connectorv2.Source_Lifecycle_OnDeleted_Request) (cpluginv2.SourceLifecycleOnDeletedRequest, error) {
-	out := cpluginv2.SourceLifecycleOnDeletedRequest{
+func SourceLifecycleOnDeletedRequest(in *connectorv2.Source_Lifecycle_OnDeleted_Request) cpluginv2.SourceLifecycleOnDeletedRequest {
+	return cpluginv2.SourceLifecycleOnDeletedRequest{
 		Config: in.Config,
 	}
-	return out, nil
 }

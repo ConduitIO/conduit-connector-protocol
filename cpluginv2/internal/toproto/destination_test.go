@@ -35,8 +35,7 @@ func TestDestinationRunResponse(t *testing.T) {
 	}
 
 	is := is.New(t)
-	got, err := DestinationRunResponse(have)
-	is.NoErr(err)
+	got := DestinationRunResponse(have)
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
