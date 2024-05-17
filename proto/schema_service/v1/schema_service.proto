@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+service SchemaService {
+  rpc Register(RegisterSchemaRequest) returns (RegisterSchemaResponse);
+  rpc Fetch(FetchSchemaRequest) returns (FetchSchemaResponse);
+}
+
+enum SchemaType {
+  TYPE_UNDEFINED = 0;
+  TYPE_AVRO = 1;
+}
+
+message RegisterSchemaRequest {
+  string name = 1;
+  int32 version = 2;
+  SchemaType type = 3;
+  bytes bytes = 4;
+}
+
+message RegisterSchemaResponse {
+  string id = 1;
+}
+
+message FetchSchemaRequest {
+  string id = 1;
+}
+
+message FetchSchemaResponse {
+  string id = 1;
+  string name = 2;
+  int32 version = 3;
+  SchemaType type = 4;
+  bytes bytes = 5;
+}
