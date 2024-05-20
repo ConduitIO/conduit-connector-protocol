@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: schema_service/v1/schema_service.proto
 
-package v1
+package schemav1
 
 import (
 	context "context"
@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SchemaService_Register_FullMethodName = "/SchemaService/Register"
-	SchemaService_Fetch_FullMethodName    = "/SchemaService/Fetch"
+	SchemaService_Register_FullMethodName = "/schema.v1.SchemaService/Register"
+	SchemaService_Fetch_FullMethodName    = "/schema.v1.SchemaService/Fetch"
 )
 
 // SchemaServiceClient is the client API for SchemaService service.
@@ -129,7 +129,7 @@ func _SchemaService_Fetch_Handler(srv interface{}, ctx context.Context, dec func
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SchemaService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "SchemaService",
+	ServiceName: "schema.v1.SchemaService",
 	HandlerType: (*SchemaServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
