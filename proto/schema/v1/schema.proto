@@ -7,15 +7,15 @@ service SchemaService {
   rpc Fetch(FetchSchemaRequest) returns (FetchSchemaResponse);
 }
 
-enum SchemaType {
-  SCHEMA_TYPE_UNSPECIFIED = 0;
-  SCHEMA_TYPE_AVRO = 1;
+enum Type {
+  TYPE_UNSPECIFIED = 0;
+  TYPE_AVRO = 1;
 }
 
 message RegisterSchemaRequest {
   string name = 1;
   int32 version = 2;
-  SchemaType type = 3;
+  Type type = 3;
   bytes bytes = 4;
 }
 
@@ -31,6 +31,6 @@ message FetchSchemaResponse {
   string id = 1;
   string name = 2;
   int32 version = 3;
-  SchemaType type = 4;
+  Type type = 4;
   bytes bytes = 5;
 }
