@@ -8,8 +8,8 @@ service SchemaService {
 }
 
 enum SchemaType {
-  TYPE_UNDEFINED = 0;
-  TYPE_AVRO = 1;
+  SCHEMA_TYPE_UNSPECIFIED = 0;
+  SCHEMA_TYPE_AVRO = 1;
 }
 
 message RegisterSchemaRequest {
