@@ -3,34 +3,36 @@ syntax = "proto3";
 package schema.v1;
 
 service SchemaService {
-  rpc Register(RegisterSchemaRequest) returns (RegisterSchemaResponse);
-  rpc Fetch(FetchSchemaRequest) returns (FetchSchemaResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Fetch(FetchRequest) returns (FetchResponse);
 }
 
-enum Type {
-  TYPE_UNSPECIFIED = 0;
-  TYPE_AVRO = 1;
-}
+message Schema {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_AVRO = 1;
+  }
 
-message RegisterSchemaRequest {
-  string name = 1;
-  int32 version = 2;
-  Type type = 3;
-  bytes bytes = 4;
-}
-
-message RegisterSchemaResponse {
-  string id = 1;
-}
-
-message FetchSchemaRequest {
-  string id = 1;
-}
-
-message FetchSchemaResponse {
   string id = 1;
   string name = 2;
   int32 version = 3;
   Type type = 4;
   bytes bytes = 5;
+}
+
+message RegisterRequest {
+  string name = 1;
+  int32 version = 2;
+  Schema.Type type = 3;
+  bytes bytes = 4;
+}
+message RegisterResponse {
+  string id = 1;
+}
+
+message FetchRequest {
+  string id = 1;
+}
+message FetchResponse {
+  Schema schema = 1;
 }
