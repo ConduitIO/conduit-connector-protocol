@@ -22,7 +22,50 @@ import (
 
 // -- Request Conversions -----------------------------------------------------
 
-// TODO
+func SourceConfigureRequest(in cplugin.SourceConfigureRequest) *connectorv1.Source_Configure_Request {
+	return &connectorv1.Source_Configure_Request{
+		Config: in.Config,
+	}
+}
+
+func SourceStartRequest(in cplugin.SourceStartRequest) *connectorv1.Source_Start_Request {
+	return &connectorv1.Source_Start_Request{
+		Position: in.Position,
+	}
+}
+
+func SourceRunRequest(in cplugin.SourceRunRequest) *connectorv1.Source_Run_Request {
+	return &connectorv1.Source_Run_Request{
+		AckPosition: in.AckPosition,
+	}
+}
+
+func SourceStopRequest(_ cplugin.SourceStopRequest) *connectorv1.Source_Stop_Request {
+	return &connectorv1.Source_Stop_Request{}
+}
+
+func SourceTeardownRequest(_ cplugin.SourceTeardownRequest) *connectorv1.Source_Teardown_Request {
+	return &connectorv1.Source_Teardown_Request{}
+}
+
+func SourceLifecycleOnCreatedRequest(in cplugin.SourceLifecycleOnCreatedRequest) *connectorv1.Source_Lifecycle_OnCreated_Request {
+	return &connectorv1.Source_Lifecycle_OnCreated_Request{
+		Config: in.Config,
+	}
+}
+
+func SourceLifecycleOnUpdatedRequest(in cplugin.SourceLifecycleOnUpdatedRequest) *connectorv1.Source_Lifecycle_OnUpdated_Request {
+	return &connectorv1.Source_Lifecycle_OnUpdated_Request{
+		ConfigBefore: in.ConfigBefore,
+		ConfigAfter:  in.ConfigAfter,
+	}
+}
+
+func SourceLifecycleOnDeletedRequest(in cplugin.SourceLifecycleOnDeletedRequest) *connectorv1.Source_Lifecycle_OnDeleted_Request {
+	return &connectorv1.Source_Lifecycle_OnDeleted_Request{
+		Config: in.Config,
+	}
+}
 
 // -- Response Conversions ----------------------------------------------------
 

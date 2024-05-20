@@ -15,9 +15,12 @@
 package fromproto
 
 import (
+	"github.com/conduitio/conduit-commons/opencdc"
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
+
+// -- Request Conversions -----------------------------------------------------
 
 func SourceConfigureRequest(in *connectorv2.Source_Configure_Request) cplugin.SourceConfigureRequest {
 	return cplugin.SourceConfigureRequest{
@@ -59,5 +62,24 @@ func SourceLifecycleOnUpdatedRequest(in *connectorv2.Source_Lifecycle_OnUpdated_
 func SourceLifecycleOnDeletedRequest(in *connectorv2.Source_Lifecycle_OnDeleted_Request) cplugin.SourceLifecycleOnDeletedRequest {
 	return cplugin.SourceLifecycleOnDeletedRequest{
 		Config: in.Config,
+	}
+}
+
+// -- Response Conversions ----------------------------------------------------
+
+func SourceRunResponse(in *connectorv2.Source_Run_Response) (cplugin.SourceRunResponse, error) {
+	var rec opencdc.Record
+	err := rec.FromProto(in.Record)
+	if err != nil {
+		return cplugin.SourceRunResponse{}, err
+	}
+	return cplugin.SourceRunResponse{
+		Record: rec,
+	}, nil
+}
+
+func SourceStopResponse(in *connectorv2.Source_Stop_Response) cplugin.SourceStopResponse {
+	return cplugin.SourceStopResponse{
+		LastPosition: in.LastPosition,
 	}
 }

@@ -20,6 +20,55 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
+// -- Request Conversions -----------------------------------------------------
+
+func SourceConfigureRequest(in cplugin.SourceConfigureRequest) *connectorv2.Source_Configure_Request {
+	return &connectorv2.Source_Configure_Request{
+		Config: in.Config,
+	}
+}
+
+func SourceStartRequest(in cplugin.SourceStartRequest) *connectorv2.Source_Start_Request {
+	return &connectorv2.Source_Start_Request{
+		Position: in.Position,
+	}
+}
+
+func SourceRunRequest(in cplugin.SourceRunRequest) *connectorv2.Source_Run_Request {
+	return &connectorv2.Source_Run_Request{
+		AckPosition: in.AckPosition,
+	}
+}
+
+func SourceStopRequest(_ cplugin.SourceStopRequest) *connectorv2.Source_Stop_Request {
+	return &connectorv2.Source_Stop_Request{}
+}
+
+func SourceTeardownRequest(_ cplugin.SourceTeardownRequest) *connectorv2.Source_Teardown_Request {
+	return &connectorv2.Source_Teardown_Request{}
+}
+
+func SourceLifecycleOnCreatedRequest(in cplugin.SourceLifecycleOnCreatedRequest) *connectorv2.Source_Lifecycle_OnCreated_Request {
+	return &connectorv2.Source_Lifecycle_OnCreated_Request{
+		Config: in.Config,
+	}
+}
+
+func SourceLifecycleOnUpdatedRequest(in cplugin.SourceLifecycleOnUpdatedRequest) *connectorv2.Source_Lifecycle_OnUpdated_Request {
+	return &connectorv2.Source_Lifecycle_OnUpdated_Request{
+		ConfigBefore: in.ConfigBefore,
+		ConfigAfter:  in.ConfigAfter,
+	}
+}
+
+func SourceLifecycleOnDeletedRequest(in cplugin.SourceLifecycleOnDeletedRequest) *connectorv2.Source_Lifecycle_OnDeleted_Request {
+	return &connectorv2.Source_Lifecycle_OnDeleted_Request{
+		Config: in.Config,
+	}
+}
+
+// -- Response Conversions ----------------------------------------------------
+
 func SourceConfigureResponse(_ cplugin.SourceConfigureResponse) *connectorv2.Source_Configure_Response {
 	return &connectorv2.Source_Configure_Response{}
 }

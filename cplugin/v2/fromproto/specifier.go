@@ -15,10 +15,39 @@
 package fromproto
 
 import (
+	"github.com/conduitio/conduit-commons/config"
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
+// -- Request Conversions -----------------------------------------------------
+
 func SpecifierSpecifyRequest(_ *connectorv2.Specifier_Specify_Request) cplugin.SpecifierSpecifyRequest {
 	return cplugin.SpecifierSpecifyRequest{}
+}
+
+// -- Response Conversions ----------------------------------------------------
+
+func SpecifierSpecifyResponse(in *connectorv2.Specifier_Specify_Response) (cplugin.SpecifierSpecifyResponse, error) {
+	sourceParams := make(config.Parameters)
+	err := sourceParams.FromProto(in.SourceParams)
+	if err != nil {
+		return cplugin.SpecifierSpecifyResponse{}, err
+	}
+
+	destinationParams := make(config.Parameters)
+	err = destinationParams.FromProto(in.DestinationParams)
+	if err != nil {
+		return cplugin.SpecifierSpecifyResponse{}, err
+	}
+
+	return cplugin.SpecifierSpecifyResponse{
+		Name:              in.Name,
+		Summary:           in.Summary,
+		Description:       in.Description,
+		Version:           in.Version,
+		Author:            in.Author,
+		DestinationParams: destinationParams,
+		SourceParams:      sourceParams,
+	}, nil
 }

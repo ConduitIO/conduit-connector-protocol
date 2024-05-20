@@ -20,6 +20,14 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
+// -- Request Conversions -----------------------------------------------------
+
+func SpecifierSpecifyRequest(_ cplugin.SpecifierSpecifyRequest) *connectorv2.Specifier_Specify_Request {
+	return &connectorv2.Specifier_Specify_Request{}
+}
+
+// -- Response Conversions ----------------------------------------------------
+
 func SpecifierSpecifyResponse(in cplugin.SpecifierSpecifyResponse) *connectorv2.Specifier_Specify_Response {
 	sourceParams := make(map[string]*configv1.Parameter, len(in.SourceParams))
 	in.SourceParams.ToProto(sourceParams)

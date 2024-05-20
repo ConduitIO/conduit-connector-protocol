@@ -20,6 +20,8 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
+// -- Request Conversions -----------------------------------------------------
+
 func DestinationConfigureRequest(in *connectorv2.Destination_Configure_Request) cplugin.DestinationConfigureRequest {
 	return cplugin.DestinationConfigureRequest{
 		Config: in.Config,
@@ -65,5 +67,14 @@ func DestinationLifecycleOnUpdatedRequest(in *connectorv2.Destination_Lifecycle_
 func DestinationLifecycleOnDeletedRequest(in *connectorv2.Destination_Lifecycle_OnDeleted_Request) cplugin.DestinationLifecycleOnDeletedRequest {
 	return cplugin.DestinationLifecycleOnDeletedRequest{
 		Config: in.Config,
+	}
+}
+
+// -- Response Conversions ----------------------------------------------------
+
+func DestinationRunResponse(in *connectorv2.Destination_Run_Response) cplugin.DestinationRunResponse {
+	return cplugin.DestinationRunResponse{
+		AckPosition: in.AckPosition,
+		Error:       in.Error,
 	}
 }

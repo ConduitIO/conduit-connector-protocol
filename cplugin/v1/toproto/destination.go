@@ -15,13 +15,63 @@
 package toproto
 
 import (
+	opencdcv1 "github.com/conduitio/conduit-commons/proto/opencdc/v1"
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
 
 // -- Request Conversions -----------------------------------------------------
 
-// TODO
+func DestinationConfigureRequest(in cplugin.DestinationConfigureRequest) *connectorv1.Destination_Configure_Request {
+	return &connectorv1.Destination_Configure_Request{
+		Config: in.Config,
+	}
+}
+
+func DestinationStartRequest(_ cplugin.DestinationStartRequest) *connectorv1.Destination_Start_Request {
+	return &connectorv1.Destination_Start_Request{}
+}
+
+func DestinationRunRequest(in cplugin.DestinationRunRequest) (*connectorv1.Destination_Run_Request, error) {
+	out := connectorv1.Destination_Run_Request{
+		Record: &opencdcv1.Record{},
+	}
+	err := in.Record.ToProto(out.Record)
+	if err != nil {
+		return nil, err
+	}
+
+	return &out, nil
+}
+
+func DestinationStopRequest(in cplugin.DestinationStopRequest) *connectorv1.Destination_Stop_Request {
+	return &connectorv1.Destination_Stop_Request{
+		LastPosition: in.LastPosition,
+	}
+}
+
+func DestinationTeardownRequest(_ cplugin.DestinationTeardownRequest) *connectorv1.Destination_Teardown_Request {
+	return &connectorv1.Destination_Teardown_Request{}
+}
+
+func DestinationLifecycleOnCreatedRequest(in cplugin.DestinationLifecycleOnCreatedRequest) *connectorv1.Destination_Lifecycle_OnCreated_Request {
+	return &connectorv1.Destination_Lifecycle_OnCreated_Request{
+		Config: in.Config,
+	}
+}
+
+func DestinationLifecycleOnUpdatedRequest(in cplugin.DestinationLifecycleOnUpdatedRequest) *connectorv1.Destination_Lifecycle_OnUpdated_Request {
+	return &connectorv1.Destination_Lifecycle_OnUpdated_Request{
+		ConfigBefore: in.ConfigBefore,
+		ConfigAfter:  in.ConfigAfter,
+	}
+}
+
+func DestinationLifecycleOnDeletedRequest(in cplugin.DestinationLifecycleOnDeletedRequest) *connectorv1.Destination_Lifecycle_OnDeleted_Request {
+	return &connectorv1.Destination_Lifecycle_OnDeleted_Request{
+		Config: in.Config,
+	}
+}
 
 // -- Response Conversions ----------------------------------------------------
 
