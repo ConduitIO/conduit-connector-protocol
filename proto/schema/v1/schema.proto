@@ -13,6 +13,7 @@ message Schema {
     TYPE_AVRO = 1;
   }
 
+  // The schema version's unique ID
   string id = 1;
   string name = 2;
   int32 version = 3;
@@ -22,9 +23,8 @@ message Schema {
 
 message RegisterRequest {
   string name = 1;
-  int32 version = 2;
-  Schema.Type type = 3;
-  bytes bytes = 4;
+  Schema.Type type = 2;
+  bytes bytes = 3;
 }
 message RegisterResponse {
   string id = 1;
