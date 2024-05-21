@@ -17,6 +17,8 @@ package fromproto
 import (
 	"testing"
 
+	"github.com/conduitio/conduit-commons/opencdc"
+
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 	"github.com/google/go-cmp/cmp"
@@ -66,10 +68,10 @@ func TestSourceStartRequest(t *testing.T) {
 
 func TestSourceRunRequest(t *testing.T) {
 	have := &connectorv2.Source_Run_Request{
-		AckPosition: []byte("test_ack_position"),
+		AckPositions: [][]byte{[]byte("1"), []byte("2")},
 	}
 	want := cplugin.SourceRunRequest{
-		AckPosition: []byte("test_ack_position"),
+		AckPositions: []opencdc.Position{opencdc.Position("1"), opencdc.Position("2")},
 	}
 
 	is := is.New(t)

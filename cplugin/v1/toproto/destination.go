@@ -32,16 +32,19 @@ func DestinationStartRequest(_ cplugin.DestinationStartRequest) *connectorv1.Des
 	return &connectorv1.Destination_Start_Request{}
 }
 
-func DestinationRunRequest(in cplugin.DestinationRunRequest) (*connectorv1.Destination_Run_Request, error) {
-	out := connectorv1.Destination_Run_Request{
-		Record: &opencdcv1.Record{},
+func DestinationRunRequest(in cplugin.DestinationRunRequest) ([]*connectorv1.Destination_Run_Request, error) {
+	out := make([]*connectorv1.Destination_Run_Request, len(in.Records))
+	for i, rec := range in.Records {
+		outReq := connectorv1.Destination_Run_Request{
+			Record: &opencdcv1.Record{},
+		}
+		err := rec.ToProto(outReq.Record)
+		if err != nil {
+			return nil, err
+		}
+		out[i] = &outReq
 	}
-	err := in.Record.ToProto(out.Record)
-	if err != nil {
-		return nil, err
-	}
-
-	return &out, nil
+	return out, nil
 }
 
 func DestinationStopRequest(in cplugin.DestinationStopRequest) *connectorv1.Destination_Stop_Request {
@@ -83,11 +86,15 @@ func DestinationStartResponse(_ cplugin.DestinationStartResponse) *connectorv1.D
 	return &connectorv1.Destination_Start_Response{}
 }
 
-func DestinationRunResponse(in cplugin.DestinationRunResponse) *connectorv1.Destination_Run_Response {
-	return &connectorv1.Destination_Run_Response{
-		AckPosition: in.AckPosition,
-		Error:       in.Error,
+func DestinationRunResponse(in cplugin.DestinationRunResponse) []*connectorv1.Destination_Run_Response {
+	out := make([]*connectorv1.Destination_Run_Response, len(in.Acks))
+	for i, ack := range in.Acks {
+		out[i] = &connectorv1.Destination_Run_Response{
+			AckPosition: ack.Position,
+			Error:       ack.Error,
+		}
 	}
+	return out
 }
 
 func DestinationStopResponse(_ cplugin.DestinationStopResponse) *connectorv1.Destination_Stop_Response {

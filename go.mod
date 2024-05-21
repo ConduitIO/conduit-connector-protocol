@@ -7,6 +7,7 @@ require (
 	github.com/conduitio/conduit-commons v0.2.0
 	github.com/golangci/golangci-lint v1.58.1
 	github.com/google/go-cmp v0.6.0
+	github.com/hashicorp/go-hclog v1.5.0
 	github.com/hashicorp/go-plugin v1.6.1
 	github.com/matryer/is v1.4.1
 	go.uber.org/mock v0.4.0
@@ -113,7 +114,6 @@ require (
 	github.com/gostaticanalysis/comment v1.4.2 // indirect
 	github.com/gostaticanalysis/forcetypeassert v0.1.0 // indirect
 	github.com/gostaticanalysis/nilerr v0.1.1 // indirect
-	github.com/hashicorp/go-hclog v1.5.0 // indirect
 	github.com/hashicorp/go-version v1.6.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect

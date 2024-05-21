@@ -34,30 +34,49 @@ type SourcePlugin interface {
 	LifecycleOnDeleted(context.Context, SourceLifecycleOnDeletedRequest) (SourceLifecycleOnDeletedResponse, error)
 }
 
+// SourceRunStream is the bidirectional stream interface for SourcePlugin.Run.
+// It combines the client and server interfaces into a single interface.
+type SourceRunStream interface {
+	// Client is only allowed to be used by the host (Conduit).
+	Client() SourceRunStreamClient
+	// Server is only allowed to be used by the plugin (connector).
+	Server() SourceRunStreamServer
+}
+
+// SourceRunStreamClient is the client-side interface for a bidirectional stream
+// of SourceRunRequest and SourceRunResponse messages.
+type SourceRunStreamClient interface {
+	Send(SourceRunRequest) error
+	Recv() (SourceRunResponse, error)
+}
+
+// SourceRunStreamServer is the server-side interface for a bidirectional stream
+// of SourceRunRequest and SourceRunResponse messages.
+type SourceRunStreamServer interface {
+	Send(SourceRunResponse) error
+	Recv() (SourceRunRequest, error)
+}
+
 type SourceConfigureRequest struct {
 	Config map[string]string
 }
 type SourceConfigureResponse struct{}
 
 type SourceStartRequest struct {
-	Position []byte
+	Position opencdc.Position
 }
 type SourceStartResponse struct{}
 
-type SourceRunStream interface {
-	Send(SourceRunResponse) error
-	Recv() (SourceRunRequest, error)
-}
 type SourceRunRequest struct {
-	AckPosition []byte
+	AckPositions []opencdc.Position
 }
 type SourceRunResponse struct {
-	Record opencdc.Record
+	Records []opencdc.Record
 }
 
 type SourceStopRequest struct{}
 type SourceStopResponse struct {
-	LastPosition []byte
+	LastPosition opencdc.Position
 }
 
 type SourceTeardownRequest struct{}

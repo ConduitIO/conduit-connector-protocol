@@ -38,8 +38,7 @@ func (s *destinationPluginServer) Configure(ctx context.Context, protoReq *conne
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationConfigureResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationConfigureResponse(goResp), nil
 }
 func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connectorv1.Destination_Start_Request) (*connectorv1.Destination_Start_Response, error) {
 	goReq := fromproto.DestinationStartRequest(protoReq)
@@ -47,8 +46,7 @@ func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connector
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationStartResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationStartResponse(goResp), nil
 }
 func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunServer) error {
 	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
@@ -63,8 +61,7 @@ func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationStopResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationStopResponse(goResp), nil
 }
 func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connectorv1.Destination_Teardown_Request) (*connectorv1.Destination_Teardown_Response, error) {
 	goReq := fromproto.DestinationTeardownRequest(protoReq)
@@ -72,8 +69,7 @@ func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connec
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationTeardownResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationTeardownResponse(goResp), nil
 }
 func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnCreated_Request) (*connectorv1.Destination_Lifecycle_OnCreated_Response, error) {
 	goReq := fromproto.DestinationLifecycleOnCreatedRequest(protoReq)
@@ -81,8 +77,7 @@ func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoR
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationLifecycleOnCreatedResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationLifecycleOnCreatedResponse(goResp), nil
 }
 func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnUpdated_Request) (*connectorv1.Destination_Lifecycle_OnUpdated_Response, error) {
 	goReq := fromproto.DestinationLifecycleOnUpdatedRequest(protoReq)
@@ -90,8 +85,7 @@ func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoR
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationLifecycleOnUpdatedResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationLifecycleOnUpdatedResponse(goResp), nil
 }
 func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv1.Destination_Lifecycle_OnDeleted_Request) (*connectorv1.Destination_Lifecycle_OnDeleted_Response, error) {
 	goReq := fromproto.DestinationLifecycleOnDeletedRequest(protoReq)
@@ -99,8 +93,7 @@ func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoR
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationLifecycleOnDeletedResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationLifecycleOnDeletedResponse(goResp), nil
 }
 
 type destinationRunStream struct {
@@ -109,7 +102,13 @@ type destinationRunStream struct {
 
 func (s *destinationRunStream) Send(in cplugin.DestinationRunResponse) error {
 	out := toproto.DestinationRunResponse(in)
-	return s.impl.Send(out)
+	for _, out := range out {
+		err := s.impl.Send(out)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (s *destinationRunStream) Recv() (cplugin.DestinationRunRequest, error) {

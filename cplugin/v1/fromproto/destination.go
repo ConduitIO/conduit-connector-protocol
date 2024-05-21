@@ -39,7 +39,7 @@ func DestinationRunRequest(in *connectorv1.Destination_Run_Request) (cplugin.Des
 		return cplugin.DestinationRunRequest{}, err
 	}
 	return cplugin.DestinationRunRequest{
-		Record: rec,
+		Records: []opencdc.Record{rec},
 	}, nil
 }
 
@@ -74,7 +74,9 @@ func DestinationLifecycleOnDeletedRequest(in *connectorv1.Destination_Lifecycle_
 
 func DestinationRunResponse(in *connectorv1.Destination_Run_Response) cplugin.DestinationRunResponse {
 	return cplugin.DestinationRunResponse{
-		AckPosition: in.AckPosition,
-		Error:       in.Error,
+		Acks: []cplugin.DestinationRunResponseAck{{
+			Position: in.AckPosition,
+			Error:    in.Error,
+		}},
 	}
 }

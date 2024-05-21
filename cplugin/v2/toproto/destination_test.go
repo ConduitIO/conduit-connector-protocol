@@ -26,12 +26,20 @@ import (
 
 func TestDestinationRunResponse(t *testing.T) {
 	have := cplugin.DestinationRunResponse{
-		AckPosition: []byte("test_position"),
-		Error:       "test_error",
+		Acks: []cplugin.DestinationRunResponseAck{{
+			Position: []byte("test_position_1"),
+			Error:    "test_error",
+		}, {
+			Position: []byte("test_position_2"),
+		}},
 	}
 	want := &connectorv2.Destination_Run_Response{
-		AckPosition: []byte("test_position"),
-		Error:       "test_error",
+		Acks: []*connectorv2.Destination_Run_Response_Ack{{
+			Position: []byte("test_position_1"),
+			Error:    "test_error",
+		}, {
+			Position: []byte("test_position_2"),
+		}},
 	}
 
 	is := is.New(t)
@@ -40,6 +48,7 @@ func TestDestinationRunResponse(t *testing.T) {
 		"",
 		cmp.Diff(want, got,
 			cmpopts.IgnoreUnexported(connectorv2.Destination_Run_Response{}),
+			cmpopts.IgnoreUnexported(connectorv2.Destination_Run_Response_Ack{}),
 		),
 	)
 }

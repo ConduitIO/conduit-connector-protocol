@@ -34,11 +34,16 @@ func DestinationStartRequest(_ cplugin.DestinationStartRequest) *connectorv2.Des
 
 func DestinationRunRequest(in cplugin.DestinationRunRequest) (*connectorv2.Destination_Run_Request, error) {
 	out := connectorv2.Destination_Run_Request{
-		Record: &opencdcv1.Record{},
+		Records: make([]*opencdcv1.Record, len(in.Records)),
 	}
-	err := in.Record.ToProto(out.Record)
-	if err != nil {
-		return nil, err
+
+	for i, inRec := range in.Records {
+		outRec := &opencdcv1.Record{}
+		err := inRec.ToProto(outRec)
+		if err != nil {
+			return nil, err
+		}
+		out.Records[i] = outRec
 	}
 
 	return &out, nil
@@ -84,9 +89,19 @@ func DestinationStartResponse(_ cplugin.DestinationStartResponse) *connectorv2.D
 }
 
 func DestinationRunResponse(in cplugin.DestinationRunResponse) *connectorv2.Destination_Run_Response {
+	acks := make([]*connectorv2.Destination_Run_Response_Ack, len(in.Acks))
+	for i, inAck := range in.Acks {
+		acks[i] = DestinationRunResponseAck(inAck)
+	}
 	return &connectorv2.Destination_Run_Response{
-		AckPosition: in.AckPosition,
-		Error:       in.Error,
+		Acks: acks,
+	}
+}
+
+func DestinationRunResponseAck(in cplugin.DestinationRunResponseAck) *connectorv2.Destination_Run_Response_Ack {
+	return &connectorv2.Destination_Run_Response_Ack{
+		Position: in.Position,
+		Error:    in.Error,
 	}
 }
 

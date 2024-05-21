@@ -36,7 +36,7 @@ func SourceStartRequest(in *connectorv1.Source_Start_Request) cplugin.SourceStar
 
 func SourceRunRequest(in *connectorv1.Source_Run_Request) cplugin.SourceRunRequest {
 	return cplugin.SourceRunRequest{
-		AckPosition: in.AckPosition,
+		AckPositions: []opencdc.Position{in.AckPosition},
 	}
 }
 
@@ -74,7 +74,7 @@ func SourceRunResponse(in *connectorv1.Source_Run_Response) (cplugin.SourceRunRe
 		return cplugin.SourceRunResponse{}, err
 	}
 	return cplugin.SourceRunResponse{
-		Record: rec,
+		Records: []opencdc.Record{rec},
 	}, nil
 }
 

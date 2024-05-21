@@ -34,6 +34,29 @@ type DestinationPlugin interface {
 	LifecycleOnDeleted(context.Context, DestinationLifecycleOnDeletedRequest) (DestinationLifecycleOnDeletedResponse, error)
 }
 
+// DestinationRunStream is the bidirectional stream interface for DestinationPlugin.Run.
+// It combines the client and server interfaces into a single interface.
+type DestinationRunStream interface {
+	// Client is only allowed to be used by the host (Conduit).
+	Client() DestinationRunStreamClient
+	// Server is only allowed to be used by the plugin (connector).
+	Server() DestinationRunStreamServer
+}
+
+// DestinationRunStreamClient is the client-side interface for a bidirectional stream
+// of DestinationRunRequest and DestinationRunResponse messages.
+type DestinationRunStreamClient interface {
+	Send(DestinationRunRequest) error
+	Recv() (DestinationRunResponse, error)
+}
+
+// DestinationRunStreamServer is the server-side interface for a bidirectional stream
+// of DestinationRunRequest and DestinationRunResponse messages.
+type DestinationRunStreamServer interface {
+	Send(DestinationRunResponse) error
+	Recv() (DestinationRunRequest, error)
+}
+
 type DestinationConfigureRequest struct {
 	Config map[string]string
 }
@@ -42,20 +65,20 @@ type DestinationConfigureResponse struct{}
 type DestinationStartRequest struct{}
 type DestinationStartResponse struct{}
 
-type DestinationRunStream interface {
-	Send(DestinationRunResponse) error
-	Recv() (DestinationRunRequest, error)
-}
 type DestinationRunRequest struct {
-	Record opencdc.Record
+	Records []opencdc.Record
 }
 type DestinationRunResponse struct {
-	AckPosition []byte
-	Error       string
+	Acks []DestinationRunResponseAck
+}
+
+type DestinationRunResponseAck struct {
+	Position opencdc.Position
+	Error    string
 }
 
 type DestinationStopRequest struct {
-	LastPosition []byte
+	LastPosition opencdc.Position
 }
 type DestinationStopResponse struct{}
 

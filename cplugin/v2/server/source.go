@@ -24,90 +24,92 @@ import (
 )
 
 func NewSourcePluginServer(impl cplugin.SourcePlugin) connectorv2.SourcePluginServer {
-	return &sourcePluginServer{impl: impl}
+	return &SourcePluginServer{impl: impl}
 }
 
-type sourcePluginServer struct {
+type SourcePluginServer struct {
 	connectorv2.UnimplementedSourcePluginServer
 	impl cplugin.SourcePlugin
 }
 
-func (s *sourcePluginServer) Configure(ctx context.Context, protoReq *connectorv2.Source_Configure_Request) (*connectorv2.Source_Configure_Response, error) {
+func (s *SourcePluginServer) Configure(ctx context.Context, protoReq *connectorv2.Source_Configure_Request) (*connectorv2.Source_Configure_Response, error) {
 	goReq := fromproto.SourceConfigureRequest(protoReq)
 	goResp, err := s.impl.Configure(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SourceConfigureResponse(goResp)
-	return protoResp, nil
+	return toproto.SourceConfigureResponse(goResp), nil
 }
-func (s *sourcePluginServer) Start(ctx context.Context, protoReq *connectorv2.Source_Start_Request) (*connectorv2.Source_Start_Response, error) {
+func (s *SourcePluginServer) Start(ctx context.Context, protoReq *connectorv2.Source_Start_Request) (*connectorv2.Source_Start_Response, error) {
 	goReq := fromproto.SourceStartRequest(protoReq)
 	goResp, err := s.impl.Start(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SourceStartResponse(goResp)
-	return protoResp, nil
+	return toproto.SourceStartResponse(goResp), nil
 }
-func (s *sourcePluginServer) Run(stream connectorv2.SourcePlugin_RunServer) error {
-	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
+func (s *SourcePluginServer) Run(stream connectorv2.SourcePlugin_RunServer) error {
+	err := s.impl.Run(stream.Context(), &SourceRunStream{impl: stream})
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (s *sourcePluginServer) Stop(ctx context.Context, protoReq *connectorv2.Source_Stop_Request) (*connectorv2.Source_Stop_Response, error) {
+func (s *SourcePluginServer) Stop(ctx context.Context, protoReq *connectorv2.Source_Stop_Request) (*connectorv2.Source_Stop_Response, error) {
 	goReq := fromproto.SourceStopRequest(protoReq)
 	goResp, err := s.impl.Stop(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SourceStopResponse(goResp)
-	return protoResp, nil
+	return toproto.SourceStopResponse(goResp), nil
 }
-func (s *sourcePluginServer) Teardown(ctx context.Context, protoReq *connectorv2.Source_Teardown_Request) (*connectorv2.Source_Teardown_Response, error) {
+func (s *SourcePluginServer) Teardown(ctx context.Context, protoReq *connectorv2.Source_Teardown_Request) (*connectorv2.Source_Teardown_Response, error) {
 	goReq := fromproto.SourceTeardownRequest(protoReq)
 	goResp, err := s.impl.Teardown(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SourceTeardownResponse(goResp)
-	return protoResp, nil
+	return toproto.SourceTeardownResponse(goResp), nil
 }
-func (s *sourcePluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv2.Source_Lifecycle_OnCreated_Request) (*connectorv2.Source_Lifecycle_OnCreated_Response, error) {
+func (s *SourcePluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv2.Source_Lifecycle_OnCreated_Request) (*connectorv2.Source_Lifecycle_OnCreated_Response, error) {
 	goReq := fromproto.SourceLifecycleOnCreatedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnCreated(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SourceLifecycleOnCreatedResponse(goResp)
-	return protoResp, nil
+	return toproto.SourceLifecycleOnCreatedResponse(goResp), nil
 }
-func (s *sourcePluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv2.Source_Lifecycle_OnUpdated_Request) (*connectorv2.Source_Lifecycle_OnUpdated_Response, error) {
+func (s *SourcePluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv2.Source_Lifecycle_OnUpdated_Request) (*connectorv2.Source_Lifecycle_OnUpdated_Response, error) {
 	goReq := fromproto.SourceLifecycleOnUpdatedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnUpdated(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SourceLifecycleOnUpdatedResponse(goResp)
-	return protoResp, nil
+	return toproto.SourceLifecycleOnUpdatedResponse(goResp), nil
 }
-func (s *sourcePluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv2.Source_Lifecycle_OnDeleted_Request) (*connectorv2.Source_Lifecycle_OnDeleted_Response, error) {
+func (s *SourcePluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv2.Source_Lifecycle_OnDeleted_Request) (*connectorv2.Source_Lifecycle_OnDeleted_Response, error) {
 	goReq := fromproto.SourceLifecycleOnDeletedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnDeleted(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SourceLifecycleOnDeletedResponse(goResp)
-	return protoResp, nil
+	return toproto.SourceLifecycleOnDeletedResponse(goResp), nil
 }
 
-type sourceRunStream struct {
+// SourceRunStream is the server-side implementation of the
+// cplugin.SourceRunStream interface.
+type SourceRunStream struct {
 	impl connectorv2.SourcePlugin_RunServer
 }
 
-func (s *sourceRunStream) Send(in cplugin.SourceRunResponse) error {
+func (s *SourceRunStream) Client() cplugin.SourceRunStreamClient {
+	panic("invalid use of server.SourceRunStream - it is a server-side type only")
+}
+func (s *SourceRunStream) Server() cplugin.SourceRunStreamServer {
+	return s
+}
+
+func (s *SourceRunStream) Send(in cplugin.SourceRunResponse) error {
 	out, err := toproto.SourceRunResponse(in)
 	if err != nil {
 		return err
@@ -115,7 +117,7 @@ func (s *sourceRunStream) Send(in cplugin.SourceRunResponse) error {
 	return s.impl.Send(out)
 }
 
-func (s *sourceRunStream) Recv() (cplugin.SourceRunRequest, error) {
+func (s *SourceRunStream) Recv() (cplugin.SourceRunRequest, error) {
 	in, err := s.impl.Recv()
 	if err != nil {
 		return cplugin.SourceRunRequest{}, err

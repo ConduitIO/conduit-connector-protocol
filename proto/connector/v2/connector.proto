@@ -143,14 +143,14 @@ message Source {
 
   message Run {
     message Request {
-      // This is the position of the record that was successfully
+      // These are the positions of the records that were successfully
       // processed.
-      bytes ack_position = 1;
+      repeated bytes ack_positions = 1;
     }
     message Response {
-      // Record contains the OpenCDC record read by the source from the 3rd
+      // Records contains the OpenCDC records read by the source from the 3rd
       // party resource.
-      opencdc.v1.Record record = 1;
+      repeated opencdc.v1.Record records = 1;
     }
   }
 
@@ -220,17 +220,22 @@ message Destination {
 
   message Run {
     message Request {
-      // Record contains the OpenCDC record that should be written to the 3rd
-      // party resource.
-      opencdc.v1.Record record = 1;
+      // Records contains a batch of OpenCDC records that should be written to
+      // the 3rd party resource.
+      repeated opencdc.v1.Record records = 1;
     }
     message Response {
-      // This is the position of the record that was processed.
-      bytes ack_position = 1;
-      // Error should be empty if the record was successfully processed or
-      // should contain a descriptive message in case the record
-      // processing failed.
-      string error = 2;
+      // Ack contains the acknowledgments for the records that were processed.
+      repeated Ack acks = 1;
+
+      message Ack {
+        // These is the position of the record that was processed.
+        bytes position = 1;
+        // Error should be empty if the record was successfully processed or
+        // should contain a descriptive message in case the record
+        // processing failed.
+        string error = 2;
+      }
     }
   }
 

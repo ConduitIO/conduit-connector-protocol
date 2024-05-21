@@ -34,10 +34,14 @@ func SourceStartRequest(in cplugin.SourceStartRequest) *connectorv1.Source_Start
 	}
 }
 
-func SourceRunRequest(in cplugin.SourceRunRequest) *connectorv1.Source_Run_Request {
-	return &connectorv1.Source_Run_Request{
-		AckPosition: in.AckPosition,
+func SourceRunRequest(in cplugin.SourceRunRequest) []*connectorv1.Source_Run_Request {
+	out := make([]*connectorv1.Source_Run_Request, len(in.AckPositions))
+	for i, pos := range in.AckPositions {
+		out[i] = &connectorv1.Source_Run_Request{
+			AckPosition: pos,
+		}
 	}
+	return out
 }
 
 func SourceStopRequest(_ cplugin.SourceStopRequest) *connectorv1.Source_Stop_Request {
@@ -77,16 +81,19 @@ func SourceStartResponse(_ cplugin.SourceStartResponse) *connectorv1.Source_Star
 	return &connectorv1.Source_Start_Response{}
 }
 
-func SourceRunResponse(in cplugin.SourceRunResponse) (*connectorv1.Source_Run_Response, error) {
-	out := connectorv1.Source_Run_Response{
-		Record: &opencdcv1.Record{},
+func SourceRunResponse(in cplugin.SourceRunResponse) ([]*connectorv1.Source_Run_Response, error) {
+	out := make([]*connectorv1.Source_Run_Response, len(in.Records))
+	for i, rec := range in.Records {
+		outResp := connectorv1.Source_Run_Response{
+			Record: &opencdcv1.Record{},
+		}
+		err := rec.ToProto(outResp.Record)
+		if err != nil {
+			return nil, err
+		}
+		out[i] = &outResp
 	}
-	err := in.Record.ToProto(out.Record)
-	if err != nil {
-		return nil, err
-	}
-
-	return &out, nil
+	return out, nil
 }
 
 func SourceStopResponse(in cplugin.SourceStopResponse) *connectorv1.Source_Stop_Response {

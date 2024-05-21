@@ -35,8 +35,13 @@ func SourceStartRequest(in cplugin.SourceStartRequest) *connectorv2.Source_Start
 }
 
 func SourceRunRequest(in cplugin.SourceRunRequest) *connectorv2.Source_Run_Request {
+	ackPositions := make([][]byte, len(in.AckPositions))
+	for i, pos := range in.AckPositions {
+		ackPositions[i] = pos
+	}
+
 	return &connectorv2.Source_Run_Request{
-		AckPosition: in.AckPosition,
+		AckPositions: ackPositions,
 	}
 }
 
@@ -79,11 +84,16 @@ func SourceStartResponse(_ cplugin.SourceStartResponse) *connectorv2.Source_Star
 
 func SourceRunResponse(in cplugin.SourceRunResponse) (*connectorv2.Source_Run_Response, error) {
 	out := connectorv2.Source_Run_Response{
-		Record: &opencdcv1.Record{},
+		Records: make([]*opencdcv1.Record, len(in.Records)),
 	}
-	err := in.Record.ToProto(out.Record)
-	if err != nil {
-		return nil, err
+
+	for i, inRec := range in.Records {
+		outRec := &opencdcv1.Record{}
+		err := inRec.ToProto(outRec)
+		if err != nil {
+			return nil, err
+		}
+		out.Records[i] = outRec
 	}
 
 	return &out, nil

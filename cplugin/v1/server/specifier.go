@@ -38,6 +38,5 @@ func (s specifierPluginServer) Specify(ctx context.Context, protoReq *connectorv
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.SpecifierSpecifyResponse(goResp)
-	return protoResp, nil
+	return toproto.SpecifierSpecifyResponse(goResp), nil
 }

@@ -24,95 +24,97 @@ import (
 )
 
 func NewDestinationPluginServer(impl cplugin.DestinationPlugin) connectorv2.DestinationPluginServer {
-	return &destinationPluginServer{impl: impl}
+	return &DestinationPluginServer{impl: impl}
 }
 
-type destinationPluginServer struct {
+type DestinationPluginServer struct {
 	connectorv2.UnimplementedDestinationPluginServer
 	impl cplugin.DestinationPlugin
 }
 
-func (s *destinationPluginServer) Configure(ctx context.Context, protoReq *connectorv2.Destination_Configure_Request) (*connectorv2.Destination_Configure_Response, error) {
+func (s *DestinationPluginServer) Configure(ctx context.Context, protoReq *connectorv2.Destination_Configure_Request) (*connectorv2.Destination_Configure_Response, error) {
 	goReq := fromproto.DestinationConfigureRequest(protoReq)
 	goResp, err := s.impl.Configure(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationConfigureResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationConfigureResponse(goResp), nil
 }
-func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connectorv2.Destination_Start_Request) (*connectorv2.Destination_Start_Response, error) {
+func (s *DestinationPluginServer) Start(ctx context.Context, protoReq *connectorv2.Destination_Start_Request) (*connectorv2.Destination_Start_Response, error) {
 	goReq := fromproto.DestinationStartRequest(protoReq)
 	goResp, err := s.impl.Start(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationStartResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationStartResponse(goResp), nil
 }
-func (s *destinationPluginServer) Run(stream connectorv2.DestinationPlugin_RunServer) error {
-	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
+func (s *DestinationPluginServer) Run(stream connectorv2.DestinationPlugin_RunServer) error {
+	err := s.impl.Run(stream.Context(), &DestinationRunStream{impl: stream})
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv2.Destination_Stop_Request) (*connectorv2.Destination_Stop_Response, error) {
+func (s *DestinationPluginServer) Stop(ctx context.Context, protoReq *connectorv2.Destination_Stop_Request) (*connectorv2.Destination_Stop_Response, error) {
 	goReq := fromproto.DestinationStopRequest(protoReq)
 	goResp, err := s.impl.Stop(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationStopResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationStopResponse(goResp), nil
 }
-func (s *destinationPluginServer) Teardown(ctx context.Context, protoReq *connectorv2.Destination_Teardown_Request) (*connectorv2.Destination_Teardown_Response, error) {
+func (s *DestinationPluginServer) Teardown(ctx context.Context, protoReq *connectorv2.Destination_Teardown_Request) (*connectorv2.Destination_Teardown_Response, error) {
 	goReq := fromproto.DestinationTeardownRequest(protoReq)
 	goResp, err := s.impl.Teardown(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationTeardownResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationTeardownResponse(goResp), nil
 }
-func (s *destinationPluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnCreated_Request) (*connectorv2.Destination_Lifecycle_OnCreated_Response, error) {
+func (s *DestinationPluginServer) LifecycleOnCreated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnCreated_Request) (*connectorv2.Destination_Lifecycle_OnCreated_Response, error) {
 	goReq := fromproto.DestinationLifecycleOnCreatedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnCreated(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationLifecycleOnCreatedResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationLifecycleOnCreatedResponse(goResp), nil
 }
-func (s *destinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnUpdated_Request) (*connectorv2.Destination_Lifecycle_OnUpdated_Response, error) {
+func (s *DestinationPluginServer) LifecycleOnUpdated(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnUpdated_Request) (*connectorv2.Destination_Lifecycle_OnUpdated_Response, error) {
 	goReq := fromproto.DestinationLifecycleOnUpdatedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnUpdated(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationLifecycleOnUpdatedResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationLifecycleOnUpdatedResponse(goResp), nil
 }
-func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnDeleted_Request) (*connectorv2.Destination_Lifecycle_OnDeleted_Response, error) {
+func (s *DestinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *connectorv2.Destination_Lifecycle_OnDeleted_Request) (*connectorv2.Destination_Lifecycle_OnDeleted_Response, error) {
 	goReq := fromproto.DestinationLifecycleOnDeletedRequest(protoReq)
 	goResp, err := s.impl.LifecycleOnDeleted(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	protoResp := toproto.DestinationLifecycleOnDeletedResponse(goResp)
-	return protoResp, nil
+	return toproto.DestinationLifecycleOnDeletedResponse(goResp), nil
 }
 
-type destinationRunStream struct {
+// DestinationRunStream is the server-side implementation of the
+// cplugin.DestinationRunStream interface.
+type DestinationRunStream struct {
 	impl connectorv2.DestinationPlugin_RunServer
 }
 
-func (s *destinationRunStream) Send(in cplugin.DestinationRunResponse) error {
+func (s *DestinationRunStream) Client() cplugin.DestinationRunStreamClient {
+	panic("invalid use of server.DestinationRunStream - it is a server-side type only")
+}
+func (s *DestinationRunStream) Server() cplugin.DestinationRunStreamServer {
+	return s
+}
+
+func (s *DestinationRunStream) Send(in cplugin.DestinationRunResponse) error {
 	out := toproto.DestinationRunResponse(in)
 	return s.impl.Send(out)
 }
 
-func (s *destinationRunStream) Recv() (cplugin.DestinationRunRequest, error) {
+func (s *DestinationRunStream) Recv() (cplugin.DestinationRunRequest, error) {
 	in, err := s.impl.Recv()
 	if err != nil {
 		return cplugin.DestinationRunRequest{}, err

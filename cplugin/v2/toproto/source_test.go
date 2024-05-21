@@ -90,10 +90,10 @@ var (
 
 func TestSourceRunResponse(t *testing.T) {
 	have := cplugin.SourceRunResponse{
-		Record: testRecordGo,
+		Records: []opencdc.Record{testRecordGo, testRecordGo},
 	}
 	want := &connectorv2.Source_Run_Response{
-		Record: &testRecordProto,
+		Records: []*opencdcv1.Record{&testRecordProto, &testRecordProto},
 	}
 
 	is := is.New(t)

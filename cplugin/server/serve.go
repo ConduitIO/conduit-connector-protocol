@@ -29,30 +29,9 @@ import (
 	"google.golang.org/grpc"
 )
 
-var HandshakeConfig = plugin.HandshakeConfig{
-	MagicCookieKey:   "CONDUIT_PLUGIN_MAGIC_COOKIE",
-	MagicCookieValue: "204e8e812c3a1bb73b838928c575b42a105dd2e9aa449be481bc4590486df53f",
-}
-
-var (
-	v1PluginSetFactory = newPluginSetFactory(
-		connectorv1.RegisterSpecifierPluginServer,
-		serverv1.NewSpecifierPluginServer,
-		connectorv1.RegisterSourcePluginServer,
-		serverv1.NewSourcePluginServer,
-		connectorv1.RegisterDestinationPluginServer,
-		serverv1.NewDestinationPluginServer,
-	)
-	v2PluginSetFactory = newPluginSetFactory(
-		connectorv2.RegisterSpecifierPluginServer,
-		serverv2.NewSpecifierPluginServer,
-		connectorv2.RegisterSourcePluginServer,
-		serverv2.NewSourcePluginServer,
-		connectorv2.RegisterDestinationPluginServer,
-		serverv2.NewDestinationPluginServer,
-	)
-)
-
+// Serve starts a go-plugin server with the given factories for creating
+// Specifier, Source, and Destination plugins. The server will support both v1
+// and v2 of the connector protocol.
 func Serve(
 	specifierFactory func() cplugin.SpecifierPlugin,
 	sourceFactory func() cplugin.SourcePlugin,
@@ -60,7 +39,7 @@ func Serve(
 	opts ...ServeOption,
 ) error {
 	serveConfig := &plugin.ServeConfig{
-		HandshakeConfig: HandshakeConfig,
+		HandshakeConfig: cplugin.HandshakeConfig,
 		VersionedPlugins: map[int]plugin.PluginSet{
 			v1.Version: v1PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
 			v2.Version: v2PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
@@ -113,6 +92,29 @@ func WithGRPCServerOptions(opt ...grpc.ServerOption) ServeOption {
 		return nil
 	})
 }
+
+var (
+	// v1PluginSetFactory is a factory for creating a PluginSet for v1 of the
+	// connector protocol.
+	v1PluginSetFactory = newPluginSetFactory(
+		connectorv1.RegisterSpecifierPluginServer,
+		serverv1.NewSpecifierPluginServer,
+		connectorv1.RegisterSourcePluginServer,
+		serverv1.NewSourcePluginServer,
+		connectorv1.RegisterDestinationPluginServer,
+		serverv1.NewDestinationPluginServer,
+	)
+	// v2PluginSetFactory is a factory for creating a PluginSet for v2 of the
+	// connector protocol.
+	v2PluginSetFactory = newPluginSetFactory(
+		connectorv2.RegisterSpecifierPluginServer,
+		serverv2.NewSpecifierPluginServer,
+		connectorv2.RegisterSourcePluginServer,
+		serverv2.NewSourcePluginServer,
+		connectorv2.RegisterDestinationPluginServer,
+		serverv2.NewDestinationPluginServer,
+	)
+)
 
 // pluginSetFactory is a function that takes cplugin factories and creates a PluginSet.
 type pluginSetFactory func(

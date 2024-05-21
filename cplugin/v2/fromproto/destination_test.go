@@ -112,10 +112,10 @@ func TestDestinationConfigureRequest(t *testing.T) {
 
 func TestDestinationRunRequest(t *testing.T) {
 	have := &connectorv2.Destination_Run_Request{
-		Record: &testRecordProto,
+		Records: []*opencdcv1.Record{&testRecordProto, &testRecordProto},
 	}
 	want := cplugin.DestinationRunRequest{
-		Record: testRecordGo,
+		Records: []opencdc.Record{testRecordGo, testRecordGo},
 	}
 
 	is := is.New(t)

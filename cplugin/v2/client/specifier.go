@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package server
+package client
 
 import (
 	"context"
@@ -23,20 +23,25 @@ import (
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 )
 
-func NewSpecifierPluginServer(impl cplugin.SpecifierPlugin) connectorv2.SpecifierPluginServer {
-	return &SpecifierPluginServer{impl: impl}
+type SpecifierPluginClient struct {
+	grpcClient connectorv2.SpecifierPluginClient
 }
 
-type SpecifierPluginServer struct {
-	connectorv2.UnimplementedSpecifierPluginServer
-	impl cplugin.SpecifierPlugin
+var _ cplugin.SpecifierPlugin = (*SpecifierPluginClient)(nil)
+
+func NewSpecifierPluginClient(grpcClient connectorv2.SpecifierPluginClient) cplugin.SpecifierPlugin {
+	return &SpecifierPluginClient{grpcClient: grpcClient}
 }
 
-func (s SpecifierPluginServer) Specify(ctx context.Context, protoReq *connectorv2.Specifier_Specify_Request) (*connectorv2.Specifier_Specify_Response, error) {
-	goReq := fromproto.SpecifierSpecifyRequest(protoReq)
-	goResp, err := s.impl.Specify(ctx, goReq)
+func (s *SpecifierPluginClient) Specify(ctx context.Context, goReq cplugin.SpecifierSpecifyRequest) (cplugin.SpecifierSpecifyResponse, error) {
+	protoReq := toproto.SpecifierSpecifyRequest(goReq)
+	protoResp, err := s.grpcClient.Specify(ctx, protoReq)
 	if err != nil {
-		return nil, err
+		return cplugin.SpecifierSpecifyResponse{}, unwrapGRPCError(err)
 	}
-	return toproto.SpecifierSpecifyResponse(goResp), nil
+	goResp, err := fromproto.SpecifierSpecifyResponse(protoResp)
+	if err != nil {
+		return cplugin.SpecifierSpecifyResponse{}, err
+	}
+	return goResp, nil
 }
