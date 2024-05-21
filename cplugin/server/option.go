@@ -35,7 +35,7 @@ func (s serveConfigFunc) ApplyOption(in *plugin.ServeConfig) error {
 	return s(in)
 }
 
-// WithDebug returns a Option that will set the server into debug mode, using
+// WithDebug returns an Option that will set the server into debug mode, using
 // the passed options to populate the go-plugin ServeTestConfig.
 func WithDebug(ctx context.Context, config chan *plugin.ReattachConfig, closeCh chan struct{}) Option {
 	return serveConfigFunc(func(in *plugin.ServeConfig) error {

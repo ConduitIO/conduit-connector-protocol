@@ -17,7 +17,6 @@ package client
 import (
 	"context"
 	"fmt"
-	"io"
 
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	"github.com/conduitio/conduit-connector-protocol/cplugin/v2/fromproto"
@@ -146,10 +145,6 @@ func (s *SourceRunStream) Send(goReq cplugin.SourceRunRequest) error {
 	protoReq := toproto.SourceRunRequest(goReq)
 	err := s.client.Send(protoReq)
 	if err != nil {
-		if err == io.EOF {
-			// stream was gracefully closed
-			return cplugin.ErrStreamNotOpen
-		}
 		return unwrapGRPCError(err)
 	}
 	return nil
@@ -158,9 +153,6 @@ func (s *SourceRunStream) Send(goReq cplugin.SourceRunRequest) error {
 func (s *SourceRunStream) Recv() (cplugin.SourceRunResponse, error) {
 	protoResp, err := s.client.Recv()
 	if err != nil {
-		if err == io.EOF {
-			return cplugin.SourceRunResponse{}, cplugin.ErrStreamNotOpen
-		}
 		return cplugin.SourceRunResponse{}, unwrapGRPCError(err)
 	}
 	goResp, err := fromproto.SourceRunResponse(protoResp)

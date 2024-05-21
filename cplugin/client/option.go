@@ -36,7 +36,7 @@ func (s serveConfigFunc) ApplyOption(in *plugin.ClientConfig) error {
 	return s(in)
 }
 
-// WithReattachConfig returns a Option that will set the client into debug
+// WithReattachConfig returns an Option that will set the client into debug
 // mode, using the passed options to populate the go-plugin ReattachConfig.
 func WithReattachConfig(config *plugin.ReattachConfig) Option {
 	return serveConfigFunc(func(in *plugin.ClientConfig) error {

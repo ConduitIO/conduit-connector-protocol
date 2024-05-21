@@ -17,6 +17,5 @@ package cplugin
 import "errors"
 
 var (
-	ErrStreamNotOpen = errors.New("stream not open")
 	ErrUnimplemented = errors.New("method not implemented")
 )
