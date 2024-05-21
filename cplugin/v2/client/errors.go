@@ -24,8 +24,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// TODO move this error handling up to the generic client package
-
 // knownErrors contains known error messages that are mapped to internal error
 // types. gRPC does not retain error types, so we have to resort to relying on
 // the error message itself.

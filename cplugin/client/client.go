@@ -22,10 +22,12 @@ import (
 	"os/exec"
 
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
+	v1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1"
+	v2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2"
+	clientv2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2/client"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	"google.golang.org/grpc"
 )
 
 // NewClient creates a new plugin client. The provided context is used to kill
@@ -43,16 +45,12 @@ func NewClient(
 	clientConfig := &plugin.ClientConfig{
 		HandshakeConfig: cplugin.HandshakeConfig,
 		VersionedPlugins: map[int]plugin.PluginSet{
-			1: {
-				"specifier":   &GRPCSpecifierPlugin{},
-				"source":      &GRPCSourcePlugin{},
-				"destination": &GRPCDestinationPlugin{},
-			},
-			2: {
-				"specifier":   &GRPCSpecifierPlugin{},
-				"source":      &GRPCSourcePlugin{},
-				"destination": &GRPCDestinationPlugin{},
-			},
+			v1.Version: nil, // TODO
+			v2.Version: newPluginSet(
+				clientv2.NewSpecifierPluginClient,
+				clientv2.NewSourcePluginClient,
+				clientv2.NewDestinationPluginClient,
+			),
 		},
 		Cmd: cmd,
 		AllowedProtocols: []plugin.Protocol{
@@ -144,26 +142,40 @@ func getFreePort() int {
 	return l.Addr().(*net.TCPAddr).Port
 }
 
-// knownErrors contains known error messages that are mapped to internal error
-// types. gRPC does not retain error types, so we have to resort to relying on
-// the error message itself.
-var knownErrors = map[string]error{
-	"context canceled":          context.Canceled,
-	"context deadline exceeded": context.DeadlineExceeded,
+func newPluginSet[SPEC, SRC, DST any](
+	newSpecifierPluginClient func(*grpc.ClientConn) SPEC,
+	newSourcePluginClient func(*grpc.ClientConn) SRC,
+	newDestinationPluginClient func(*grpc.ClientConn) DST,
+) plugin.PluginSet {
+	return plugin.PluginSet{
+		"specifier":   newGRPCPlugin(newSpecifierPluginClient),
+		"source":      newGRPCPlugin(newSourcePluginClient),
+		"destination": newGRPCPlugin(newDestinationPluginClient),
+	}
 }
 
-// unwrapGRPCError removes the gRPC wrapper from the error and returns a known
-// error if possible, otherwise creates an internal error.
-func unwrapGRPCError(err error) error {
-	st, ok := status.FromError(err)
-	if !ok {
-		return err
+type grpcPlugin[T any] struct {
+	plugin.NetRPCUnsupportedPlugin
+	newPluginClient func(cc *grpc.ClientConn) T
+}
+
+func newGRPCPlugin[T any](
+	newPluginClient func(cc *grpc.ClientConn) T,
+) *grpcPlugin[T] {
+	return &grpcPlugin[T]{
+		newPluginClient: newPluginClient,
 	}
-	if st.Code() == codes.Unimplemented {
-		return fmt.Errorf("%s: %w", st.Message(), cplugin.ErrUnimplemented)
-	}
-	if knownErr, ok := knownErrors[st.Message()]; ok {
-		return knownErr
-	}
-	return errors.New(st.Message())
+}
+
+var _ plugin.Plugin = (*grpcPlugin[any])(nil)
+var _ plugin.GRPCPlugin = (*grpcPlugin[any])(nil)
+
+func (p *grpcPlugin[T]) GRPCClient(_ context.Context, _ *plugin.GRPCBroker, cc *grpc.ClientConn) (any, error) {
+	return p.newPluginClient(cc), nil
+}
+
+// GRPCServer always returns an error; we're only implementing the client half
+// of the interface.
+func (p *grpcPlugin[T]) GRPCServer(*plugin.GRPCBroker, *grpc.Server) error {
+	return errors.New("this package only implements gRPC clients")
 }

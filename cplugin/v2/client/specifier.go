@@ -21,6 +21,7 @@ import (
 	"github.com/conduitio/conduit-connector-protocol/cplugin/v2/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/cplugin/v2/toproto"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
+	"google.golang.org/grpc"
 )
 
 type SpecifierPluginClient struct {
@@ -29,8 +30,8 @@ type SpecifierPluginClient struct {
 
 var _ cplugin.SpecifierPlugin = (*SpecifierPluginClient)(nil)
 
-func NewSpecifierPluginClient(grpcClient connectorv2.SpecifierPluginClient) cplugin.SpecifierPlugin {
-	return &SpecifierPluginClient{grpcClient: grpcClient}
+func NewSpecifierPluginClient(cc *grpc.ClientConn) cplugin.SpecifierPlugin {
+	return &SpecifierPluginClient{grpcClient: connectorv2.NewSpecifierPluginClient(cc)}
 }
 
 func (s *SpecifierPluginClient) Specify(ctx context.Context, goReq cplugin.SpecifierSpecifyRequest) (cplugin.SpecifierSpecifyResponse, error) {

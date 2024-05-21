@@ -49,11 +49,7 @@ func (s *destinationPluginServer) Start(ctx context.Context, protoReq *connector
 	return toproto.DestinationStartResponse(goResp), nil
 }
 func (s *destinationPluginServer) Run(stream connectorv1.DestinationPlugin_RunServer) error {
-	err := s.impl.Run(stream.Context(), &destinationRunStream{impl: stream})
-	if err != nil {
-		return err
-	}
-	return nil
+	return s.impl.Run(stream.Context(), &DestinationRunStream{stream: stream})
 }
 func (s *destinationPluginServer) Stop(ctx context.Context, protoReq *connectorv1.Destination_Stop_Request) (*connectorv1.Destination_Stop_Response, error) {
 	goReq := fromproto.DestinationStopRequest(protoReq)
@@ -96,14 +92,26 @@ func (s *destinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoR
 	return toproto.DestinationLifecycleOnDeletedResponse(goResp), nil
 }
 
-type destinationRunStream struct {
-	impl connectorv1.DestinationPlugin_RunServer
+// DestinationRunStream is the server-side implementation of the
+// cplugin.DestinationRunStream interface.
+type DestinationRunStream struct {
+	stream connectorv1.DestinationPlugin_RunServer
 }
 
-func (s *destinationRunStream) Send(in cplugin.DestinationRunResponse) error {
+func (s *DestinationRunStream) Client() cplugin.DestinationRunStreamClient {
+	panic("invalid use of server.DestinationRunStream - it is a server-side type only")
+}
+func (s *DestinationRunStream) Server() cplugin.DestinationRunStreamServer {
+	if s.stream == nil {
+		panic("invalid use of server.DestinationRunStream - stream has not been initialized using DestinationPluginServer.Run")
+	}
+	return s
+}
+
+func (s *DestinationRunStream) Send(in cplugin.DestinationRunResponse) error {
 	out := toproto.DestinationRunResponse(in)
 	for _, out := range out {
-		err := s.impl.Send(out)
+		err := s.stream.Send(out)
 		if err != nil {
 			return err
 		}
@@ -111,8 +119,8 @@ func (s *destinationRunStream) Send(in cplugin.DestinationRunResponse) error {
 	return nil
 }
 
-func (s *destinationRunStream) Recv() (cplugin.DestinationRunRequest, error) {
-	in, err := s.impl.Recv()
+func (s *DestinationRunStream) Recv() (cplugin.DestinationRunRequest, error) {
+	in, err := s.stream.Recv()
 	if err != nil {
 		return cplugin.DestinationRunRequest{}, err
 	}

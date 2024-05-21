@@ -49,11 +49,7 @@ func (s *DestinationPluginServer) Start(ctx context.Context, protoReq *connector
 	return toproto.DestinationStartResponse(goResp), nil
 }
 func (s *DestinationPluginServer) Run(stream connectorv2.DestinationPlugin_RunServer) error {
-	err := s.impl.Run(stream.Context(), &DestinationRunStream{impl: stream})
-	if err != nil {
-		return err
-	}
-	return nil
+	return s.impl.Run(stream.Context(), &DestinationRunStream{stream: stream})
 }
 func (s *DestinationPluginServer) Stop(ctx context.Context, protoReq *connectorv2.Destination_Stop_Request) (*connectorv2.Destination_Stop_Response, error) {
 	goReq := fromproto.DestinationStopRequest(protoReq)
@@ -99,23 +95,26 @@ func (s *DestinationPluginServer) LifecycleOnDeleted(ctx context.Context, protoR
 // DestinationRunStream is the server-side implementation of the
 // cplugin.DestinationRunStream interface.
 type DestinationRunStream struct {
-	impl connectorv2.DestinationPlugin_RunServer
+	stream connectorv2.DestinationPlugin_RunServer
 }
 
 func (s *DestinationRunStream) Client() cplugin.DestinationRunStreamClient {
 	panic("invalid use of server.DestinationRunStream - it is a server-side type only")
 }
 func (s *DestinationRunStream) Server() cplugin.DestinationRunStreamServer {
+	if s.stream == nil {
+		panic("invalid use of server.DestinationRunStream - stream has not been initialized using DestinationPluginServer.Run")
+	}
 	return s
 }
 
 func (s *DestinationRunStream) Send(in cplugin.DestinationRunResponse) error {
 	out := toproto.DestinationRunResponse(in)
-	return s.impl.Send(out)
+	return s.stream.Send(out)
 }
 
 func (s *DestinationRunStream) Recv() (cplugin.DestinationRunRequest, error) {
-	in, err := s.impl.Recv()
+	in, err := s.stream.Recv()
 	if err != nil {
 		return cplugin.DestinationRunRequest{}, err
 	}

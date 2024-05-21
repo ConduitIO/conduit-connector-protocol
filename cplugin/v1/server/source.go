@@ -49,7 +49,7 @@ func (s *sourcePluginServer) Start(ctx context.Context, protoReq *connectorv1.So
 	return toproto.SourceStartResponse(goResp), nil
 }
 func (s *sourcePluginServer) Run(stream connectorv1.SourcePlugin_RunServer) error {
-	err := s.impl.Run(stream.Context(), &sourceRunStream{impl: stream})
+	err := s.impl.Run(stream.Context(), &SourceRunStream{stream: stream})
 	if err != nil {
 		return err
 	}
@@ -96,17 +96,29 @@ func (s *sourcePluginServer) LifecycleOnDeleted(ctx context.Context, protoReq *c
 	return toproto.SourceLifecycleOnDeletedResponse(goResp), nil
 }
 
-type sourceRunStream struct {
-	impl connectorv1.SourcePlugin_RunServer
+// SourceRunStream is the server-side implementation of the
+// cplugin.SourceRunStream interface.
+type SourceRunStream struct {
+	stream connectorv1.SourcePlugin_RunServer
 }
 
-func (s *sourceRunStream) Send(in cplugin.SourceRunResponse) error {
+func (s *SourceRunStream) Client() cplugin.SourceRunStreamClient {
+	panic("invalid use of server.SourceRunStream - it is a server-side type only")
+}
+func (s *SourceRunStream) Server() cplugin.SourceRunStreamServer {
+	if s.stream == nil {
+		panic("invalid use of server.SourceRunStream - stream has not been initialized using SourcePluginServer.Run")
+	}
+	return s
+}
+
+func (s *SourceRunStream) Send(in cplugin.SourceRunResponse) error {
 	out, err := toproto.SourceRunResponse(in)
 	if err != nil {
 		return err
 	}
 	for _, out := range out {
-		err := s.impl.Send(out)
+		err := s.stream.Send(out)
 		if err != nil {
 			return err
 		}
@@ -114,8 +126,8 @@ func (s *sourceRunStream) Send(in cplugin.SourceRunResponse) error {
 	return nil
 }
 
-func (s *sourceRunStream) Recv() (cplugin.SourceRunRequest, error) {
-	in, err := s.impl.Recv()
+func (s *SourceRunStream) Recv() (cplugin.SourceRunRequest, error) {
+	in, err := s.stream.Recv()
 	if err != nil {
 		return cplugin.SourceRunRequest{}, err
 	}

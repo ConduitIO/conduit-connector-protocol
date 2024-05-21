@@ -18,7 +18,6 @@ import (
 	"testing"
 
 	"github.com/conduitio/conduit-commons/opencdc"
-
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 	"github.com/google/go-cmp/cmp"

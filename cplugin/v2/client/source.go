@@ -23,6 +23,7 @@ import (
 	"github.com/conduitio/conduit-connector-protocol/cplugin/v2/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/cplugin/v2/toproto"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
+	"google.golang.org/grpc"
 )
 
 type SourcePluginClient struct {
@@ -31,8 +32,8 @@ type SourcePluginClient struct {
 
 var _ cplugin.SourcePlugin = (*SourcePluginClient)(nil)
 
-func NewSourcePluginClient(grpcClient connectorv2.SourcePluginClient) cplugin.SourcePlugin {
-	return &SourcePluginClient{grpcClient: grpcClient}
+func NewSourcePluginClient(cc *grpc.ClientConn) cplugin.SourcePlugin {
+	return &SourcePluginClient{grpcClient: connectorv2.NewSourcePluginClient(cc)}
 }
 
 func (s *SourcePluginClient) Configure(ctx context.Context, goReq cplugin.SourceConfigureRequest) (cplugin.SourceConfigureResponse, error) {
