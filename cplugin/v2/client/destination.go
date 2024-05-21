@@ -70,7 +70,6 @@ func (s *DestinationPluginClient) Run(ctx context.Context, stream cplugin.Destin
 
 	clientStream.client = grpcStream
 	return nil
-
 }
 
 func (s *DestinationPluginClient) Stop(ctx context.Context, goReq cplugin.DestinationStopRequest) (cplugin.DestinationStopResponse, error) {

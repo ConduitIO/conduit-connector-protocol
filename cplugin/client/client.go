@@ -17,13 +17,11 @@ package client
 import (
 	"context"
 	"errors"
-	"fmt"
-	"net"
 	"os/exec"
 
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
-	v1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1"
-	clientv1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1/client"
+	v1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1"              //nolint:staticcheck // v1 is used for backwards compatibility
+	clientv1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1/client" //nolint:staticcheck // v1 is used for backwards compatibility
 	v2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2"
 	clientv2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2/client"
 	"github.com/hashicorp/go-hclog"
@@ -37,7 +35,7 @@ import (
 func NewClient(
 	logger hclog.Logger,
 	path string,
-	opts ...ClientOption,
+	opts ...Option,
 ) (*plugin.Client, error) {
 	cmd := exec.Command(path)
 	// NB: we give cmd a clean env here by setting Env to an empty slice
@@ -67,84 +65,13 @@ func NewClient(
 	}
 
 	for _, opt := range opts {
-		err := opt.ApplyClientOption(clientConfig)
+		err := opt.ApplyOption(clientConfig)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	return plugin.NewClient(clientConfig), nil
-}
-
-// ClientOption is an interface for defining options that can be passed to the
-// NewClient function. Each implementation modifies the ClientConfig being
-// generated. A slice of ClientOptions then, cumulatively applied, render a full
-// ClientConfig.
-type ClientOption interface {
-	ApplyClientOption(*plugin.ClientConfig) error
-}
-
-type serveConfigFunc func(*plugin.ClientConfig) error
-
-func (s serveConfigFunc) ApplyClientOption(in *plugin.ClientConfig) error {
-	return s(in)
-}
-
-// WithReattachConfig returns a ClientOption that will set the client into debug
-// mode, using the passed options to populate the go-plugin ReattachConfig.
-func WithReattachConfig(config *plugin.ReattachConfig) ClientOption {
-	return serveConfigFunc(func(in *plugin.ClientConfig) error {
-		in.Reattach = config
-		in.Cmd = nil // only reattach or cmd can be set
-		return nil
-	})
-}
-
-// WithDelve runs the plugin with Delve listening on the supplied port. If the
-// port is 0 it finds a random free port.
-// For more information on how to use Delve refer to the official repository:
-// https://github.com/go-delve/delve
-func WithDelve(port int) ClientOption {
-	const delve = "dlv"
-	return serveConfigFunc(func(in *plugin.ClientConfig) error {
-		delvePath, err := exec.LookPath(delve)
-		if err != nil {
-			return err
-		}
-
-		if port == 0 {
-			port = getFreePort()
-		}
-
-		pluginPath := in.Cmd.Path
-		in.Cmd.Path = delvePath
-		in.Cmd.Args = []string{
-			delve,
-			fmt.Sprintf("--listen=:%d", port),
-			"--headless=true", "--api-version=2", "--accept-multiclient", "--log-dest=2",
-			"exec", pluginPath,
-		}
-
-		in.Logger.Info("DELVE: starting plugin", "port", port)
-		return nil
-	})
-}
-
-func getFreePort() int {
-	// Excerpt from net.Listen godoc:
-	// If the port in the address parameter is empty or "0", as in
-	// "127.0.0.1:" or "[::1]:0", a port number is automatically chosen.
-	l, err := net.Listen("tcp", "localhost:0")
-	if err != nil {
-		panic(err)
-	}
-
-	err = l.Close()
-	if err != nil {
-		panic(err)
-	}
-
-	return l.Addr().(*net.TCPAddr).Port
 }
 
 func newPluginSet[SPEC, SRC, DST any](

@@ -19,8 +19,8 @@ import (
 	"errors"
 
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
-	v1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1"
-	serverv1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1/server"
+	v1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1"              //nolint:staticcheck // v1 is used for backwards compatibility
+	serverv1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1/server" //nolint:staticcheck // v1 is used for backwards compatibility
 	v2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2"
 	serverv2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2/server"
 	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
@@ -36,7 +36,7 @@ func Serve(
 	specifierFactory func() cplugin.SpecifierPlugin,
 	sourceFactory func() cplugin.SourcePlugin,
 	destinationFactory func() cplugin.DestinationPlugin,
-	opts ...ServeOption,
+	opts ...Option,
 ) error {
 	serveConfig := &plugin.ServeConfig{
 		HandshakeConfig: cplugin.HandshakeConfig,
@@ -47,7 +47,7 @@ func Serve(
 		GRPCServer: plugin.DefaultGRPCServer,
 	}
 	for _, opt := range opts {
-		err := opt.ApplyServeOption(serveConfig)
+		err := opt.ApplyOption(serveConfig)
 		if err != nil {
 			return err
 		}
@@ -55,42 +55,6 @@ func Serve(
 
 	plugin.Serve(serveConfig)
 	return nil
-}
-
-// ServeOption is an interface for defining options that can be passed to the
-// Serve function. Each implementation modifies the ServeConfig being
-// generated. A slice of ServeOptions then, cumulatively applied, render a full
-// ServeConfig.
-type ServeOption interface {
-	ApplyServeOption(*plugin.ServeConfig) error
-}
-
-type serveConfigFunc func(*plugin.ServeConfig) error
-
-func (s serveConfigFunc) ApplyServeOption(in *plugin.ServeConfig) error {
-	return s(in)
-}
-
-// WithDebug returns a ServeOption that will set the server into debug mode, using
-// the passed options to populate the go-plugin ServeTestConfig.
-func WithDebug(ctx context.Context, config chan *plugin.ReattachConfig, closeCh chan struct{}) ServeOption {
-	return serveConfigFunc(func(in *plugin.ServeConfig) error {
-		in.Test = &plugin.ServeTestConfig{
-			Context:          ctx,
-			ReattachConfigCh: config,
-			CloseCh:          closeCh,
-		}
-		return nil
-	})
-}
-
-func WithGRPCServerOptions(opt ...grpc.ServerOption) ServeOption {
-	return serveConfigFunc(func(in *plugin.ServeConfig) error {
-		in.GRPCServer = func(opts []grpc.ServerOption) *grpc.Server {
-			return plugin.DefaultGRPCServer(append(opts, opt...))
-		}
-		return nil
-	})
 }
 
 var (
