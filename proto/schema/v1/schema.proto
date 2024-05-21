@@ -13,15 +13,18 @@ message Schema {
     TYPE_AVRO = 1;
   }
 
-  // The schema version's unique ID
+  // The schema's globally unique ID
   string id = 1;
+  // The schema's name (globally unique)
   string name = 2;
   int32 version = 3;
   Type type = 4;
+  // The schema contents
   bytes bytes = 5;
 }
 
 message RegisterRequest {
+  // The schema name. It needs to be unique in the scope of a connector.
   string name = 1;
   Schema.Type type = 2;
   bytes bytes = 3;
