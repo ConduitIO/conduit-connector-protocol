@@ -71,12 +71,14 @@ type Schema struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The schema version's unique ID
-	Id      string      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// The schema's globally unique ID
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// The schema's name (globally unique)
 	Name    string      `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Version int32       `protobuf:"varint,3,opt,name=version,proto3" json:"version,omitempty"`
 	Type    Schema_Type `protobuf:"varint,4,opt,name=type,proto3,enum=schema.v1.Schema_Type" json:"type,omitempty"`
-	Bytes   []byte      `protobuf:"bytes,5,opt,name=bytes,proto3" json:"bytes,omitempty"`
+	// The schema contents
+	Bytes []byte `protobuf:"bytes,5,opt,name=bytes,proto3" json:"bytes,omitempty"`
 }
 
 func (x *Schema) Reset() {
@@ -151,6 +153,7 @@ type RegisterRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The schema name. It needs to be unique in the scope of a connector.
 	Name  string      `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Type  Schema_Type `protobuf:"varint,2,opt,name=type,proto3,enum=schema.v1.Schema_Type" json:"type,omitempty"`
 	Bytes []byte      `protobuf:"bytes,3,opt,name=bytes,proto3" json:"bytes,omitempty"`
