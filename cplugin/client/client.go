@@ -23,6 +23,7 @@ import (
 
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	v1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1"
+	clientv1 "github.com/conduitio/conduit-connector-protocol/cplugin/v1/client"
 	v2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2"
 	clientv2 "github.com/conduitio/conduit-connector-protocol/cplugin/v2/client"
 	"github.com/hashicorp/go-hclog"
@@ -45,7 +46,11 @@ func NewClient(
 	clientConfig := &plugin.ClientConfig{
 		HandshakeConfig: cplugin.HandshakeConfig,
 		VersionedPlugins: map[int]plugin.PluginSet{
-			v1.Version: nil, // TODO
+			v1.Version: newPluginSet(
+				clientv1.NewSpecifierPluginClient,
+				clientv1.NewSourcePluginClient,
+				clientv1.NewDestinationPluginClient,
+			),
 			v2.Version: newPluginSet(
 				clientv2.NewSpecifierPluginClient,
 				clientv2.NewSourcePluginClient,

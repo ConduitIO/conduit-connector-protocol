@@ -20,20 +20,20 @@ import (
 	"io"
 
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
-	"github.com/conduitio/conduit-connector-protocol/cplugin/v2/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/cplugin/v2/toproto"
-	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
+	"github.com/conduitio/conduit-connector-protocol/cplugin/v1/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/cplugin/v1/toproto"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 	"google.golang.org/grpc"
 )
 
 type DestinationPluginClient struct {
-	grpcClient connectorv2.DestinationPluginClient
+	grpcClient connectorv1.DestinationPluginClient
 }
 
 var _ cplugin.DestinationPlugin = (*DestinationPluginClient)(nil)
 
 func NewDestinationPluginClient(cc *grpc.ClientConn) cplugin.DestinationPlugin {
-	return &DestinationPluginClient{grpcClient: connectorv2.NewDestinationPluginClient(cc)}
+	return &DestinationPluginClient{grpcClient: connectorv1.NewDestinationPluginClient(cc)}
 }
 
 func (s *DestinationPluginClient) Configure(ctx context.Context, goReq cplugin.DestinationConfigureRequest) (cplugin.DestinationConfigureResponse, error) {
@@ -123,7 +123,7 @@ func (s *DestinationPluginClient) NewStream() cplugin.DestinationRunStream {
 // DestinationRunStream is the client-side implementation of the
 // cplugin.DestinationRunStream interface.
 type DestinationRunStream struct {
-	client connectorv2.DestinationPlugin_RunClient
+	client connectorv1.DestinationPlugin_RunClient
 }
 
 func (s *DestinationRunStream) Client() cplugin.DestinationRunStreamClient {
@@ -143,13 +143,16 @@ func (s *DestinationRunStream) Send(goReq cplugin.DestinationRunRequest) error {
 		return err
 	}
 
-	err = s.client.Send(protoReq)
-	if err != nil {
-		if err == io.EOF {
-			// stream was gracefully closed
-			return cplugin.ErrStreamNotOpen
+	// Batching is not supported in v1, send each request individually.
+	for _, req := range protoReq {
+		err = s.client.Send(req)
+		if err != nil {
+			if err == io.EOF {
+				// stream was gracefully closed
+				return cplugin.ErrStreamNotOpen
+			}
+			return unwrapGRPCError(err)
 		}
-		return unwrapGRPCError(err)
 	}
 	return nil
 }

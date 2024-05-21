@@ -72,6 +72,14 @@ func DestinationLifecycleOnDeletedRequest(in *connectorv1.Destination_Lifecycle_
 
 // -- Response Conversions ----------------------------------------------------
 
+func DestinationConfigureResponse(_ *connectorv1.Destination_Configure_Response) cplugin.DestinationConfigureResponse {
+	return cplugin.DestinationConfigureResponse{}
+}
+
+func DestinationStartResponse(_ *connectorv1.Destination_Start_Response) cplugin.DestinationStartResponse {
+	return cplugin.DestinationStartResponse{}
+}
+
 func DestinationRunResponse(in *connectorv1.Destination_Run_Response) cplugin.DestinationRunResponse {
 	return cplugin.DestinationRunResponse{
 		Acks: []cplugin.DestinationRunResponseAck{{
@@ -79,4 +87,22 @@ func DestinationRunResponse(in *connectorv1.Destination_Run_Response) cplugin.De
 			Error:    in.Error,
 		}},
 	}
+}
+
+func DestinationStopResponse(_ *connectorv1.Destination_Stop_Response) cplugin.DestinationStopResponse {
+	return cplugin.DestinationStopResponse{}
+}
+
+func DestinationTeardownResponse(_ *connectorv1.Destination_Teardown_Response) cplugin.DestinationTeardownResponse {
+	return cplugin.DestinationTeardownResponse{}
+}
+
+func DestinationLifecycleOnCreatedResponse(_ *connectorv1.Destination_Lifecycle_OnCreated_Response) cplugin.DestinationLifecycleOnCreatedResponse {
+	return cplugin.DestinationLifecycleOnCreatedResponse{}
+}
+func DestinationLifecycleOnUpdatedResponse(_ *connectorv1.Destination_Lifecycle_OnUpdated_Response) cplugin.DestinationLifecycleOnUpdatedResponse {
+	return cplugin.DestinationLifecycleOnUpdatedResponse{}
+}
+func DestinationLifecycleOnDeletedResponse(_ *connectorv1.Destination_Lifecycle_OnDeleted_Response) cplugin.DestinationLifecycleOnDeletedResponse {
+	return cplugin.DestinationLifecycleOnDeletedResponse{}
 }

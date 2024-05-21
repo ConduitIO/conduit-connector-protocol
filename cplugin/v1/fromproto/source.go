@@ -67,6 +67,14 @@ func SourceLifecycleOnDeletedRequest(in *connectorv1.Source_Lifecycle_OnDeleted_
 
 // -- Response Conversions ----------------------------------------------------
 
+func SourceConfigureResponse(_ *connectorv1.Source_Configure_Response) cplugin.SourceConfigureResponse {
+	return cplugin.SourceConfigureResponse{}
+}
+
+func SourceStartResponse(_ *connectorv1.Source_Start_Response) cplugin.SourceStartResponse {
+	return cplugin.SourceStartResponse{}
+}
+
 func SourceRunResponse(in *connectorv1.Source_Run_Response) (cplugin.SourceRunResponse, error) {
 	var rec opencdc.Record
 	err := rec.FromProto(in.Record)
@@ -82,4 +90,18 @@ func SourceStopResponse(in *connectorv1.Source_Stop_Response) cplugin.SourceStop
 	return cplugin.SourceStopResponse{
 		LastPosition: in.LastPosition,
 	}
+}
+
+func SourceTeardownResponse(_ *connectorv1.Source_Teardown_Response) cplugin.SourceTeardownResponse {
+	return cplugin.SourceTeardownResponse{}
+}
+
+func SourceLifecycleOnCreatedResponse(_ *connectorv1.Source_Lifecycle_OnCreated_Response) cplugin.SourceLifecycleOnCreatedResponse {
+	return cplugin.SourceLifecycleOnCreatedResponse{}
+}
+func SourceLifecycleOnUpdatedResponse(_ *connectorv1.Source_Lifecycle_OnUpdated_Response) cplugin.SourceLifecycleOnUpdatedResponse {
+	return cplugin.SourceLifecycleOnUpdatedResponse{}
+}
+func SourceLifecycleOnDeletedResponse(_ *connectorv1.Source_Lifecycle_OnDeleted_Response) cplugin.SourceLifecycleOnDeletedResponse {
+	return cplugin.SourceLifecycleOnDeletedResponse{}
 }
