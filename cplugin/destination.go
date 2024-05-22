@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate mockgen -destination=mock/destination.go -package=mock -mock_names=DestinationPlugin=DestinationPlugin,DestinationRunStream=DestinationRunStream . DestinationPlugin,DestinationRunStream
-
 package cplugin
 
 import (

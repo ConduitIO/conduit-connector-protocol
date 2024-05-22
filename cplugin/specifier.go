@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate mockgen -destination=mock/specifier.go -package=mock -mock_names=SpecifierPlugin=SpecifierPlugin . SpecifierPlugin
-
 package cplugin
 
 import (
