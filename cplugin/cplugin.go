@@ -1,4 +1,4 @@
-// Copyright © 2022 Meroxa, Inc.
+// Copyright © 2024 Meroxa, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:build tools
+package cplugin
 
-package main
+import "github.com/hashicorp/go-plugin"
 
-import (
-	_ "github.com/bufbuild/buf/cmd/buf"
-	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
-)
+var HandshakeConfig = plugin.HandshakeConfig{
+	MagicCookieKey:   "CONDUIT_PLUGIN_MAGIC_COOKIE",
+	MagicCookieValue: "204e8e812c3a1bb73b838928c575b42a105dd2e9aa449be481bc4590486df53f",
+}
