@@ -29,9 +29,8 @@ import (
 	"google.golang.org/grpc"
 )
 
-// NewClient creates a new plugin client. The provided context is used to kill
-// the process (by calling os.Process.Kill) if the context becomes done before
-// the plugin completes on its own. Path should point to the plugin executable.
+// NewClient creates a new plugin client. Path should point to the plugin
+// executable. The client will support both v1 and v2 of the connector protocol.
 func NewClient(
 	logger hclog.Logger,
 	path string,
