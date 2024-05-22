@@ -21,7 +21,6 @@ import (
 	"github.com/conduitio/conduit-connector-protocol/cplugin"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/matryer/is"
 )
 
@@ -39,12 +38,7 @@ func TestSourceConfigureRequest(t *testing.T) {
 
 	is := is.New(t)
 	got := SourceConfigureRequest(have)
-	is.Equal(
-		"",
-		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(cplugin.SourceConfigureRequest{}),
-		),
-	)
+	is.Equal("", cmp.Diff(want, got))
 }
 
 func TestSourceStartRequest(t *testing.T) {
@@ -57,12 +51,7 @@ func TestSourceStartRequest(t *testing.T) {
 
 	is := is.New(t)
 	got := SourceStartRequest(have)
-	is.Equal(
-		"",
-		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(cplugin.SourceStartRequest{}),
-		),
-	)
+	is.Equal("", cmp.Diff(want, got))
 }
 
 func TestSourceRunRequest(t *testing.T) {
@@ -75,10 +64,5 @@ func TestSourceRunRequest(t *testing.T) {
 
 	is := is.New(t)
 	got := SourceRunRequest(have)
-	is.Equal(
-		"",
-		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(cplugin.SourceRunRequest{}),
-		),
-	)
+	is.Equal("", cmp.Diff(want, got))
 }

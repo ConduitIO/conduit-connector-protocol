@@ -102,12 +102,7 @@ func TestDestinationConfigureRequest(t *testing.T) {
 
 	is := is.New(t)
 	got := DestinationConfigureRequest(have)
-	is.Equal(
-		"",
-		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(cplugin.DestinationConfigureRequest{}),
-		),
-	)
+	is.Equal("", cmp.Diff(want, got))
 }
 
 func TestDestinationRunRequest(t *testing.T) {
@@ -124,7 +119,6 @@ func TestDestinationRunRequest(t *testing.T) {
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(cplugin.DestinationRunRequest{}),
 			cmpopts.IgnoreUnexported(opencdc.Record{}),
 		),
 	)
@@ -140,10 +134,5 @@ func TestDestinationStopRequest(t *testing.T) {
 
 	is := is.New(t)
 	got := DestinationStopRequest(have)
-	is.Equal(
-		"",
-		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(cplugin.DestinationStopRequest{}),
-		),
-	)
+	is.Equal("", cmp.Diff(want, got))
 }
