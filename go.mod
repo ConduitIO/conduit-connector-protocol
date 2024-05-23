@@ -7,7 +7,7 @@ require (
 	github.com/conduitio/conduit-commons v0.2.0
 	github.com/golangci/golangci-lint v1.58.2
 	github.com/google/go-cmp v0.6.0
-	github.com/hashicorp/go-hclog v1.5.0
+	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.6.1
 	github.com/matryer/is v1.4.1
 	google.golang.org/grpc v1.64.0
