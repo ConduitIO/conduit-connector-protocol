@@ -1,4 +1,4 @@
-// Copyright © 2022 Meroxa, Inc.
+// Copyright © 2024 Meroxa, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:build tools
-
-package main
+package cplugin
 
 import (
-	_ "github.com/bufbuild/buf/cmd/buf"
-	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
+	"context"
+
+	"github.com/conduitio/conduit-commons/config"
 )
+
+type SpecifierPlugin interface {
+	Specify(context.Context, SpecifierSpecifyRequest) (SpecifierSpecifyResponse, error)
+}
+
+type SpecifierSpecifyRequest struct{}
+type SpecifierSpecifyResponse struct {
+	Name              string
+	Summary           string
+	Description       string
+	Version           string
+	Author            string
+	DestinationParams config.Parameters
+	SourceParams      config.Parameters
+}
