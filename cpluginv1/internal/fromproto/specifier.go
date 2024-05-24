@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:build tools
-
-package main
+package fromproto
 
 import (
-	_ "github.com/bufbuild/buf/cmd/buf"
-	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
-	_ "go.uber.org/mock/mockgen"
+	"github.com/conduitio/conduit-connector-protocol/cpluginv1"
+	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 )
+
+func SpecifierSpecifyRequest(_ *connectorv1.Specifier_Specify_Request) (cpluginv1.SpecifierSpecifyRequest, error) {
+	return cpluginv1.SpecifierSpecifyRequest{}, nil
+}

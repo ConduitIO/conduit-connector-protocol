@@ -12,12 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:build tools
+package cpluginv1
 
-package main
-
-import (
-	_ "github.com/bufbuild/buf/cmd/buf"
-	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
-	_ "go.uber.org/mock/mockgen"
+const (
+	OperationCreate Operation = iota + 1
+	OperationUpdate
+	OperationDelete
+	OperationSnapshot
 )
+
+type Operation int
+
+type Record struct {
+	Position  []byte
+	Operation Operation
+	Metadata  map[string]string
+	Key       Data
+	Payload   Change
+}
+
+type Change struct {
+	Before Data
+	After  Data
+}
+
+type Data interface {
+	isData()
+}
+
+type RawData []byte
+
+func (RawData) isData() {}
+
+type StructuredData map[string]interface{}
+
+func (StructuredData) isData() {}
