@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package schema.v1;
+package conduit.v1;
 
 service SchemaService {
-  rpc Register(RegisterRequest) returns (RegisterResponse);
-  rpc Fetch(FetchRequest) returns (FetchResponse);
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Get(GetRequest) returns (GetResponse);
 }
 
 message Schema {
@@ -23,19 +23,19 @@ message Schema {
   bytes bytes = 5;
 }
 
-message RegisterRequest {
+message CreateRequest {
   // The schema name. It needs to be unique in the scope of a connector.
   string name = 1;
   Schema.Type type = 2;
   bytes bytes = 3;
 }
-message RegisterResponse {
-  string id = 1;
+message CreateResponse {
+  Schema schema = 1;
 }
 
-message FetchRequest {
+message GetRequest {
   string id = 1;
 }
-message FetchResponse {
+message GetResponse {
   Schema schema = 1;
 }
