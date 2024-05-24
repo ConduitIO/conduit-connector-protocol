@@ -15,40 +15,43 @@
 package toproto
 
 import (
-	"fmt"
-
 	"github.com/conduitio/conduit-commons/schema"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
-func GetResponse(inst schema.Instance) *conduitv1.GetSchemaResponse {
+func GetSchemaRequest(id string) *conduitv1.GetSchemaRequest {
+	return &conduitv1.GetSchemaRequest{
+		Id: id,
+	}
+}
+
+func GetSchemaResponse(inst schema.Instance) *conduitv1.GetSchemaResponse {
 	return &conduitv1.GetSchemaResponse{
 		Schema: &conduitv1.Schema{
 			Id:      inst.ID,
 			Name:    inst.Name,
 			Version: inst.Version,
-			Type:    ProtoType(inst.Type),
+			Type:    conduitv1.Schema_Type(inst.Type),
 			Bytes:   inst.Bytes,
 		},
 	}
 }
 
-func ProtoType(t schema.Type) conduitv1.Schema_Type {
-	switch t {
-	case schema.TypeAvro:
-		return conduitv1.Schema_TYPE_AVRO
-	default:
-		panic(fmt.Errorf("unsupported schema type %q", t))
+func CreateSchemaRequest(inst schema.Instance) *conduitv1.CreateSchemaRequest {
+	return &conduitv1.CreateSchemaRequest{
+		Name:  inst.Name,
+		Type:  conduitv1.Schema_Type(inst.Type),
+		Bytes: inst.Bytes,
 	}
 }
 
-func CreateResponse(inst schema.Instance) *conduitv1.CreateSchemaResponse {
+func CreateSchemaResponse(inst schema.Instance) *conduitv1.CreateSchemaResponse {
 	return &conduitv1.CreateSchemaResponse{
 		Schema: &conduitv1.Schema{
 			Id:      inst.ID,
 			Name:    inst.Name,
 			Version: inst.Version,
-			Type:    ProtoType(inst.Type),
+			Type:    conduitv1.Schema_Type(inst.Type),
 			Bytes:   inst.Bytes,
 		},
 	}

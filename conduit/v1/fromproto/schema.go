@@ -15,30 +15,20 @@
 package fromproto
 
 import (
-	"fmt"
-
 	"github.com/conduitio/conduit-commons/schema"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
-func SchemaInstance(req *conduitv1.CreateSchemaRequest) (schema.Instance, error) {
-	typ, err := SchemaType(req.Type)
-	if err != nil {
-		return schema.Instance{}, fmt.Errorf("invalid schema type: %w", err)
-	}
-
-	return schema.Instance{
-		Name:  req.Name,
-		Type:  typ,
-		Bytes: req.Bytes,
-	}, nil
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	var cTypes [1]struct{}
+	_ = cTypes[int(schema.TypeAvro)-int(conduitv1.Schema_TYPE_AVRO)]
 }
 
-func SchemaType(typ conduitv1.Schema_Type) (schema.Type, error) {
-	switch typ {
-	case conduitv1.Schema_TYPE_AVRO:
-		return schema.TypeAvro, nil
-	default:
-		return 0, fmt.Errorf("unsupported %q", typ)
-	}
+func SchemaInstance(req *conduitv1.CreateSchemaRequest) (schema.Instance, error) {
+	return schema.Instance{
+		Name:  req.Name,
+		Type:  schema.Type(req.Type),
+		Bytes: req.Bytes,
+	}, nil
 }
