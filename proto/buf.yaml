@@ -6,7 +6,7 @@ lint:
   service_suffix: Plugin
   ignore_only:
     SERVICE_SUFFIX:
-      - schema/v1/schema.proto
+      - conduit/v1/schema.proto
   use:
     - DEFAULT
   except:
