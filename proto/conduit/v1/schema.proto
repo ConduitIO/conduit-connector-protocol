@@ -17,7 +17,6 @@ message Schema {
 
   // The schema's globally unique ID
   string id = 1;
-  // The schema's name (globally unique)
   string name = 2;
   int32 version = 3;
   Type type = 4;
