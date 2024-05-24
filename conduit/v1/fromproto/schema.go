@@ -32,3 +32,13 @@ func SchemaInstance(req *conduitv1.CreateSchemaRequest) (schema.Instance, error)
 		Bytes: req.Bytes,
 	}, nil
 }
+
+func SchemaInstanceFromResponse(res *conduitv1.CreateSchemaResponse) schema.Instance {
+	return schema.Instance{
+		ID:      res.Schema.Id,
+		Name:    res.Schema.Name,
+		Version: res.Schema.Version,
+		Type:    schema.Type(res.Schema.Type),
+		Bytes:   res.Schema.Bytes,
+	}
+}
