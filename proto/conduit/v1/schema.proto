@@ -2,9 +2,11 @@ syntax = "proto3";
 
 package conduit.v1;
 
+option go_package = "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1";
+
 service SchemaService {
-  rpc Create(CreateRequest) returns (CreateResponse);
-  rpc Get(GetRequest) returns (GetResponse);
+  rpc Create(CreateSchemaRequest) returns (CreateSchemaResponse);
+  rpc Get(GetSchemaRequest) returns (GetSchemaResponse);
 }
 
 message Schema {
@@ -23,19 +25,19 @@ message Schema {
   bytes bytes = 5;
 }
 
-message CreateRequest {
+message CreateSchemaRequest {
   // The schema name. It needs to be unique in the scope of a connector.
   string name = 1;
   Schema.Type type = 2;
   bytes bytes = 3;
 }
-message CreateResponse {
+message CreateSchemaResponse {
   Schema schema = 1;
 }
 
-message GetRequest {
+message GetSchemaRequest {
   string id = 1;
 }
-message GetResponse {
+message GetSchemaResponse {
   Schema schema = 1;
 }
