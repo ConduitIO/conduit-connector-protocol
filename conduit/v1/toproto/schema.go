@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package v1
+package toproto
 
 import (
 	"fmt"
+
 	"github.com/conduitio/conduit-commons/schema"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
