@@ -25,20 +25,12 @@ func _() {
 	_ = cTypes[int(schema.TypeAvro)-int(conduitv1.Schema_TYPE_AVRO)]
 }
 
-func SchemaInstance(req *conduitv1.CreateSchemaRequest) (schema.Instance, error) {
+func SchemaInstance(s *conduitv1.Schema) schema.Instance {
 	return schema.Instance{
-		Name:  req.Name,
-		Type:  schema.Type(req.Type),
-		Bytes: req.Bytes,
-	}, nil
-}
-
-func SchemaInstanceFromResponse(res *conduitv1.CreateSchemaResponse) schema.Instance {
-	return schema.Instance{
-		ID:      res.Schema.Id,
-		Name:    res.Schema.Name,
-		Version: res.Schema.Version,
-		Type:    schema.Type(res.Schema.Type),
-		Bytes:   res.Schema.Bytes,
+		ID:      s.Id,
+		Name:    s.Name,
+		Version: s.Version,
+		Type:    schema.Type(s.Type),
+		Bytes:   s.Bytes,
 	}
 }
