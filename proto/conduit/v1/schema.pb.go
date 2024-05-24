@@ -72,8 +72,7 @@ type Schema struct {
 	unknownFields protoimpl.UnknownFields
 
 	// The schema's globally unique ID
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// The schema's name (globally unique)
+	Id      string      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name    string      `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Version int32       `protobuf:"varint,3,opt,name=version,proto3" json:"version,omitempty"`
 	Type    Schema_Type `protobuf:"varint,4,opt,name=type,proto3,enum=conduit.v1.Schema_Type" json:"type,omitempty"`
