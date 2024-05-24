@@ -21,7 +21,7 @@ import (
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
-func SchemaInstance(req *conduitv1.CreateRequest) (schema.Instance, error) {
+func SchemaInstance(req *conduitv1.CreateSchemaRequest) (schema.Instance, error) {
 	typ, err := SchemaType(req.Type)
 	if err != nil {
 		return schema.Instance{}, fmt.Errorf("invalid schema type: %w", err)

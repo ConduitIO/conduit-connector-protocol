@@ -21,8 +21,8 @@ import (
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
-func GetResponse(inst schema.Instance) *conduitv1.GetResponse {
-	return &conduitv1.GetResponse{
+func GetResponse(inst schema.Instance) *conduitv1.GetSchemaResponse {
+	return &conduitv1.GetSchemaResponse{
 		Schema: &conduitv1.Schema{
 			Id:      inst.ID,
 			Name:    inst.Name,
@@ -42,8 +42,8 @@ func ProtoType(t schema.Type) conduitv1.Schema_Type {
 	}
 }
 
-func CreateResponse(inst schema.Instance) *conduitv1.CreateResponse {
-	return &conduitv1.CreateResponse{
+func CreateResponse(inst schema.Instance) *conduitv1.CreateSchemaResponse {
+	return &conduitv1.CreateSchemaResponse{
 		Schema: &conduitv1.Schema{
 			Id:      inst.ID,
 			Name:    inst.Name,
