@@ -26,11 +26,27 @@ type SpecifierPlugin interface {
 
 type SpecifierSpecifyRequest struct{}
 type SpecifierSpecifyResponse struct {
-	Name              string
-	Summary           string
-	Description       string
-	Version           string
-	Author            string
-	DestinationParams config.Parameters
+	Specification Specification
+}
+
+// Specification is returned by a plugin when Specify is called.
+// It contains information about the configuration parameters for plugins
+// and allows them to describe their parameters.
+type Specification struct {
+	// Name is the name of the plugin.
+	Name string
+	// Summary is a brief description of the plugin and what it does.
+	Summary string
+	// Description is a more long form area appropriate for README-like text
+	// that the author can provide for documentation about the specified
+	// Parameters.
+	Description string
+	// Version string. Should be a semver prepended with `v`, e.g. `v1.54.3`.
+	Version string
+	// Author declares the entity that created or maintains this plugin.
+	Author string
+	// SourceParams and DestinationParams are maps of named Parameters that
+	// describe how to configure the plugins Destination or Source.
 	SourceParams      config.Parameters
+	DestinationParams config.Parameters
 }

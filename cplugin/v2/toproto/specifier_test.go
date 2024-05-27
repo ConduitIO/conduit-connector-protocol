@@ -28,56 +28,60 @@ import (
 
 func TestSpecifierSpecifyResponse(t *testing.T) {
 	have := cplugin.SpecifierSpecifyResponse{
-		Name:        "TestPlugin",
-		Summary:     "This is a test plugin",
-		Description: "A plugin for testing purposes",
-		Version:     "v1.0.0",
-		Author:      "Test Author",
-		DestinationParams: config.Parameters{
-			"param1": config.Parameter{
-				Default:     "value1",
-				Description: "Description of param1",
-				Type:        config.ParameterTypeString,
-				Validations: []config.Validation{
-					config.ValidationInclusion{List: []string{"value1", "value2"}},
+		Specification: cplugin.Specification{
+			Name:        "TestPlugin",
+			Summary:     "This is a test plugin",
+			Description: "A plugin for testing purposes",
+			Version:     "v1.0.0",
+			Author:      "Test Author",
+			DestinationParams: config.Parameters{
+				"param1": config.Parameter{
+					Default:     "value1",
+					Description: "Description of param1",
+					Type:        config.ParameterTypeString,
+					Validations: []config.Validation{
+						config.ValidationInclusion{List: []string{"value1", "value2"}},
+					},
 				},
 			},
-		},
-		SourceParams: config.Parameters{
-			"param2": config.Parameter{
-				Default:     "20",
-				Description: "Description of param2",
-				Type:        config.ParameterTypeInt,
-				Validations: []config.Validation{
-					config.ValidationExclusion{List: []string{"10", "11", "12"}},
+			SourceParams: config.Parameters{
+				"param2": config.Parameter{
+					Default:     "20",
+					Description: "Description of param2",
+					Type:        config.ParameterTypeInt,
+					Validations: []config.Validation{
+						config.ValidationExclusion{List: []string{"10", "11", "12"}},
+					},
 				},
 			},
 		},
 	}
 
 	want := &connectorv2.Specifier_Specify_Response{
-		Name:        "TestPlugin",
-		Summary:     "This is a test plugin",
-		Description: "A plugin for testing purposes",
-		Version:     "v1.0.0",
-		Author:      "Test Author",
-		DestinationParams: map[string]*configv1.Parameter{
-			"param1": {
-				Default:     "value1",
-				Description: "Description of param1",
-				Type:        configv1.Parameter_TYPE_STRING,
-				Validations: []*configv1.Validation{
-					{Type: configv1.Validation_TYPE_INCLUSION, Value: "value1,value2"},
+		Specification: &connectorv2.Specification{
+			Name:        "TestPlugin",
+			Summary:     "This is a test plugin",
+			Description: "A plugin for testing purposes",
+			Version:     "v1.0.0",
+			Author:      "Test Author",
+			DestinationParams: map[string]*configv1.Parameter{
+				"param1": {
+					Default:     "value1",
+					Description: "Description of param1",
+					Type:        configv1.Parameter_TYPE_STRING,
+					Validations: []*configv1.Validation{
+						{Type: configv1.Validation_TYPE_INCLUSION, Value: "value1,value2"},
+					},
 				},
 			},
-		},
-		SourceParams: map[string]*configv1.Parameter{
-			"param2": {
-				Default:     "20",
-				Description: "Description of param2",
-				Type:        configv1.Parameter_TYPE_INT,
-				Validations: []*configv1.Validation{
-					{Type: configv1.Validation_TYPE_EXCLUSION, Value: "10,11,12"},
+			SourceParams: map[string]*configv1.Parameter{
+				"param2": {
+					Default:     "20",
+					Description: "Description of param2",
+					Type:        configv1.Parameter_TYPE_INT,
+					Validations: []*configv1.Validation{
+						{Type: configv1.Validation_TYPE_EXCLUSION, Value: "10,11,12"},
+					},
 				},
 			},
 		},
@@ -89,6 +93,7 @@ func TestSpecifierSpecifyResponse(t *testing.T) {
 		"",
 		cmp.Diff(want, got,
 			cmpopts.IgnoreUnexported(connectorv2.Specifier_Specify_Response{}),
+			cmpopts.IgnoreUnexported(connectorv2.Specification{}),
 			cmpopts.IgnoreUnexported(configv1.Parameter{}),
 			cmpopts.IgnoreUnexported(configv1.Validation{}),
 		),

@@ -48,13 +48,13 @@ func SpecifierSpecifyRequest(_ cplugin.SpecifierSpecifyRequest) *connectorv1.Spe
 
 func SpecifierSpecifyResponse(in cplugin.SpecifierSpecifyResponse) *connectorv1.Specifier_Specify_Response {
 	out := connectorv1.Specifier_Specify_Response{
-		Name:              in.Name,
-		Summary:           in.Summary,
-		Description:       in.Description,
-		Version:           in.Version,
-		Author:            in.Author,
-		DestinationParams: SpecifierParameters(in.DestinationParams),
-		SourceParams:      SpecifierParameters(in.SourceParams),
+		Name:              in.Specification.Name,
+		Summary:           in.Specification.Summary,
+		Description:       in.Specification.Description,
+		Version:           in.Specification.Version,
+		Author:            in.Specification.Author,
+		DestinationParams: SpecifierParameters(in.Specification.DestinationParams),
+		SourceParams:      SpecifierParameters(in.Specification.SourceParams),
 	}
 	return &out
 }

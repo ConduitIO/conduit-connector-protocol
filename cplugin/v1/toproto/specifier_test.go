@@ -27,28 +27,30 @@ import (
 
 func TestSpecifierSpecifyResponse(t *testing.T) {
 	have := cplugin.SpecifierSpecifyResponse{
-		Name:        "TestPlugin",
-		Summary:     "This is a test plugin",
-		Description: "A plugin for testing purposes",
-		Version:     "v1.0.0",
-		Author:      "Test Author",
-		DestinationParams: config.Parameters{
-			"param1": config.Parameter{
-				Default:     "value1",
-				Description: "Description of param1",
-				Type:        config.ParameterTypeString,
-				Validations: []config.Validation{
-					config.ValidationInclusion{List: []string{"value1", "value2"}},
+		Specification: cplugin.Specification{
+			Name:        "TestPlugin",
+			Summary:     "This is a test plugin",
+			Description: "A plugin for testing purposes",
+			Version:     "v1.0.0",
+			Author:      "Test Author",
+			DestinationParams: config.Parameters{
+				"param1": config.Parameter{
+					Default:     "value1",
+					Description: "Description of param1",
+					Type:        config.ParameterTypeString,
+					Validations: []config.Validation{
+						config.ValidationInclusion{List: []string{"value1", "value2"}},
+					},
 				},
 			},
-		},
-		SourceParams: config.Parameters{
-			"param2": config.Parameter{
-				Default:     "20",
-				Description: "Description of param2",
-				Type:        config.ParameterTypeInt,
-				Validations: []config.Validation{
-					config.ValidationExclusion{List: []string{"10", "11", "12"}},
+			SourceParams: config.Parameters{
+				"param2": config.Parameter{
+					Default:     "20",
+					Description: "Description of param2",
+					Type:        config.ParameterTypeInt,
+					Validations: []config.Validation{
+						config.ValidationExclusion{List: []string{"10", "11", "12"}},
+					},
 				},
 			},
 		},
