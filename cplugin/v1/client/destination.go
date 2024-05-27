@@ -31,7 +31,7 @@ type DestinationPluginClient struct {
 
 var _ cplugin.DestinationPlugin = (*DestinationPluginClient)(nil)
 
-func NewDestinationPluginClient(cc *grpc.ClientConn) cplugin.DestinationPlugin {
+func NewDestinationPluginClient(cc *grpc.ClientConn) *DestinationPluginClient {
 	return &DestinationPluginClient{grpcClient: connectorv1.NewDestinationPluginClient(cc)}
 }
 

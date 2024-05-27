@@ -30,7 +30,7 @@ type SpecifierPluginClient struct {
 
 var _ cplugin.SpecifierPlugin = (*SpecifierPluginClient)(nil)
 
-func NewSpecifierPluginClient(cc *grpc.ClientConn) cplugin.SpecifierPlugin {
+func NewSpecifierPluginClient(cc *grpc.ClientConn) *SpecifierPluginClient {
 	return &SpecifierPluginClient{grpcClient: connectorv1.NewSpecifierPluginClient(cc)}
 }
 

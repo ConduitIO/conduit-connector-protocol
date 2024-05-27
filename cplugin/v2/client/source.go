@@ -31,7 +31,7 @@ type SourcePluginClient struct {
 
 var _ cplugin.SourcePlugin = (*SourcePluginClient)(nil)
 
-func NewSourcePluginClient(cc *grpc.ClientConn) cplugin.SourcePlugin {
+func NewSourcePluginClient(cc *grpc.ClientConn) *SourcePluginClient {
 	return &SourcePluginClient{grpcClient: connectorv2.NewSourcePluginClient(cc)}
 }
 
