@@ -44,13 +44,13 @@ func (s *DestinationPluginClient) Configure(ctx context.Context, goReq cplugin.D
 	return fromproto.DestinationConfigureResponse(protoResp), nil
 }
 
-func (s *DestinationPluginClient) Start(ctx context.Context, goReq cplugin.DestinationStartRequest) (cplugin.DestinationStartResponse, error) {
-	protoReq := toproto.DestinationStartRequest(goReq)
-	protoResp, err := s.grpcClient.Start(ctx, protoReq)
+func (s *DestinationPluginClient) Open(ctx context.Context, goReq cplugin.DestinationOpenRequest) (cplugin.DestinationOpenResponse, error) {
+	protoReq := toproto.DestinationOpenRequest(goReq)
+	protoResp, err := s.grpcClient.Open(ctx, protoReq)
 	if err != nil {
-		return cplugin.DestinationStartResponse{}, unwrapGRPCError(err)
+		return cplugin.DestinationOpenResponse{}, unwrapGRPCError(err)
 	}
-	return fromproto.DestinationStartResponse(protoResp), nil
+	return fromproto.DestinationOpenResponse(protoResp), nil
 }
 
 func (s *DestinationPluginClient) Run(ctx context.Context, stream cplugin.DestinationRunStream) error {

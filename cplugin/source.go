@@ -22,7 +22,7 @@ import (
 
 type SourcePlugin interface {
 	Configure(context.Context, SourceConfigureRequest) (SourceConfigureResponse, error)
-	Start(context.Context, SourceStartRequest) (SourceStartResponse, error)
+	Open(context.Context, SourceOpenRequest) (SourceOpenResponse, error)
 	Run(context.Context, SourceRunStream) error
 	Stop(context.Context, SourceStopRequest) (SourceStopResponse, error)
 	Teardown(context.Context, SourceTeardownRequest) (SourceTeardownResponse, error)
@@ -60,10 +60,10 @@ type SourceConfigureRequest struct {
 }
 type SourceConfigureResponse struct{}
 
-type SourceStartRequest struct {
+type SourceOpenRequest struct {
 	Position opencdc.Position
 }
-type SourceStartResponse struct{}
+type SourceOpenResponse struct{}
 
 type SourceRunRequest struct {
 	AckPositions []opencdc.Position

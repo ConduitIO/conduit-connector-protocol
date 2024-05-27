@@ -44,13 +44,13 @@ func (s *SourcePluginClient) Configure(ctx context.Context, goReq cplugin.Source
 	return fromproto.SourceConfigureResponse(protoResp), nil
 }
 
-func (s *SourcePluginClient) Start(ctx context.Context, goReq cplugin.SourceStartRequest) (cplugin.SourceStartResponse, error) {
-	protoReq := toproto.SourceStartRequest(goReq)
-	protoResp, err := s.grpcClient.Start(ctx, protoReq)
+func (s *SourcePluginClient) Open(ctx context.Context, goReq cplugin.SourceOpenRequest) (cplugin.SourceOpenResponse, error) {
+	protoReq := toproto.SourceOpenRequest(goReq)
+	protoResp, err := s.grpcClient.Open(ctx, protoReq)
 	if err != nil {
-		return cplugin.SourceStartResponse{}, unwrapGRPCError(err)
+		return cplugin.SourceOpenResponse{}, unwrapGRPCError(err)
 	}
-	return fromproto.SourceStartResponse(protoResp), nil
+	return fromproto.SourceOpenResponse(protoResp), nil
 }
 
 // Run initializes a stream for the source plugin to send and receive messages.

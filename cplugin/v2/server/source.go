@@ -40,13 +40,13 @@ func (s *SourcePluginServer) Configure(ctx context.Context, protoReq *connectorv
 	}
 	return toproto.SourceConfigureResponse(goResp), nil
 }
-func (s *SourcePluginServer) Start(ctx context.Context, protoReq *connectorv2.Source_Start_Request) (*connectorv2.Source_Start_Response, error) {
-	goReq := fromproto.SourceStartRequest(protoReq)
-	goResp, err := s.impl.Start(ctx, goReq)
+func (s *SourcePluginServer) Open(ctx context.Context, protoReq *connectorv2.Source_Open_Request) (*connectorv2.Source_Open_Response, error) {
+	goReq := fromproto.SourceOpenRequest(protoReq)
+	goResp, err := s.impl.Open(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	return toproto.SourceStartResponse(goResp), nil
+	return toproto.SourceOpenResponse(goResp), nil
 }
 func (s *SourcePluginServer) Run(stream connectorv2.SourcePlugin_RunServer) error {
 	return s.impl.Run(stream.Context(), &SourceRunStream{stream: stream})

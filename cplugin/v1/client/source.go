@@ -44,11 +44,11 @@ func (s *SourcePluginClient) Configure(ctx context.Context, goReq cplugin.Source
 	return fromproto.SourceConfigureResponse(protoResp), nil
 }
 
-func (s *SourcePluginClient) Start(ctx context.Context, goReq cplugin.SourceStartRequest) (cplugin.SourceStartResponse, error) {
+func (s *SourcePluginClient) Open(ctx context.Context, goReq cplugin.SourceOpenRequest) (cplugin.SourceOpenResponse, error) {
 	protoReq := toproto.SourceStartRequest(goReq)
 	protoResp, err := s.grpcClient.Start(ctx, protoReq)
 	if err != nil {
-		return cplugin.SourceStartResponse{}, unwrapGRPCError(err)
+		return cplugin.SourceOpenResponse{}, unwrapGRPCError(err)
 	}
 	return fromproto.SourceStartResponse(protoResp), nil
 }

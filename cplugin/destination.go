@@ -22,7 +22,7 @@ import (
 
 type DestinationPlugin interface {
 	Configure(context.Context, DestinationConfigureRequest) (DestinationConfigureResponse, error)
-	Start(context.Context, DestinationStartRequest) (DestinationStartResponse, error)
+	Open(context.Context, DestinationOpenRequest) (DestinationOpenResponse, error)
 	Run(context.Context, DestinationRunStream) error
 	Stop(context.Context, DestinationStopRequest) (DestinationStopResponse, error)
 	Teardown(context.Context, DestinationTeardownRequest) (DestinationTeardownResponse, error)
@@ -60,8 +60,8 @@ type DestinationConfigureRequest struct {
 }
 type DestinationConfigureResponse struct{}
 
-type DestinationStartRequest struct{}
-type DestinationStartResponse struct{}
+type DestinationOpenRequest struct{}
+type DestinationOpenResponse struct{}
 
 type DestinationRunRequest struct {
 	Records []opencdc.Record

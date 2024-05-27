@@ -42,7 +42,7 @@ func (s *sourcePluginServer) Configure(ctx context.Context, protoReq *connectorv
 }
 func (s *sourcePluginServer) Start(ctx context.Context, protoReq *connectorv1.Source_Start_Request) (*connectorv1.Source_Start_Response, error) {
 	goReq := fromproto.SourceStartRequest(protoReq)
-	goResp, err := s.impl.Start(ctx, goReq)
+	goResp, err := s.impl.Open(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
