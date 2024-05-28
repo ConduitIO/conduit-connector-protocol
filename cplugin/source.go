@@ -17,6 +17,7 @@ package cplugin
 import (
 	"context"
 
+	"github.com/conduitio/conduit-commons/config"
 	"github.com/conduitio/conduit-commons/opencdc"
 )
 
@@ -56,7 +57,7 @@ type SourceRunStreamServer interface {
 }
 
 type SourceConfigureRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type SourceConfigureResponse struct{}
 
@@ -81,17 +82,17 @@ type SourceTeardownRequest struct{}
 type SourceTeardownResponse struct{}
 
 type SourceLifecycleOnCreatedRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type SourceLifecycleOnCreatedResponse struct{}
 
 type SourceLifecycleOnUpdatedRequest struct {
-	ConfigBefore map[string]string
-	ConfigAfter  map[string]string
+	ConfigBefore config.Config
+	ConfigAfter  config.Config
 }
 type SourceLifecycleOnUpdatedResponse struct{}
 
 type SourceLifecycleOnDeletedRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type SourceLifecycleOnDeletedResponse struct{}
