@@ -21,6 +21,8 @@ import (
 	"github.com/conduitio/conduit-commons/opencdc"
 )
 
+//go:generate mockgen -destination=mock/destination.go -package=mock -mock_names=DestinationPlugin=DestinationPlugin . DestinationPlugin
+
 type DestinationPlugin interface {
 	Configure(context.Context, DestinationConfigureRequest) (DestinationConfigureResponse, error)
 	Open(context.Context, DestinationOpenRequest) (DestinationOpenResponse, error)

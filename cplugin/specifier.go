@@ -20,6 +20,8 @@ import (
 	"github.com/conduitio/conduit-commons/config"
 )
 
+//go:generate mockgen -destination=mock/specifier.go -package=mock -mock_names=SpecifierPlugin=SpecifierPlugin . SpecifierPlugin
+
 type SpecifierPlugin interface {
 	Specify(context.Context, SpecifierSpecifyRequest) (SpecifierSpecifyResponse, error)
 }
