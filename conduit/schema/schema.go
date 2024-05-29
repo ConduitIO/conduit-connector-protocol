@@ -20,15 +20,21 @@ import (
 )
 
 type Service interface {
-	Create(context.Context, CreateRequest) (schema.Instance, error)
-	Get(context.Context, GetRequest) (schema.Instance, error)
+	Create(context.Context, CreateRequest) (CreateResponse, error)
+	Get(context.Context, GetRequest) (GetResponse, error)
 }
 
 type CreateRequest struct {
 	Name  string
 	Bytes []byte
 }
+type CreateResponse struct {
+	schema.Instance
+}
 
 type GetRequest struct {
 	ID string
+}
+type GetResponse struct {
+	schema.Instance
 }
