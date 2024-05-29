@@ -26,7 +26,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-var _ schema.SchemaService = (*Client)(nil)
+var _ schema.Service = (*Client)(nil)
 
 type Client struct {
 	grpcClient conduitv1.SchemaServiceClient

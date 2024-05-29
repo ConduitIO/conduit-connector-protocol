@@ -25,19 +25,19 @@ import (
 
 type schemaServiceKey struct{}
 
-type SchemaService interface {
+type Service interface {
 	Create(context.Context, CreateRequest) (schema.Instance, error)
 	Get(context.Context, GetRequest) (schema.Instance, error)
 }
 
-func WithSchemaService(ctx context.Context, s SchemaService) context.Context {
+func WithSchemaService(ctx context.Context, s Service) context.Context {
 	return context.WithValue(ctx, schemaServiceKey{}, s)
 }
 
-func NewSchemaService(ctx context.Context) (SchemaService, error) {
+func NewSchemaService(ctx context.Context) (Service, error) {
 	service := ctx.Value(schemaServiceKey{})
 	if service != nil {
-		return service.(SchemaService), nil
+		return service.(Service), nil
 	}
 
 	conn, err := grpc.NewClient("localhost:8085")
