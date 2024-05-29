@@ -18,7 +18,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/conduitio/conduit-commons/schema"
+	commonsschema "github.com/conduitio/conduit-commons/schema"
+	"github.com/conduitio/conduit-connector-protocol/conduit/schema"
 	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
@@ -40,19 +41,19 @@ func NewGRPCSchemaClient() (*GRPCSchemaClient, error) {
 	}, nil
 }
 
-func (c *GRPCSchemaClient) Create(ctx context.Context, request CreateRequest) (schema.Instance, error) {
+func (c *GRPCSchemaClient) Create(ctx context.Context, request schema.CreateRequest) (commonsschema.Instance, error) {
 	resp, err := c.grpcClient.Create(ctx, toproto.CreateSchemaRequest(request))
 	if err != nil {
-		return schema.Instance{}, fmt.Errorf("failed creating schema: %w", err)
+		return commonsschema.Instance{}, fmt.Errorf("failed creating schema: %w", err)
 	}
 
 	return fromproto.SchemaInstance(resp.Schema), nil
 }
 
-func (c *GRPCSchemaClient) Get(ctx context.Context, request GetRequest) (schema.Instance, error) {
+func (c *GRPCSchemaClient) Get(ctx context.Context, request schema.GetRequest) (commonsschema.Instance, error) {
 	resp, err := c.grpcClient.Get(ctx, toproto.GetSchemaRequest(request.ID))
 	if err != nil {
-		return schema.Instance{}, fmt.Errorf("failed creating schema: %w", err)
+		return commonsschema.Instance{}, fmt.Errorf("failed creating schema: %w", err)
 	}
 
 	return fromproto.SchemaInstance(resp.Schema), nil

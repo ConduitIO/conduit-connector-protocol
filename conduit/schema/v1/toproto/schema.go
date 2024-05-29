@@ -16,7 +16,7 @@ package toproto
 
 import (
 	"github.com/conduitio/conduit-commons/schema"
-	v1 "github.com/conduitio/conduit-connector-protocol/conduit/schema/v1"
+	v1 "github.com/conduitio/conduit-connector-protocol/conduit/schema"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
