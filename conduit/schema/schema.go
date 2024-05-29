@@ -34,7 +34,7 @@ func WithSchemaService(ctx context.Context, s Service) context.Context {
 	return context.WithValue(ctx, schemaServiceKey{}, s)
 }
 
-func NewSchemaService(ctx context.Context) (Service, error) {
+func New(ctx context.Context) (Service, error) {
 	service := ctx.Value(schemaServiceKey{})
 	if service != nil {
 		return service.(Service), nil
