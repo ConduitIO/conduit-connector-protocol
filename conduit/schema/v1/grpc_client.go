@@ -30,12 +30,7 @@ type GRPCSchemaClient struct {
 	grpcClient conduitv1.SchemaServiceClient
 }
 
-func NewGRPCSchemaClient() (*GRPCSchemaClient, error) {
-	conn, err := grpc.NewClient("localhost:8085")
-	if err != nil {
-		return nil, fmt.Errorf("failed creating gRPC client: %w", err)
-	}
-
+func NewGRPCSchemaClient(conn *grpc.ClientConn) (*GRPCSchemaClient, error) {
 	return &GRPCSchemaClient{
 		grpcClient: conduitv1.NewSchemaServiceClient(conn),
 	}, nil
