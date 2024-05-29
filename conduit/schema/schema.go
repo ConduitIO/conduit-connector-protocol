@@ -16,9 +16,37 @@ package schema
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/conduitio/conduit-commons/schema"
+	v1 "github.com/conduitio/conduit-connector-protocol/conduit/schema/v1"
+	"google.golang.org/grpc"
 )
+
+type schemaServiceKey struct{}
+
+type SchemaService interface {
+	Create(context.Context, CreateRequest) (schema.Instance, error)
+	Get(context.Context, GetRequest) (schema.Instance, error)
+}
+
+func WithSchemaService(ctx context.Context, s SchemaService) context.Context {
+	return context.WithValue(ctx, schemaServiceKey{}, s)
+}
+
+func NewSchemaService(ctx context.Context) (SchemaService, error) {
+	service := ctx.Value(schemaServiceKey{})
+	if service != nil {
+		return service.(SchemaService), nil
+	}
+
+	conn, err := grpc.NewClient("localhost:8085")
+	if err != nil {
+		return nil, fmt.Errorf("failed creating gRPC client: %w", err)
+	}
+
+	return v1.NewClient(conn)
+}
 
 type CreateRequest struct {
 	Name  string
@@ -27,9 +55,4 @@ type CreateRequest struct {
 
 type GetRequest struct {
 	ID string
-}
-
-type SchemaService interface {
-	Create(context.Context, CreateRequest) (schema.Instance, error)
-	Get(context.Context, GetRequest) (schema.Instance, error)
 }
