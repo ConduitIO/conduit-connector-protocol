@@ -16,6 +16,7 @@ package toproto
 
 import (
 	"github.com/conduitio/conduit-commons/schema"
+	v1 "github.com/conduitio/conduit-connector-protocol/conduit/schema/v1"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
@@ -37,11 +38,11 @@ func GetSchemaResponse(inst schema.Instance) *conduitv1.GetSchemaResponse {
 	}
 }
 
-func CreateSchemaRequest(inst schema.Instance) *conduitv1.CreateSchemaRequest {
+func CreateSchemaRequest(request v1.CreateRequest) *conduitv1.CreateSchemaRequest {
 	return &conduitv1.CreateSchemaRequest{
-		Name:  inst.Name,
-		Type:  conduitv1.Schema_Type(inst.Type),
-		Bytes: inst.Bytes,
+		Name:  request.Name,
+		Type:  conduitv1.Schema_TYPE_AVRO,
+		Bytes: request.Bytes,
 	}
 }
 

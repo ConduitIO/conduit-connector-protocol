@@ -16,10 +16,12 @@ package v1
 
 import (
 	"context"
+
 	"github.com/conduitio/conduit-commons/schema"
 )
 
 type CreateRequest struct {
+	Name  string
 	Bytes []byte
 }
 
