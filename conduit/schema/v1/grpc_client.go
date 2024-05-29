@@ -26,17 +26,17 @@ import (
 	"google.golang.org/grpc"
 )
 
-type GRPCSchemaClient struct {
+type Client struct {
 	grpcClient conduitv1.SchemaServiceClient
 }
 
-func NewGRPCSchemaClient(conn *grpc.ClientConn) (*GRPCSchemaClient, error) {
-	return &GRPCSchemaClient{
+func NewClient(conn *grpc.ClientConn) (*Client, error) {
+	return &Client{
 		grpcClient: conduitv1.NewSchemaServiceClient(conn),
 	}, nil
 }
 
-func (c *GRPCSchemaClient) Create(ctx context.Context, request schema.CreateRequest) (commonsschema.Instance, error) {
+func (c *Client) Create(ctx context.Context, request schema.CreateRequest) (commonsschema.Instance, error) {
 	resp, err := c.grpcClient.Create(ctx, toproto.CreateSchemaRequest(request))
 	if err != nil {
 		return commonsschema.Instance{}, fmt.Errorf("failed creating schema: %w", err)
@@ -45,7 +45,7 @@ func (c *GRPCSchemaClient) Create(ctx context.Context, request schema.CreateRequ
 	return fromproto.SchemaInstance(resp.Schema), nil
 }
 
-func (c *GRPCSchemaClient) Get(ctx context.Context, request schema.GetRequest) (commonsschema.Instance, error) {
+func (c *Client) Get(ctx context.Context, request schema.GetRequest) (commonsschema.Instance, error) {
 	resp, err := c.grpcClient.Get(ctx, toproto.GetSchemaRequest(request.ID))
 	if err != nil {
 		return commonsschema.Instance{}, fmt.Errorf("failed creating schema: %w", err)
