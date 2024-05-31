@@ -16,6 +16,7 @@ package schema
 
 import (
 	"context"
+
 	"github.com/conduitio/conduit-commons/schema"
 )
 
@@ -24,8 +25,15 @@ type Service interface {
 	Get(context.Context, GetRequest) (GetResponse, error)
 }
 
+type Type int32
+
+const (
+	TypeAvro Type = iota + 1
+)
+
 type CreateRequest struct {
 	Name  string
+	Type  Type
 	Bytes []byte
 }
 type CreateResponse struct {

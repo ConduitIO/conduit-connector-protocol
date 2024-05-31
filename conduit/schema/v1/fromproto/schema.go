@@ -23,12 +23,17 @@ import (
 func _() {
 	// An "invalid array index" compiler error signifies that the constant values have changed.
 	var cTypes [1]struct{}
+	// Compatibility between the schema type in conduit-commons and the Protobuf schema type
 	_ = cTypes[int(cschema.TypeAvro)-int(conduitv1.Schema_TYPE_AVRO)]
+
+	// Compatibility between the protocol's schema.Type and the Protobuf schema type
+	_ = cTypes[int(schema.TypeAvro)-int(conduitv1.Schema_TYPE_AVRO)]
 }
 
 func CreateRequest(req *conduitv1.CreateSchemaRequest) schema.CreateRequest {
 	return schema.CreateRequest{
 		Name:  req.Name,
+		Type:  schema.Type(req.Type),
 		Bytes: req.Bytes,
 	}
 }
