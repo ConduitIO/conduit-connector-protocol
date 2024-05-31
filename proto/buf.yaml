@@ -4,6 +4,9 @@ deps:
   - buf.build/conduitio/conduit-commons
 lint:
   service_suffix: Plugin
+  ignore_only:
+    SERVICE_SUFFIX:
+      - conduit/v1/schema.proto
   use:
     - DEFAULT
   except:
