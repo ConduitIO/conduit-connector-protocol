@@ -41,16 +41,16 @@ func TestSourceConfigureRequest(t *testing.T) {
 	is.Equal("", cmp.Diff(want, got))
 }
 
-func TestSourceStartRequest(t *testing.T) {
-	have := &connectorv2.Source_Start_Request{
+func TestSourceOpenRequest(t *testing.T) {
+	have := &connectorv2.Source_Open_Request{
 		Position: []byte("test_position"),
 	}
-	want := cplugin.SourceStartRequest{
+	want := cplugin.SourceOpenRequest{
 		Position: []byte("test_position"),
 	}
 
 	is := is.New(t)
-	got := SourceStartRequest(have)
+	got := SourceOpenRequest(have)
 	is.Equal("", cmp.Diff(want, got))
 }
 

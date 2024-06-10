@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	SourcePlugin_Configure_FullMethodName          = "/connector.v2.SourcePlugin/Configure"
-	SourcePlugin_Start_FullMethodName              = "/connector.v2.SourcePlugin/Start"
+	SourcePlugin_Open_FullMethodName               = "/connector.v2.SourcePlugin/Open"
 	SourcePlugin_Run_FullMethodName                = "/connector.v2.SourcePlugin/Run"
 	SourcePlugin_Stop_FullMethodName               = "/connector.v2.SourcePlugin/Stop"
 	SourcePlugin_Teardown_FullMethodName           = "/connector.v2.SourcePlugin/Teardown"
@@ -37,12 +37,12 @@ type SourcePluginClient interface {
 	// plugin with the configuration that needs to be validated and stored. In
 	// case the configuration is not valid it should return an error status.
 	Configure(ctx context.Context, in *Source_Configure_Request, opts ...grpc.CallOption) (*Source_Configure_Response, error)
-	// Start is called after Configure to signal the plugin it can prepare to
+	// Open is called after Configure to signal the plugin it can prepare to
 	// start producing records. If needed, the plugin should open connections in
 	// this function. The position parameter will contain the position of the
 	// last record that was successfully processed. The Source should therefore
 	// start producing records after this position.
-	Start(ctx context.Context, in *Source_Start_Request, opts ...grpc.CallOption) (*Source_Start_Response, error)
+	Open(ctx context.Context, in *Source_Open_Request, opts ...grpc.CallOption) (*Source_Open_Response, error)
 	// Run will open a bidirectional stream between Conduit and the plugin.
 	// The plugin is responsible for fetching records from 3rd party resources
 	// and sending them as responses to Conduit. Conduit will process the
@@ -65,7 +65,7 @@ type SourcePluginClient interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(ctx context.Context, in *Source_Teardown_Request, opts ...grpc.CallOption) (*Source_Teardown_Response, error)
-	// LifecycleOnCreated is called after Configure and before Start when the
+	// LifecycleOnCreated is called after Configure and before Open when the
 	// connector is run for the first time. This call will be skipped if a
 	// connector was already started before. This method can be used to do some
 	// initialization that needs to happen only once in the lifetime of a
@@ -73,7 +73,7 @@ type SourcePluginClient interface {
 	// creates in this method is considered to be owned by this connector and
 	// should be cleaned up in LifecycleOnDeleted.
 	LifecycleOnCreated(ctx context.Context, in *Source_Lifecycle_OnCreated_Request, opts ...grpc.CallOption) (*Source_Lifecycle_OnCreated_Response, error)
-	// LifecycleOnUpdated is called after Configure and before Start when the
+	// LifecycleOnUpdated is called after Configure and before Open when the
 	// connector configuration has changed since the last run. This call will be
 	// skipped if the connector configuration did not change. It can be used to
 	// update anything that was initialized in LifecycleOnCreated, in case the
@@ -102,9 +102,9 @@ func (c *sourcePluginClient) Configure(ctx context.Context, in *Source_Configure
 	return out, nil
 }
 
-func (c *sourcePluginClient) Start(ctx context.Context, in *Source_Start_Request, opts ...grpc.CallOption) (*Source_Start_Response, error) {
-	out := new(Source_Start_Response)
-	err := c.cc.Invoke(ctx, SourcePlugin_Start_FullMethodName, in, out, opts...)
+func (c *sourcePluginClient) Open(ctx context.Context, in *Source_Open_Request, opts ...grpc.CallOption) (*Source_Open_Response, error) {
+	out := new(Source_Open_Response)
+	err := c.cc.Invoke(ctx, SourcePlugin_Open_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -195,12 +195,12 @@ type SourcePluginServer interface {
 	// plugin with the configuration that needs to be validated and stored. In
 	// case the configuration is not valid it should return an error status.
 	Configure(context.Context, *Source_Configure_Request) (*Source_Configure_Response, error)
-	// Start is called after Configure to signal the plugin it can prepare to
+	// Open is called after Configure to signal the plugin it can prepare to
 	// start producing records. If needed, the plugin should open connections in
 	// this function. The position parameter will contain the position of the
 	// last record that was successfully processed. The Source should therefore
 	// start producing records after this position.
-	Start(context.Context, *Source_Start_Request) (*Source_Start_Response, error)
+	Open(context.Context, *Source_Open_Request) (*Source_Open_Response, error)
 	// Run will open a bidirectional stream between Conduit and the plugin.
 	// The plugin is responsible for fetching records from 3rd party resources
 	// and sending them as responses to Conduit. Conduit will process the
@@ -223,7 +223,7 @@ type SourcePluginServer interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(context.Context, *Source_Teardown_Request) (*Source_Teardown_Response, error)
-	// LifecycleOnCreated is called after Configure and before Start when the
+	// LifecycleOnCreated is called after Configure and before Open when the
 	// connector is run for the first time. This call will be skipped if a
 	// connector was already started before. This method can be used to do some
 	// initialization that needs to happen only once in the lifetime of a
@@ -231,7 +231,7 @@ type SourcePluginServer interface {
 	// creates in this method is considered to be owned by this connector and
 	// should be cleaned up in LifecycleOnDeleted.
 	LifecycleOnCreated(context.Context, *Source_Lifecycle_OnCreated_Request) (*Source_Lifecycle_OnCreated_Response, error)
-	// LifecycleOnUpdated is called after Configure and before Start when the
+	// LifecycleOnUpdated is called after Configure and before Open when the
 	// connector configuration has changed since the last run. This call will be
 	// skipped if the connector configuration did not change. It can be used to
 	// update anything that was initialized in LifecycleOnCreated, in case the
@@ -251,8 +251,8 @@ type UnimplementedSourcePluginServer struct {
 func (UnimplementedSourcePluginServer) Configure(context.Context, *Source_Configure_Request) (*Source_Configure_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
 }
-func (UnimplementedSourcePluginServer) Start(context.Context, *Source_Start_Request) (*Source_Start_Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
+func (UnimplementedSourcePluginServer) Open(context.Context, *Source_Open_Request) (*Source_Open_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Open not implemented")
 }
 func (UnimplementedSourcePluginServer) Run(SourcePlugin_RunServer) error {
 	return status.Errorf(codes.Unimplemented, "method Run not implemented")
@@ -303,20 +303,20 @@ func _SourcePlugin_Configure_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SourcePlugin_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Source_Start_Request)
+func _SourcePlugin_Open_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Source_Open_Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SourcePluginServer).Start(ctx, in)
+		return srv.(SourcePluginServer).Open(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SourcePlugin_Start_FullMethodName,
+		FullMethod: SourcePlugin_Open_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SourcePluginServer).Start(ctx, req.(*Source_Start_Request))
+		return srv.(SourcePluginServer).Open(ctx, req.(*Source_Open_Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -449,8 +449,8 @@ var SourcePlugin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SourcePlugin_Configure_Handler,
 		},
 		{
-			MethodName: "Start",
-			Handler:    _SourcePlugin_Start_Handler,
+			MethodName: "Open",
+			Handler:    _SourcePlugin_Open_Handler,
 		},
 		{
 			MethodName: "Stop",
@@ -486,7 +486,7 @@ var SourcePlugin_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	DestinationPlugin_Configure_FullMethodName          = "/connector.v2.DestinationPlugin/Configure"
-	DestinationPlugin_Start_FullMethodName              = "/connector.v2.DestinationPlugin/Start"
+	DestinationPlugin_Open_FullMethodName               = "/connector.v2.DestinationPlugin/Open"
 	DestinationPlugin_Run_FullMethodName                = "/connector.v2.DestinationPlugin/Run"
 	DestinationPlugin_Stop_FullMethodName               = "/connector.v2.DestinationPlugin/Stop"
 	DestinationPlugin_Teardown_FullMethodName           = "/connector.v2.DestinationPlugin/Teardown"
@@ -503,10 +503,10 @@ type DestinationPluginClient interface {
 	// plugin with the configuration that needs to be validated and stored. In
 	// case the configuration is not valid it should return an error status.
 	Configure(ctx context.Context, in *Destination_Configure_Request, opts ...grpc.CallOption) (*Destination_Configure_Response, error)
-	// Start is called after Configure to signal the plugin it can prepare to
+	// Open is called after Configure to signal the plugin it can prepare to
 	// start writing records. If needed, the plugin should open connections in
 	// this function.
-	Start(ctx context.Context, in *Destination_Start_Request, opts ...grpc.CallOption) (*Destination_Start_Response, error)
+	Open(ctx context.Context, in *Destination_Open_Request, opts ...grpc.CallOption) (*Destination_Open_Response, error)
 	// Run will open a bidirectional stream between Conduit and the plugin.
 	// Conduit will be streaming records to the plugin that should be written
 	// to the 3rd party resource. The plugin is responsible for sending
@@ -524,7 +524,7 @@ type DestinationPluginClient interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(ctx context.Context, in *Destination_Teardown_Request, opts ...grpc.CallOption) (*Destination_Teardown_Response, error)
-	// LifecycleOnCreated is called after Configure and before Start when the
+	// LifecycleOnCreated is called after Configure and before Open when the
 	// connector is run for the first time. This call will be skipped if a
 	// connector was already started before. This method can be used to do some
 	// initialization that needs to happen only once in the lifetime of a
@@ -532,7 +532,7 @@ type DestinationPluginClient interface {
 	// this method is considered to be owned by this connector and should be
 	// cleaned up in LifecycleOnDeleted.
 	LifecycleOnCreated(ctx context.Context, in *Destination_Lifecycle_OnCreated_Request, opts ...grpc.CallOption) (*Destination_Lifecycle_OnCreated_Response, error)
-	// LifecycleOnUpdated is called after Configure and before Start when the
+	// LifecycleOnUpdated is called after Configure and before Open when the
 	// connector configuration has changed since the last run. This call will be
 	// skipped if the connector configuration did not change. It can be used to
 	// update anything that was initialized in LifecycleOnCreated, in case the
@@ -561,9 +561,9 @@ func (c *destinationPluginClient) Configure(ctx context.Context, in *Destination
 	return out, nil
 }
 
-func (c *destinationPluginClient) Start(ctx context.Context, in *Destination_Start_Request, opts ...grpc.CallOption) (*Destination_Start_Response, error) {
-	out := new(Destination_Start_Response)
-	err := c.cc.Invoke(ctx, DestinationPlugin_Start_FullMethodName, in, out, opts...)
+func (c *destinationPluginClient) Open(ctx context.Context, in *Destination_Open_Request, opts ...grpc.CallOption) (*Destination_Open_Response, error) {
+	out := new(Destination_Open_Response)
+	err := c.cc.Invoke(ctx, DestinationPlugin_Open_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -654,10 +654,10 @@ type DestinationPluginServer interface {
 	// plugin with the configuration that needs to be validated and stored. In
 	// case the configuration is not valid it should return an error status.
 	Configure(context.Context, *Destination_Configure_Request) (*Destination_Configure_Response, error)
-	// Start is called after Configure to signal the plugin it can prepare to
+	// Open is called after Configure to signal the plugin it can prepare to
 	// start writing records. If needed, the plugin should open connections in
 	// this function.
-	Start(context.Context, *Destination_Start_Request) (*Destination_Start_Response, error)
+	Open(context.Context, *Destination_Open_Request) (*Destination_Open_Response, error)
 	// Run will open a bidirectional stream between Conduit and the plugin.
 	// Conduit will be streaming records to the plugin that should be written
 	// to the 3rd party resource. The plugin is responsible for sending
@@ -675,7 +675,7 @@ type DestinationPluginServer interface {
 	// other function. After Teardown returns, the plugin should be ready for a
 	// graceful shutdown.
 	Teardown(context.Context, *Destination_Teardown_Request) (*Destination_Teardown_Response, error)
-	// LifecycleOnCreated is called after Configure and before Start when the
+	// LifecycleOnCreated is called after Configure and before Open when the
 	// connector is run for the first time. This call will be skipped if a
 	// connector was already started before. This method can be used to do some
 	// initialization that needs to happen only once in the lifetime of a
@@ -683,7 +683,7 @@ type DestinationPluginServer interface {
 	// this method is considered to be owned by this connector and should be
 	// cleaned up in LifecycleOnDeleted.
 	LifecycleOnCreated(context.Context, *Destination_Lifecycle_OnCreated_Request) (*Destination_Lifecycle_OnCreated_Response, error)
-	// LifecycleOnUpdated is called after Configure and before Start when the
+	// LifecycleOnUpdated is called after Configure and before Open when the
 	// connector configuration has changed since the last run. This call will be
 	// skipped if the connector configuration did not change. It can be used to
 	// update anything that was initialized in LifecycleOnCreated, in case the
@@ -703,8 +703,8 @@ type UnimplementedDestinationPluginServer struct {
 func (UnimplementedDestinationPluginServer) Configure(context.Context, *Destination_Configure_Request) (*Destination_Configure_Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
 }
-func (UnimplementedDestinationPluginServer) Start(context.Context, *Destination_Start_Request) (*Destination_Start_Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
+func (UnimplementedDestinationPluginServer) Open(context.Context, *Destination_Open_Request) (*Destination_Open_Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Open not implemented")
 }
 func (UnimplementedDestinationPluginServer) Run(DestinationPlugin_RunServer) error {
 	return status.Errorf(codes.Unimplemented, "method Run not implemented")
@@ -755,20 +755,20 @@ func _DestinationPlugin_Configure_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DestinationPlugin_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Destination_Start_Request)
+func _DestinationPlugin_Open_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Destination_Open_Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DestinationPluginServer).Start(ctx, in)
+		return srv.(DestinationPluginServer).Open(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DestinationPlugin_Start_FullMethodName,
+		FullMethod: DestinationPlugin_Open_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DestinationPluginServer).Start(ctx, req.(*Destination_Start_Request))
+		return srv.(DestinationPluginServer).Open(ctx, req.(*Destination_Open_Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -901,8 +901,8 @@ var DestinationPlugin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DestinationPlugin_Configure_Handler,
 		},
 		{
-			MethodName: "Start",
-			Handler:    _DestinationPlugin_Start_Handler,
+			MethodName: "Open",
+			Handler:    _DestinationPlugin_Open_Handler,
 		},
 		{
 			MethodName: "Stop",

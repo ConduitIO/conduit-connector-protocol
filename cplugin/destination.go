@@ -17,12 +17,15 @@ package cplugin
 import (
 	"context"
 
+	"github.com/conduitio/conduit-commons/config"
 	"github.com/conduitio/conduit-commons/opencdc"
 )
 
+//go:generate mockgen -destination=mock/destination.go -package=mock -mock_names=DestinationPlugin=DestinationPlugin . DestinationPlugin
+
 type DestinationPlugin interface {
 	Configure(context.Context, DestinationConfigureRequest) (DestinationConfigureResponse, error)
-	Start(context.Context, DestinationStartRequest) (DestinationStartResponse, error)
+	Open(context.Context, DestinationOpenRequest) (DestinationOpenResponse, error)
 	Run(context.Context, DestinationRunStream) error
 	Stop(context.Context, DestinationStopRequest) (DestinationStopResponse, error)
 	Teardown(context.Context, DestinationTeardownRequest) (DestinationTeardownResponse, error)
@@ -56,12 +59,12 @@ type DestinationRunStreamServer interface {
 }
 
 type DestinationConfigureRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type DestinationConfigureResponse struct{}
 
-type DestinationStartRequest struct{}
-type DestinationStartResponse struct{}
+type DestinationOpenRequest struct{}
+type DestinationOpenResponse struct{}
 
 type DestinationRunRequest struct {
 	Records []opencdc.Record
@@ -84,17 +87,17 @@ type DestinationTeardownRequest struct{}
 type DestinationTeardownResponse struct{}
 
 type DestinationLifecycleOnCreatedRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type DestinationLifecycleOnCreatedResponse struct{}
 
 type DestinationLifecycleOnUpdatedRequest struct {
-	ConfigBefore map[string]string
-	ConfigAfter  map[string]string
+	ConfigBefore config.Config
+	ConfigAfter  config.Config
 }
 type DestinationLifecycleOnUpdatedResponse struct{}
 
 type DestinationLifecycleOnDeletedRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type DestinationLifecycleOnDeletedResponse struct{}

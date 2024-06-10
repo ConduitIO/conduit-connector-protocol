@@ -29,9 +29,9 @@ import (
 	"google.golang.org/grpc"
 )
 
-// NewClient creates a new plugin client. Path should point to the plugin
+// New creates a new plugin client. Path should point to the plugin
 // executable. The client will support both v1 and v2 of the connector protocol.
-func NewClient(
+func New(
 	logger hclog.Logger,
 	path string,
 	opts ...Option,

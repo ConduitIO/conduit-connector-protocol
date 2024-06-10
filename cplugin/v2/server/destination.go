@@ -40,13 +40,13 @@ func (s *DestinationPluginServer) Configure(ctx context.Context, protoReq *conne
 	}
 	return toproto.DestinationConfigureResponse(goResp), nil
 }
-func (s *DestinationPluginServer) Start(ctx context.Context, protoReq *connectorv2.Destination_Start_Request) (*connectorv2.Destination_Start_Response, error) {
-	goReq := fromproto.DestinationStartRequest(protoReq)
-	goResp, err := s.impl.Start(ctx, goReq)
+func (s *DestinationPluginServer) Open(ctx context.Context, protoReq *connectorv2.Destination_Open_Request) (*connectorv2.Destination_Open_Response, error) {
+	goReq := fromproto.DestinationOpenRequest(protoReq)
+	goResp, err := s.impl.Open(ctx, goReq)
 	if err != nil {
 		return nil, err
 	}
-	return toproto.DestinationStartResponse(goResp), nil
+	return toproto.DestinationOpenResponse(goResp), nil
 }
 func (s *DestinationPluginServer) Run(stream connectorv2.DestinationPlugin_RunServer) error {
 	return s.impl.Run(stream.Context(), &DestinationRunStream{stream: stream})

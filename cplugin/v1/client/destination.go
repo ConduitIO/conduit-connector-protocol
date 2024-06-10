@@ -31,7 +31,7 @@ type DestinationPluginClient struct {
 
 var _ cplugin.DestinationPlugin = (*DestinationPluginClient)(nil)
 
-func NewDestinationPluginClient(cc *grpc.ClientConn) cplugin.DestinationPlugin {
+func NewDestinationPluginClient(cc *grpc.ClientConn) *DestinationPluginClient {
 	return &DestinationPluginClient{grpcClient: connectorv1.NewDestinationPluginClient(cc)}
 }
 
@@ -44,11 +44,11 @@ func (s *DestinationPluginClient) Configure(ctx context.Context, goReq cplugin.D
 	return fromproto.DestinationConfigureResponse(protoResp), nil
 }
 
-func (s *DestinationPluginClient) Start(ctx context.Context, goReq cplugin.DestinationStartRequest) (cplugin.DestinationStartResponse, error) {
+func (s *DestinationPluginClient) Open(ctx context.Context, goReq cplugin.DestinationOpenRequest) (cplugin.DestinationOpenResponse, error) {
 	protoReq := toproto.DestinationStartRequest(goReq)
 	protoResp, err := s.grpcClient.Start(ctx, protoReq)
 	if err != nil {
-		return cplugin.DestinationStartResponse{}, unwrapGRPCError(err)
+		return cplugin.DestinationOpenResponse{}, unwrapGRPCError(err)
 	}
 	return fromproto.DestinationStartResponse(protoResp), nil
 }

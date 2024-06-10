@@ -17,12 +17,15 @@ package cplugin
 import (
 	"context"
 
+	"github.com/conduitio/conduit-commons/config"
 	"github.com/conduitio/conduit-commons/opencdc"
 )
 
+//go:generate mockgen -destination=mock/source.go -package=mock -mock_names=SourcePlugin=SourcePlugin . SourcePlugin
+
 type SourcePlugin interface {
 	Configure(context.Context, SourceConfigureRequest) (SourceConfigureResponse, error)
-	Start(context.Context, SourceStartRequest) (SourceStartResponse, error)
+	Open(context.Context, SourceOpenRequest) (SourceOpenResponse, error)
 	Run(context.Context, SourceRunStream) error
 	Stop(context.Context, SourceStopRequest) (SourceStopResponse, error)
 	Teardown(context.Context, SourceTeardownRequest) (SourceTeardownResponse, error)
@@ -56,14 +59,14 @@ type SourceRunStreamServer interface {
 }
 
 type SourceConfigureRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type SourceConfigureResponse struct{}
 
-type SourceStartRequest struct {
+type SourceOpenRequest struct {
 	Position opencdc.Position
 }
-type SourceStartResponse struct{}
+type SourceOpenResponse struct{}
 
 type SourceRunRequest struct {
 	AckPositions []opencdc.Position
@@ -81,17 +84,17 @@ type SourceTeardownRequest struct{}
 type SourceTeardownResponse struct{}
 
 type SourceLifecycleOnCreatedRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type SourceLifecycleOnCreatedResponse struct{}
 
 type SourceLifecycleOnUpdatedRequest struct {
-	ConfigBefore map[string]string
-	ConfigAfter  map[string]string
+	ConfigBefore config.Config
+	ConfigAfter  config.Config
 }
 type SourceLifecycleOnUpdatedResponse struct{}
 
 type SourceLifecycleOnDeletedRequest struct {
-	Config map[string]string
+	Config config.Config
 }
 type SourceLifecycleOnDeletedResponse struct{}

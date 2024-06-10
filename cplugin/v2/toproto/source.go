@@ -28,8 +28,8 @@ func SourceConfigureRequest(in cplugin.SourceConfigureRequest) *connectorv2.Sour
 	}
 }
 
-func SourceStartRequest(in cplugin.SourceStartRequest) *connectorv2.Source_Start_Request {
-	return &connectorv2.Source_Start_Request{
+func SourceOpenRequest(in cplugin.SourceOpenRequest) *connectorv2.Source_Open_Request {
+	return &connectorv2.Source_Open_Request{
 		Position: in.Position,
 	}
 }
@@ -78,8 +78,8 @@ func SourceConfigureResponse(_ cplugin.SourceConfigureResponse) *connectorv2.Sou
 	return &connectorv2.Source_Configure_Response{}
 }
 
-func SourceStartResponse(_ cplugin.SourceStartResponse) *connectorv2.Source_Start_Response {
-	return &connectorv2.Source_Start_Response{}
+func SourceOpenResponse(_ cplugin.SourceOpenResponse) *connectorv2.Source_Open_Response {
+	return &connectorv2.Source_Open_Response{}
 }
 
 func SourceRunResponse(in cplugin.SourceRunResponse) (*connectorv2.Source_Run_Response, error) {

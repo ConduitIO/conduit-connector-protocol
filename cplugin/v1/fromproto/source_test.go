@@ -45,7 +45,7 @@ func TestSourceStartRequest(t *testing.T) {
 	have := &connectorv1.Source_Start_Request{
 		Position: []byte("test_position"),
 	}
-	want := cplugin.SourceStartRequest{
+	want := cplugin.SourceOpenRequest{
 		Position: []byte("test_position"),
 	}
 

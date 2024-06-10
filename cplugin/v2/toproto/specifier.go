@@ -29,13 +29,19 @@ func SpecifierSpecifyRequest(_ cplugin.SpecifierSpecifyRequest) *connectorv2.Spe
 // -- Response Conversions ----------------------------------------------------
 
 func SpecifierSpecifyResponse(in cplugin.SpecifierSpecifyResponse) *connectorv2.Specifier_Specify_Response {
+	return &connectorv2.Specifier_Specify_Response{
+		Specification: Specification(in.Specification),
+	}
+}
+
+func Specification(in cplugin.Specification) *connectorv2.Specification {
 	sourceParams := make(map[string]*configv1.Parameter, len(in.SourceParams))
 	in.SourceParams.ToProto(sourceParams)
 
 	destinationParams := make(map[string]*configv1.Parameter, len(in.DestinationParams))
 	in.DestinationParams.ToProto(destinationParams)
 
-	return &connectorv2.Specifier_Specify_Response{
+	return &connectorv2.Specification{
 		Name:              in.Name,
 		Summary:           in.Summary,
 		Description:       in.Description,

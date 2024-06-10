@@ -15,12 +15,12 @@ service SourcePlugin {
   // plugin with the configuration that needs to be validated and stored. In
   // case the configuration is not valid it should return an error status.
   rpc Configure(Source.Configure.Request) returns (Source.Configure.Response);
-  // Start is called after Configure to signal the plugin it can prepare to
+  // Open is called after Configure to signal the plugin it can prepare to
   // start producing records. If needed, the plugin should open connections in
   // this function. The position parameter will contain the position of the
   // last record that was successfully processed. The Source should therefore
   // start producing records after this position.
-  rpc Start(Source.Start.Request) returns (Source.Start.Response);
+  rpc Open(Source.Open.Request) returns (Source.Open.Response);
   // Run will open a bidirectional stream between Conduit and the plugin.
   // The plugin is responsible for fetching records from 3rd party resources
   // and sending them as responses to Conduit. Conduit will process the
@@ -46,7 +46,7 @@ service SourcePlugin {
 
   // -- Lifecycle events -------------------------------------------------------
 
-  // LifecycleOnCreated is called after Configure and before Start when the
+  // LifecycleOnCreated is called after Configure and before Open when the
   // connector is run for the first time. This call will be skipped if a
   // connector was already started before. This method can be used to do some
   // initialization that needs to happen only once in the lifetime of a
@@ -54,7 +54,7 @@ service SourcePlugin {
   // creates in this method is considered to be owned by this connector and
   // should be cleaned up in LifecycleOnDeleted.
   rpc LifecycleOnCreated(Source.Lifecycle.OnCreated.Request) returns (Source.Lifecycle.OnCreated.Response);
-  // LifecycleOnUpdated is called after Configure and before Start when the
+  // LifecycleOnUpdated is called after Configure and before Open when the
   // connector configuration has changed since the last run. This call will be
   // skipped if the connector configuration did not change. It can be used to
   // update anything that was initialized in LifecycleOnCreated, in case the
@@ -72,10 +72,10 @@ service DestinationPlugin {
   // plugin with the configuration that needs to be validated and stored. In
   // case the configuration is not valid it should return an error status.
   rpc Configure(Destination.Configure.Request) returns (Destination.Configure.Response);
-  // Start is called after Configure to signal the plugin it can prepare to
+  // Open is called after Configure to signal the plugin it can prepare to
   // start writing records. If needed, the plugin should open connections in
   // this function.
-  rpc Start(Destination.Start.Request) returns (Destination.Start.Response);
+  rpc Open(Destination.Open.Request) returns (Destination.Open.Response);
   // Run will open a bidirectional stream between Conduit and the plugin.
   // Conduit will be streaming records to the plugin that should be written
   // to the 3rd party resource. The plugin is responsible for sending
@@ -96,7 +96,7 @@ service DestinationPlugin {
 
   // -- Lifecycle events -------------------------------------------------------
 
-  // LifecycleOnCreated is called after Configure and before Start when the
+  // LifecycleOnCreated is called after Configure and before Open when the
   // connector is run for the first time. This call will be skipped if a
   // connector was already started before. This method can be used to do some
   // initialization that needs to happen only once in the lifetime of a
@@ -104,7 +104,7 @@ service DestinationPlugin {
   // this method is considered to be owned by this connector and should be
   // cleaned up in LifecycleOnDeleted.
   rpc LifecycleOnCreated(Destination.Lifecycle.OnCreated.Request) returns (Destination.Lifecycle.OnCreated.Response);
-  // LifecycleOnUpdated is called after Configure and before Start when the
+  // LifecycleOnUpdated is called after Configure and before Open when the
   // connector configuration has changed since the last run. This call will be
   // skipped if the connector configuration did not change. It can be used to
   // update anything that was initialized in LifecycleOnCreated, in case the
@@ -122,6 +122,29 @@ service SpecifierPlugin {
   rpc Specify(Specifier.Specify.Request) returns (Specifier.Specify.Response);
 }
 
+message Specification {
+  // Name is the name of the plugin.
+  string name = 1;
+  // Summary is a brief description of the plugin and what it does,
+  // ideally not longer than one sentence.
+  string summary = 2;
+  // Description is a longer form field, appropriate for README-like
+  // text that the author can provide for documentation about the
+  // usage of the plugin.
+  string description = 3;
+  // Version string. Should follow semantic versioning and use the "v"
+  // prefix (e.g. v1.23.4).
+  string version = 4;
+  // Author declares the entity that created or maintains this plugin.
+  string author = 5;
+  // A map that describes parameters available for configuring the
+  // destination plugin.
+  map<string, config.v1.Parameter> destination_params = 6;
+  // A map that describes parameters available for configuring the
+  // source plugin.
+  map<string, config.v1.Parameter> source_params = 7;
+}
+
 message Source {
   message Configure {
     message Request {
@@ -131,7 +154,7 @@ message Source {
     message Response {}
   }
 
-  message Start {
+  message Open {
     message Request {
       // This is the position of the last record that was successfully
       // processed. The Source should start producing records after this
@@ -213,7 +236,7 @@ message Destination {
     message Response {}
   }
 
-  message Start {
+  message Open {
     message Request {}
     message Response {}
   }
@@ -291,26 +314,7 @@ message Specifier {
   message Specify {
     message Request {}
     message Response {
-      // Name is the name of the plugin.
-      string name = 1;
-      // Summary is a brief description of the plugin and what it does,
-      // ideally not longer than one sentence.
-      string summary = 2;
-      // Description is a longer form field, appropriate for README-like
-      // text that the author can provide for documentation about the
-      // usage of the plugin.
-      string description = 3;
-      // Version string. Should follow semantic versioning and use the "v"
-      // prefix (e.g. v1.23.4).
-      string version = 4;
-      // Author declares the entity that created or maintains this plugin.
-      string author = 5;
-      // A map that describes parameters available for configuring the
-      // destination plugin.
-      map<string, config.v1.Parameter> destination_params = 6;
-      // A map that describes parameters available for configuring the
-      // source plugin.
-      map<string, config.v1.Parameter> source_params = 7;
+      Specification specification = 1;
     }
   }
 }

@@ -63,13 +63,15 @@ func SpecifierSpecifyResponse(in *connectorv1.Specifier_Specify_Response) (cplug
 	}
 
 	return cplugin.SpecifierSpecifyResponse{
-		Name:              in.Name,
-		Summary:           in.Summary,
-		Description:       in.Description,
-		Version:           in.Version,
-		Author:            in.Author,
-		DestinationParams: destinationParams,
-		SourceParams:      sourceParams,
+		Specification: cplugin.Specification{
+			Name:              in.Name,
+			Summary:           in.Summary,
+			Description:       in.Description,
+			Version:           in.Version,
+			Author:            in.Author,
+			DestinationParams: destinationParams,
+			SourceParams:      sourceParams,
+		},
 	}, nil
 }
 

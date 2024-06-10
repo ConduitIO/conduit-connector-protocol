@@ -28,8 +28,8 @@ func DestinationConfigureRequest(in cplugin.DestinationConfigureRequest) *connec
 	}
 }
 
-func DestinationStartRequest(_ cplugin.DestinationStartRequest) *connectorv2.Destination_Start_Request {
-	return &connectorv2.Destination_Start_Request{}
+func DestinationOpenRequest(_ cplugin.DestinationOpenRequest) *connectorv2.Destination_Open_Request {
+	return &connectorv2.Destination_Open_Request{}
 }
 
 func DestinationRunRequest(in cplugin.DestinationRunRequest) (*connectorv2.Destination_Run_Request, error) {
@@ -84,8 +84,8 @@ func DestinationConfigureResponse(_ cplugin.DestinationConfigureResponse) *conne
 	return &connectorv2.Destination_Configure_Response{}
 }
 
-func DestinationStartResponse(_ cplugin.DestinationStartResponse) *connectorv2.Destination_Start_Response {
-	return &connectorv2.Destination_Start_Response{}
+func DestinationOpenResponse(_ cplugin.DestinationOpenResponse) *connectorv2.Destination_Open_Response {
+	return &connectorv2.Destination_Open_Response{}
 }
 
 func DestinationRunResponse(in cplugin.DestinationRunResponse) *connectorv2.Destination_Run_Response {
