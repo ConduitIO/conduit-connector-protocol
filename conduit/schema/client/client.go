@@ -36,7 +36,7 @@ func New(ctx context.Context) (schema.Service, error) {
 		return service.(schema.Service), nil
 	}
 
-	conn, err := grpc.NewClient("localhost:8085", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("localhost:8184", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, fmt.Errorf("failed creating gRPC client: %w", err)
 	}
