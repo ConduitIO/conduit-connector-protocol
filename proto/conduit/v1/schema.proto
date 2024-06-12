@@ -35,7 +35,8 @@ message CreateSchemaResponse {
 }
 
 message GetSchemaRequest {
-  string id = 1;
+  string name = 1;
+  int32 version = 2;
 }
 message GetSchemaResponse {
   Schema schema = 1;

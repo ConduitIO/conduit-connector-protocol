@@ -43,7 +43,8 @@ type CreateResponse struct {
 }
 
 type GetRequest struct {
-	ID string
+	Name    string
+	Version int
 }
 type GetResponse struct {
 	schema.Instance

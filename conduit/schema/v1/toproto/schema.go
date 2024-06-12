@@ -20,9 +20,10 @@ import (
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
-func GetSchemaRequest(id string) *conduitv1.GetSchemaRequest {
+func GetSchemaRequest(request v1.GetRequest) *conduitv1.GetSchemaRequest {
 	return &conduitv1.GetSchemaRequest{
-		Id: id,
+		Name:    request.Name,
+		Version: int32(request.Version),
 	}
 }
 

@@ -47,7 +47,7 @@ func (c *Client) Create(ctx context.Context, request schema.CreateRequest) (sche
 }
 
 func (c *Client) Get(ctx context.Context, request schema.GetRequest) (schema.GetResponse, error) {
-	resp, err := c.grpcClient.Get(ctx, toproto.GetSchemaRequest(request.ID))
+	resp, err := c.grpcClient.Get(ctx, toproto.GetSchemaRequest(request))
 	if err != nil {
 		return schema.GetResponse{}, fmt.Errorf("failed creating schema: %w", err)
 	}
