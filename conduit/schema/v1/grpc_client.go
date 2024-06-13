@@ -17,10 +17,10 @@ package v1
 import (
 	"context"
 	"fmt"
+	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/internal/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/internal/toproto"
 
 	"github.com/conduitio/conduit-connector-protocol/conduit/schema"
-	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
 )
