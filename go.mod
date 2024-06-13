@@ -7,6 +7,7 @@ require (
 	github.com/conduitio/conduit-commons v0.2.1-0.20240612170747-b6e7093d3b24
 	github.com/golangci/golangci-lint v1.59.0
 	github.com/hashicorp/go-plugin v1.6.1
+	github.com/matryer/is v1.4.1
 	go.uber.org/mock v0.4.0
 	google.golang.org/grpc v1.64.0
 	google.golang.org/protobuf v1.34.1
