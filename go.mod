@@ -4,7 +4,7 @@ go 1.21.1
 
 require (
 	github.com/bufbuild/buf v1.32.2
-	github.com/conduitio/conduit-commons v0.2.1-0.20240612170747-b6e7093d3b24
+	github.com/conduitio/conduit-commons v0.2.1-0.20240613095004-061edf8e3a04
 	github.com/golangci/golangci-lint v1.59.0
 	github.com/hashicorp/go-plugin v1.6.1
 	github.com/matryer/is v1.4.1
