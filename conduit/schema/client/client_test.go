@@ -16,10 +16,10 @@ package client
 
 import (
 	"context"
-	v1 "github.com/conduitio/conduit-connector-protocol/conduit/schema/v1"
 	"testing"
 
 	"github.com/conduitio/conduit-connector-protocol/conduit/schema/mock"
+	v1 "github.com/conduitio/conduit-connector-protocol/conduit/schema/v1"
 	"github.com/matryer/is"
 	"go.uber.org/mock/gomock"
 )

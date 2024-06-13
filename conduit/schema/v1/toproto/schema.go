@@ -32,7 +32,7 @@ func GetSchemaResponse(inst schema.Instance) *conduitv1.GetSchemaResponse {
 		Schema: &conduitv1.Schema{
 			Id:      inst.ID,
 			Name:    inst.Name,
-			Version: inst.Version,
+			Version: int32(inst.Version),
 			Type:    conduitv1.Schema_Type(inst.Type),
 			Bytes:   inst.Bytes,
 		},
@@ -52,7 +52,7 @@ func CreateSchemaResponse(inst schema.Instance) *conduitv1.CreateSchemaResponse 
 		Schema: &conduitv1.Schema{
 			Id:      inst.ID,
 			Name:    inst.Name,
-			Version: inst.Version,
+			Version: int32(inst.Version),
 			Type:    conduitv1.Schema_Type(inst.Type),
 			Bytes:   inst.Bytes,
 		},

@@ -43,7 +43,7 @@ func CreateResponse(resp *conduitv1.CreateSchemaResponse) schema.CreateResponse 
 		Instance: cschema.Instance{
 			ID:      resp.Schema.Id,
 			Name:    resp.Schema.Name,
-			Version: resp.Schema.Version,
+			Version: int(resp.Schema.Version),
 			Type:    cschema.Type(resp.Schema.Type),
 			Bytes:   resp.Schema.Bytes,
 		},
@@ -55,7 +55,7 @@ func GetResponse(resp *conduitv1.GetSchemaResponse) schema.GetResponse {
 		Instance: cschema.Instance{
 			ID:      resp.Schema.Id,
 			Name:    resp.Schema.Name,
-			Version: resp.Schema.Version,
+			Version: int(resp.Schema.Version),
 			Type:    cschema.Type(resp.Schema.Type),
 			Bytes:   resp.Schema.Bytes,
 		},
