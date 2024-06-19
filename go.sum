@@ -153,8 +153,8 @@ github.com/ckaznocha/intrange v0.1.2 h1:3Y4JAxcMntgb/wABQ6e8Q8leMd26JbX2790lIss9
 github.com/ckaznocha/intrange v0.1.2/go.mod h1:RWffCw/vKBwHeOEwWdCikAtY0q4gGt8VhJZEEA5n+RE=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
-github.com/conduitio/conduit-commons v0.2.1-0.20240529171657-31b922714201 h1:Lp/HHKEaPLMYmQxNtVyvXPJVG/i0p+/XKeKp2faNQyc=
-github.com/conduitio/conduit-commons v0.2.1-0.20240529171657-31b922714201/go.mod h1:5MutXku5ivmVmLAwyFRr/Dea5lfiQp/BARl01CQKK9Q=
+github.com/conduitio/conduit-commons v0.2.1-0.20240613095004-061edf8e3a04 h1:UShHaAaZBjLT9YsFig5jcbbkquUb0HIF9HZTjCovsKE=
+github.com/conduitio/conduit-commons v0.2.1-0.20240613095004-061edf8e3a04/go.mod h1:5MutXku5ivmVmLAwyFRr/Dea5lfiQp/BARl01CQKK9Q=
 github.com/containerd/log v0.1.0 h1:TCJt7ioM2cr/tfR8GPbGf9/VRAX8D2B4PjzCpfX540I=
 github.com/containerd/log v0.1.0/go.mod h1:VRRf09a7mHDIRezVKTRCrOq78v577GXq3bSa3EhrzVo=
 github.com/containerd/stargz-snapshotter/estargz v0.15.1 h1:eXJjw9RbkLFgioVaTG+G/ZW/0kEe2oEKCdS/ZxIyoCU=
