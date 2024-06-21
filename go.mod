@@ -4,7 +4,7 @@ go 1.21.1
 
 require (
 	github.com/bufbuild/buf v1.32.2
-	github.com/conduitio/conduit-commons v0.2.1-0.20240613095004-061edf8e3a04
+	github.com/conduitio/conduit-commons v0.2.1-0.20240621101742-a0d1e2e06e88
 	github.com/golangci/golangci-lint v1.59.0
 	github.com/hashicorp/go-plugin v1.6.1
 	github.com/matryer/is v1.4.1
@@ -95,6 +95,7 @@ require (
 	github.com/go-viper/mapstructure/v2 v2.0.0-alpha.1 // indirect
 	github.com/go-xmlfmt/xmlfmt v1.1.2 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
+	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/gofrs/uuid/v5 v5.2.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect

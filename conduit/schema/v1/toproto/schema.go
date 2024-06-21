@@ -41,7 +41,7 @@ func GetSchemaResponse(inst schema.Instance) *conduitv1.GetSchemaResponse {
 
 func CreateSchemaRequest(request v1.CreateRequest) *conduitv1.CreateSchemaRequest {
 	return &conduitv1.CreateSchemaRequest{
-		Name:  request.Name,
+		Name:  request.Subject,
 		Type:  conduitv1.Schema_Type(request.Type),
 		Bytes: request.Bytes,
 	}

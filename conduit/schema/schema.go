@@ -34,16 +34,16 @@ const (
 )
 
 type CreateRequest struct {
-	Name  string
-	Type  Type
-	Bytes []byte
+	Subject string
+	Type    Type
+	Bytes   []byte
 }
 type CreateResponse struct {
 	schema.Instance
 }
 
 type GetRequest struct {
-	Name    string
+	Subject string
 	Version int
 }
 type GetResponse struct {
