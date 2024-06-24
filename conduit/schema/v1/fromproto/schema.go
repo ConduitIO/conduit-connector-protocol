@@ -41,8 +41,7 @@ func CreateRequest(req *conduitv1.CreateSchemaRequest) schema.CreateRequest {
 func CreateResponse(resp *conduitv1.CreateSchemaResponse) schema.CreateResponse {
 	return schema.CreateResponse{
 		Instance: cschema.Instance{
-			ID:      resp.Schema.Id,
-			Subject: resp.Schema.Name,
+			Subject: resp.Schema.Subject,
 			Version: int(resp.Schema.Version),
 			Type:    cschema.Type(resp.Schema.Type),
 			Bytes:   resp.Schema.Bytes,
@@ -53,8 +52,7 @@ func CreateResponse(resp *conduitv1.CreateSchemaResponse) schema.CreateResponse 
 func GetResponse(resp *conduitv1.GetSchemaResponse) schema.GetResponse {
 	return schema.GetResponse{
 		Instance: cschema.Instance{
-			ID:      resp.Schema.Id,
-			Subject: resp.Schema.Name,
+			Subject: resp.Schema.Subject,
 			Version: int(resp.Schema.Version),
 			Type:    cschema.Type(resp.Schema.Type),
 			Bytes:   resp.Schema.Bytes,

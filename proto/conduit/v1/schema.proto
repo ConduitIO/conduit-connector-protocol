@@ -15,8 +15,6 @@ message Schema {
     TYPE_AVRO = 1;
   }
 
-  // The schema's globally unique ID
-  string id = 1;
   string subject = 2;
   int32 version = 3;
   Type type = 4;

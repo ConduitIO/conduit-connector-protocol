@@ -23,6 +23,7 @@ import (
 	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 var _ schema.Service = (*Client)(nil)
@@ -31,10 +32,16 @@ type Client struct {
 	grpcClient conduitv1.SchemaServiceClient
 }
 
-func NewClient(conn *grpc.ClientConn) (*Client, error) {
-	return &Client{
-		grpcClient: conduitv1.NewSchemaServiceClient(conn),
-	}, nil
+func NewClient() (*Client, error) {
+	conn, err := grpc.NewClient(
+		"localhost:8184",
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed creating gRPC client: %w", err)
+	}
+
+	return &Client{grpcClient: conduitv1.NewSchemaServiceClient(conn)}, nil
 }
 
 func (c *Client) Create(ctx context.Context, request schema.CreateRequest) (schema.CreateResponse, error) {
