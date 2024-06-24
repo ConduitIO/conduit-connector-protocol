@@ -22,7 +22,7 @@ import (
 
 func GetSchemaRequest(request v1.GetRequest) *conduitv1.GetSchemaRequest {
 	return &conduitv1.GetSchemaRequest{
-		Name:    request.Subject,
+		Subject: request.Subject,
 		Version: int32(request.Version),
 	}
 }
@@ -40,9 +40,9 @@ func GetSchemaResponse(inst schema.Instance) *conduitv1.GetSchemaResponse {
 
 func CreateSchemaRequest(request v1.CreateRequest) *conduitv1.CreateSchemaRequest {
 	return &conduitv1.CreateSchemaRequest{
-		Name:  request.Subject,
-		Type:  conduitv1.Schema_Type(request.Type),
-		Bytes: request.Bytes,
+		Subject: request.Subject,
+		Type:    conduitv1.Schema_Type(request.Type),
+		Bytes:   request.Bytes,
 	}
 }
 

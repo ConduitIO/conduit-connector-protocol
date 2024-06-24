@@ -23,8 +23,7 @@ message Schema {
 }
 
 message CreateSchemaRequest {
-  // The schema name. It needs to be unique in the scope of a connector.
-  string name = 1;
+  string subject = 1;
   Schema.Type type = 2;
   bytes bytes = 3;
 }
@@ -33,7 +32,7 @@ message CreateSchemaResponse {
 }
 
 message GetSchemaRequest {
-  string name = 1;
+  string subject = 1;
   int32 version = 2;
 }
 message GetSchemaResponse {

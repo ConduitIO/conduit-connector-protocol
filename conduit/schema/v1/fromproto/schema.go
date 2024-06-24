@@ -32,7 +32,7 @@ func _() {
 
 func CreateRequest(req *conduitv1.CreateSchemaRequest) schema.CreateRequest {
 	return schema.CreateRequest{
-		Subject: req.Name,
+		Subject: req.Subject,
 		Type:    schema.Type(req.Type),
 		Bytes:   req.Bytes,
 	}
