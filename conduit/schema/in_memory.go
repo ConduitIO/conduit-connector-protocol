@@ -23,8 +23,10 @@ import (
 )
 
 type inMemoryService struct {
+	// schemas is a map of schema subjects to all the versions of that schema
+	// versioning starts at 1, newer versions are appended to the end of the versions slice.
 	schemas map[string][]schema.Instance
-
+	// m guards access to schemas
 	m sync.Mutex
 }
 
