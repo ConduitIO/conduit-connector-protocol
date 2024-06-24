@@ -38,11 +38,6 @@ func (s *inMemoryService) Create(_ context.Context, request CreateRequest) (Crea
 	s.m.Lock()
 	defer s.m.Unlock()
 
-	_, ok := s.schemas[request.Subject]
-	if !ok {
-		s.schemas[request.Subject] = make([]schema.Instance, 0)
-	}
-
 	inst := schema.Instance{
 		Subject: request.Subject,
 		Version: len(s.schemas[request.Subject]) + 1,
