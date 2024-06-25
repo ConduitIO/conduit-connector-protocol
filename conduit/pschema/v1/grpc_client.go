@@ -18,15 +18,15 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/conduitio/conduit-connector-protocol/conduit/schema"
-	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/conduit/schema/v1/toproto"
+	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
+	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-var _ schema.Service = (*Client)(nil)
+var _ pschema.Service = (*Client)(nil)
 
 type Client struct {
 	grpcClient conduitv1.SchemaServiceClient
@@ -44,19 +44,19 @@ func NewClient() (*Client, error) {
 	return &Client{grpcClient: conduitv1.NewSchemaServiceClient(conn)}, nil
 }
 
-func (c *Client) Create(ctx context.Context, request schema.CreateRequest) (schema.CreateResponse, error) {
+func (c *Client) Create(ctx context.Context, request pschema.CreateRequest) (pschema.CreateResponse, error) {
 	resp, err := c.grpcClient.Create(ctx, toproto.CreateSchemaRequest(request))
 	if err != nil {
-		return schema.CreateResponse{}, fmt.Errorf("failed creating schema: %w", err)
+		return pschema.CreateResponse{}, fmt.Errorf("failed creating schema: %w", err)
 	}
 
 	return fromproto.CreateResponse(resp), nil
 }
 
-func (c *Client) Get(ctx context.Context, request schema.GetRequest) (schema.GetResponse, error) {
+func (c *Client) Get(ctx context.Context, request pschema.GetRequest) (pschema.GetResponse, error) {
 	resp, err := c.grpcClient.Get(ctx, toproto.GetSchemaRequest(request))
 	if err != nil {
-		return schema.GetResponse{}, fmt.Errorf("failed creating schema: %w", err)
+		return pschema.GetResponse{}, fmt.Errorf("failed creating schema: %w", err)
 	}
 
 	return fromproto.GetResponse(resp), nil

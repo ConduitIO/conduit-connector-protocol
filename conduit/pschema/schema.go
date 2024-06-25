@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate mockgen -destination=mock/schema.go -package=mock -mock_names=Service=Service . Service
+//go:generate mockgen -destination=mock/pschema.go -package=mock -mock_names=Service=Service . Service
 
-package schema
+package pschema
 
 import (
 	"context"
