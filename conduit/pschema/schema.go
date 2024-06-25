@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate mockgen -destination=mock/pschema.go -package=mock -mock_names=Service=Service . Service
+//go:generate mockgen -typed -destination=mock/pschema.go -package=mock -mock_names=Service=Service . Service
 
 package pschema
 
