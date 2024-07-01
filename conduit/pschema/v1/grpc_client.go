@@ -18,9 +18,8 @@ import (
 	"context"
 	"fmt"
 
+	cschema "github.com/conduitio/conduit-commons/schema"
 	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
-	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -45,19 +44,42 @@ func NewClient() (*Client, error) {
 }
 
 func (c *Client) Create(ctx context.Context, request pschema.CreateRequest) (pschema.CreateResponse, error) {
-	resp, err := c.grpcClient.Create(ctx, toproto.CreateSchemaRequest(request))
+	// request is a pschema.CreateRequest and I need to change to proto so I can create a schema request with that proto
+	resp, err := c.grpcClient.Create(ctx, &conduitv1.CreateSchemaRequest{
+		Subject: request.Subject,
+		Type:    conduitv1.Schema_Type(request.Type),
+		Bytes:   request.Bytes,
+	})
 	if err != nil {
-		return pschema.CreateResponse{}, fmt.Errorf("failed creating schema: %w", err)
+		return pschema.CreateResponse{}, unwrapGRPCError(err)
 	}
 
-	return fromproto.CreateResponse(resp), nil
+	return pschema.CreateResponse{
+		Schema: cschema.Schema{
+			Subject: resp.Schema.Subject,
+			Version: int(resp.Schema.Version),
+			Type:    cschema.Type(resp.Schema.Type),
+			Bytes:   resp.Schema.Bytes,
+		},
+	}, nil
 }
 
 func (c *Client) Get(ctx context.Context, request pschema.GetRequest) (pschema.GetResponse, error) {
-	resp, err := c.grpcClient.Get(ctx, toproto.GetSchemaRequest(request))
+	resp, err := c.grpcClient.Get(ctx, &conduitv1.GetSchemaRequest{
+		Subject: request.Subject,
+		Version: int32(request.Version),
+	})
+
 	if err != nil {
 		return pschema.GetResponse{}, fmt.Errorf("failed creating schema: %w", err)
 	}
 
-	return fromproto.GetResponse(resp), nil
+	return pschema.GetResponse{
+		Schema: cschema.Schema{
+			Subject: resp.Schema.Subject,
+			Version: int(resp.Schema.Version),
+			Type:    cschema.Type(resp.Schema.Type),
+			Bytes:   resp.Schema.Bytes,
+		},
+	}, nil
 }

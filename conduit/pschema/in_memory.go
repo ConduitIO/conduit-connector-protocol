@@ -43,7 +43,7 @@ func (s *inMemoryService) Create(_ context.Context, request CreateRequest) (Crea
 	inst := schema.Schema{
 		Subject: request.Subject,
 		Version: len(s.schemas[request.Subject]) + 1,
-		Type:    schema.Type(request.Type),
+		Type:    request.Type,
 		Bytes:   request.Bytes,
 	}
 	s.schemas[request.Subject] = append(s.schemas[request.Subject], inst)

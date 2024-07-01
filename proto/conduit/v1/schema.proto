@@ -13,11 +13,11 @@ service SchemaService {
 
 message CreateSchemaRequest {
   string subject = 1;
-  Schema.Type type = 2;
+  schema.v1.Schema.Type type = 2;
   bytes bytes = 3;
 }
 message CreateSchemaResponse {
-  Schema schema = 1;
+  schema.v1.Schema schema = 1;
 }
 
 message GetSchemaRequest {
@@ -25,5 +25,5 @@ message GetSchemaRequest {
   int32 version = 2;
 }
 message GetSchemaResponse {
-  Schema schema = 1;
+  schema.v1.Schema schema = 1;
 }
