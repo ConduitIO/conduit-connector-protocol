@@ -16,7 +16,7 @@ proto-generate:
 
 .PHONY: proto-update
 proto-update:
-	cd proto && buf mod update
+	cd proto && buf dep update
 
 .PHONY: proto-lint
 proto-lint:

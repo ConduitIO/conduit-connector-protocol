@@ -4,7 +4,7 @@ go 1.21.1
 
 require (
 	github.com/bufbuild/buf v1.34.0
-	github.com/conduitio/conduit-commons v0.2.1-0.20240625112558-36c8cf1d5447
+	github.com/conduitio/conduit-commons v0.2.1-0.20240628160859-0daeaaf8c952
 	github.com/golangci/golangci-lint v1.59.1
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/go-hclog v1.6.3
@@ -259,3 +259,5 @@ require (
 	mvdan.cc/gofumpt v0.6.0 // indirect
 	mvdan.cc/unparam v0.0.0-20240528143540-8a5130ca722f // indirect
 )
+
+replace github.com/conduitio/conduit-commons => ../conduit-commons
