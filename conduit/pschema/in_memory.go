@@ -25,14 +25,14 @@ import (
 type inMemoryService struct {
 	// schemas is a map of schema subjects to all the versions of that schema
 	// versioning starts at 1, newer versions are appended to the end of the versions slice.
-	schemas map[string][]schema.Instance
+	schemas map[string][]schema.Schema
 	// m guards access to schemas
 	m sync.Mutex
 }
 
 func NewInMemoryService() Service {
 	return &inMemoryService{
-		schemas: make(map[string][]schema.Instance),
+		schemas: make(map[string][]schema.Schema),
 	}
 }
 
@@ -40,7 +40,7 @@ func (s *inMemoryService) Create(_ context.Context, request CreateRequest) (Crea
 	s.m.Lock()
 	defer s.m.Unlock()
 
-	inst := schema.Instance{
+	inst := schema.Schema{
 		Subject: request.Subject,
 		Version: len(s.schemas[request.Subject]) + 1,
 		Type:    schema.Type(request.Type),
@@ -48,7 +48,7 @@ func (s *inMemoryService) Create(_ context.Context, request CreateRequest) (Crea
 	}
 	s.schemas[request.Subject] = append(s.schemas[request.Subject], inst)
 
-	return CreateResponse{Instance: inst}, nil
+	return CreateResponse{Schema: inst}, nil
 }
 
 func (s *inMemoryService) Get(_ context.Context, request GetRequest) (GetResponse, error) {
@@ -57,12 +57,12 @@ func (s *inMemoryService) Get(_ context.Context, request GetRequest) (GetRespons
 
 	versions, ok := s.schemas[request.Subject]
 	if !ok {
-		return GetResponse{}, fmt.Errorf("name %v: %w", request.Subject, ErrSchemaNotFound)
+		return GetResponse{}, fmt.Errorf("subject %v: %w", request.Subject, ErrSchemaNotFound)
 	}
 
 	if len(versions) < request.Version {
 		return GetResponse{}, fmt.Errorf("version %v: %w", request.Version, ErrSchemaNotFound)
 	}
 
-	return GetResponse{Instance: versions[request.Version-1]}, nil
+	return GetResponse{Schema: versions[request.Version-1]}, nil
 }

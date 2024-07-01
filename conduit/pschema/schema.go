@@ -27,19 +27,13 @@ type Service interface {
 	Get(context.Context, GetRequest) (GetResponse, error)
 }
 
-type Type int32
-
-const (
-	TypeAvro Type = iota + 1
-)
-
 type CreateRequest struct {
 	Subject string
-	Type    Type
+	Type    schema.Type
 	Bytes   []byte
 }
 type CreateResponse struct {
-	schema.Instance
+	schema.Schema
 }
 
 type GetRequest struct {
@@ -47,5 +41,5 @@ type GetRequest struct {
 	Version int
 }
 type GetResponse struct {
-	schema.Instance
+	schema.Schema
 }

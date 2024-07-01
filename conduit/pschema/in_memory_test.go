@@ -29,7 +29,7 @@ func TestInMemoryService(t *testing.T) {
 
 	underTest := NewInMemoryService()
 
-	want1 := schema.Instance{
+	want1 := schema.Schema{
 		Subject: "test-subject",
 		Version: 1,
 		Type:    schema.TypeAvro,
@@ -39,14 +39,14 @@ func TestInMemoryService(t *testing.T) {
 	// Create first version
 	got1, err := underTest.Create(ctx, CreateRequest{
 		Subject: want1.Subject,
-		Type:    Type(want1.Type),
+		Type:    want1.Type,
 		Bytes:   want1.Bytes,
 	})
 	is.NoErr(err)
-	is.Equal("", cmp.Diff(want1, got1.Instance))
+	is.Equal("", cmp.Diff(want1, got1.Schema))
 
 	// Create second version
-	want2 := schema.Instance{
+	want2 := schema.Schema{
 		Subject: want1.Subject,
 		Version: 2,
 		Type:    want1.Type,
@@ -54,19 +54,19 @@ func TestInMemoryService(t *testing.T) {
 	}
 	got2, err := underTest.Create(ctx, CreateRequest{
 		Subject: want2.Subject,
-		Type:    Type(want2.Type),
+		Type:    want2.Type,
 		Bytes:   want2.Bytes,
 	})
 	is.NoErr(err)
-	is.Equal("", cmp.Diff(want2, got2.Instance))
+	is.Equal("", cmp.Diff(want2, got2.Schema))
 
 	// Get first version
 	getResp1, err := underTest.Get(ctx, GetRequest{Subject: want1.Subject, Version: 1})
 	is.NoErr(err)
-	is.Equal("", cmp.Diff(want1, getResp1.Instance))
+	is.Equal("", cmp.Diff(want1, getResp1.Schema))
 
 	// Get second version
 	getResp2, err := underTest.Get(ctx, GetRequest{Subject: want2.Subject, Version: 2})
 	is.NoErr(err)
-	is.Equal("", cmp.Diff(want2, getResp2.Instance))
+	is.Equal("", cmp.Diff(want2, getResp2.Schema))
 }
