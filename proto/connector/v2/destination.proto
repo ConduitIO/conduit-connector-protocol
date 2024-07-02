@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package connector.v2;
+
+import "google/protobuf/descriptor.proto";
+import "opencdc/v1/opencdc.proto";
+
+option go_package = "github.com/conduitio/conduit-connector-protocol/proto/connector/v2";
+
+// DestinationPlugin is responsible for writing records to 3rd party resources.
+service DestinationPlugin {
+  // Configure is the first function to be called in a plugin. It provides the
+  // plugin with the configuration that needs to be validated and stored. In
+  // case the configuration is not valid it should return an error status.
+  rpc Configure(Destination.Configure.Request) returns (Destination.Configure.Response);
+  // Open is called after Configure to signal the plugin it can prepare to
+  // start writing records. If needed, the plugin should open connections in
+  // this function.
+  rpc Open(Destination.Open.Request) returns (Destination.Open.Response);
+  // Run will open a bidirectional stream between Conduit and the plugin.
+  // Conduit will be streaming records to the plugin that should be written
+  // to the 3rd party resource. The plugin is responsible for sending
+  // acknowledgments back to Conduit once a record has been processed. The
+  // acknowledgment should contain an error in case a record could not be
+  // successfully processed. The stream should still stay open in case Conduit
+  // is able to recover from the error and the pipeline keeps running.
+  rpc Run(stream Destination.Run.Request) returns (stream Destination.Run.Response);
+  // Stop signals to the plugin that the record with the specified position is
+  // the last one and no more records will be written to the stream after it.
+  // Once the plugin receives the last record it should flush any records that
+  // might be cached and not yet written to the 3rd party resource.
+  rpc Stop(Destination.Stop.Request) returns (Destination.Stop.Response);
+  // Teardown signals to the plugin that there will be no more calls to any
+  // other function. After Teardown returns, the plugin should be ready for a
+  // graceful shutdown.
+  rpc Teardown(Destination.Teardown.Request) returns (Destination.Teardown.Response);
+
+  // -- Lifecycle events -------------------------------------------------------
+
+  // LifecycleOnCreated is called after Configure and before Open when the
+  // connector is run for the first time. This call will be skipped if a
+  // connector was already started before. This method can be used to do some
+  // initialization that needs to happen only once in the lifetime of a
+  // connector (e.g. create a bucket). Anything that the connector creates in
+  // this method is considered to be owned by this connector and should be
+  // cleaned up in LifecycleOnDeleted.
+  rpc LifecycleOnCreated(Destination.Lifecycle.OnCreated.Request) returns (Destination.Lifecycle.OnCreated.Response);
+  // LifecycleOnUpdated is called after Configure and before Open when the
+  // connector configuration has changed since the last run. This call will be
+  // skipped if the connector configuration did not change. It can be used to
+  // update anything that was initialized in LifecycleOnCreated, in case the
+  // configuration change affects it.
+  rpc LifecycleOnUpdated(Destination.Lifecycle.OnUpdated.Request) returns (Destination.Lifecycle.OnUpdated.Response);
+  // LifecycleOnDeleted is called when the connector was deleted. It will be the
+  // only method that is called in that case. This method can be used to clean
+  // up anything that was initialized in LifecycleOnCreated.
+  rpc LifecycleOnDeleted(Destination.Lifecycle.OnDeleted.Request) returns (Destination.Lifecycle.OnDeleted.Response);
+}
+
+message Destination {
+  message Configure {
+    message Request {
+      // Config contains the raw plugin settings.
+      map<string, string> config = 1;
+    }
+    message Response {}
+  }
+
+  message Open {
+    message Request {}
+    message Response {}
+  }
+
+  message Run {
+    message Request {
+      // Records contains a batch of OpenCDC records that should be written to
+      // the 3rd party resource.
+      repeated opencdc.v1.Record records = 1;
+    }
+    message Response {
+      // Ack contains the acknowledgments for the records that were processed.
+      repeated Ack acks = 1;
+
+      message Ack {
+        // These is the position of the record that was processed.
+        bytes position = 1;
+        // Error should be empty if the record was successfully processed or
+        // should contain a descriptive message in case the record
+        // processing failed.
+        string error = 2;
+      }
+    }
+  }
+
+  message Stop {
+    message Request {
+      // This is the position of the last record that was sent into the stream.
+      // Conduit won't send any records after a record with this position is
+      // received.
+      bytes last_position = 1;
+    }
+    message Response {}
+  }
+
+  message Teardown {
+    message Request {}
+    message Response {}
+  }
+
+  message Lifecycle {
+    message OnCreated {
+      message Request {
+        // This is the connector configuration that was also passed to
+        // Configure, therefore it's already validated.
+        map<string, string> config = 1;
+      }
+      message Response {}
+    }
+    message OnUpdated {
+      message Request {
+        // This is the old connector configuration that was used the last time
+        // the connector was running. It was valid at that time, since it passed
+        // through the Configure function.
+        map<string, string> config_before = 1;
+        // This is the new connector configuration that was also passed to
+        // Configure, therefore it's already validated.
+        map<string, string> config_after = 2;
+      }
+      message Response {}
+    }
+    message OnDeleted {
+      message Request {
+        // This is the old connector configuration that was used the last time
+        // the connector was running. It was valid at that time, since it passed
+        // through the Configure function.
+        map<string, string> config = 1;
+      }
+      message Response {}
+    }
+  }
+}
