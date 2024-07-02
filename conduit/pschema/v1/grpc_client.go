@@ -32,9 +32,9 @@ type Client struct {
 	grpcClient conduitv1.SchemaServiceClient
 }
 
-func NewClient() (*Client, error) {
+func NewClient(target string) (*Client, error) {
 	conn, err := grpc.NewClient(
-		"localhost:8184",
+		target,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -54,6 +54,9 @@ func (c *Client) Create(ctx context.Context, request pschema.CreateRequest) (psc
 	if err != nil {
 		return pschema.CreateResponse{}, internal.UnwrapGRPCError(err)
 	}
+
+	// var schema cschema.Schema
+	// schema.FromProto(resp.Schema) // resp.Schema is a CreateSchemaResponse, not a proto Schema
 
 	return pschema.CreateResponse{
 		Schema: cschema.Schema{
