@@ -23,23 +23,24 @@ import (
 )
 
 type Service interface {
-	Create(context.Context, CreateRequest) (CreateResponse, error)
-	Get(context.Context, GetRequest) (GetResponse, error)
+	Create(context.Context, CreateSchemaRequest) (CreateSchemaResponse, error)
+	Get(context.Context, GetSchemaRequest) (GetSchemaResponse, error)
 }
 
-type CreateRequest struct {
+type CreateSchemaRequest struct {
 	Subject string
 	Type    schema.Type
 	Bytes   []byte
 }
-type CreateResponse struct {
-	schema.Schema
+
+type CreateSchemaResponse struct {
+	Schema schema.Schema
 }
 
-type GetRequest struct {
+type GetSchemaRequest struct {
 	Subject string
 	Version int
 }
-type GetResponse struct {
-	schema.Schema
+type GetSchemaResponse struct {
+	Schema schema.Schema
 }

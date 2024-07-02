@@ -36,7 +36,7 @@ func NewInMemoryService() Service {
 	}
 }
 
-func (s *inMemoryService) Create(_ context.Context, request CreateRequest) (CreateResponse, error) {
+func (s *inMemoryService) Create(_ context.Context, request CreateSchemaRequest) (CreateSchemaResponse, error) {
 	s.m.Lock()
 	defer s.m.Unlock()
 
@@ -48,21 +48,21 @@ func (s *inMemoryService) Create(_ context.Context, request CreateRequest) (Crea
 	}
 	s.schemas[request.Subject] = append(s.schemas[request.Subject], inst)
 
-	return CreateResponse{Schema: inst}, nil
+	return CreateSchemaResponse{Schema: inst}, nil
 }
 
-func (s *inMemoryService) Get(_ context.Context, request GetRequest) (GetResponse, error) {
+func (s *inMemoryService) Get(_ context.Context, request GetSchemaRequest) (GetSchemaResponse, error) {
 	s.m.Lock()
 	defer s.m.Unlock()
 
 	versions, ok := s.schemas[request.Subject]
 	if !ok {
-		return GetResponse{}, fmt.Errorf("subject %v: %w", request.Subject, ErrSchemaNotFound)
+		return GetSchemaResponse{}, fmt.Errorf("subject %v: %w", request.Subject, ErrSchemaNotFound)
 	}
 
 	if len(versions) < request.Version {
-		return GetResponse{}, fmt.Errorf("version %v: %w", request.Version, ErrSchemaNotFound)
+		return GetSchemaResponse{}, fmt.Errorf("version %v: %w", request.Version, ErrSchemaNotFound)
 	}
 
-	return GetResponse{Schema: versions[request.Version-1]}, nil
+	return GetSchemaResponse{Schema: versions[request.Version-1]}, nil
 }

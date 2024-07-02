@@ -18,9 +18,9 @@ import (
 	"context"
 	"fmt"
 
-	schemav1 "github.com/conduitio/conduit-commons/proto/schema/v1"
-	cschema "github.com/conduitio/conduit-commons/schema"
 	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
+	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/toproto"
 	"github.com/conduitio/conduit-connector-protocol/internal"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
@@ -45,46 +45,20 @@ func NewClient(target string) (*Client, error) {
 	return &Client{grpcClient: conduitv1.NewSchemaServiceClient(conn)}, nil
 }
 
-func (c *Client) Create(ctx context.Context, request pschema.CreateRequest) (pschema.CreateResponse, error) {
-	// request is a pschema.CreateRequest and I need to change to proto so I can create a schema request with that proto
-	resp, err := c.grpcClient.Create(ctx, &conduitv1.CreateSchemaRequest{
-		Subject: request.Subject,
-		Type:    schemav1.Schema_Type(request.Type),
-		Bytes:   request.Bytes,
-	})
+func (c *Client) Create(ctx context.Context, request pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error) {
+	protoReq := toproto.CreateSchemaRequest(request)
+	protoResp, err := c.grpcClient.Create(ctx, protoReq)
 	if err != nil {
-		return pschema.CreateResponse{}, internal.UnwrapGRPCError(err)
+		return pschema.CreateSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
-
-	// var schema cschema.Schema
-	// schema.FromProto(resp.Schema) // resp.Schema is a CreateSchemaResponse, not a proto Schema
-
-	return pschema.CreateResponse{
-		Schema: cschema.Schema{
-			Subject: resp.Schema.Subject,
-			Version: int(resp.Schema.Version),
-			Type:    cschema.Type(resp.Schema.Type),
-			Bytes:   resp.Schema.Bytes,
-		},
-	}, nil
+	return fromproto.CreateSchemaResponse(protoResp)
 }
 
-func (c *Client) Get(ctx context.Context, request pschema.GetRequest) (pschema.GetResponse, error) {
-	resp, err := c.grpcClient.Get(ctx, &conduitv1.GetSchemaRequest{
-		Subject: request.Subject,
-		Version: int32(request.Version),
-	})
-
+func (c *Client) Get(ctx context.Context, request pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error) {
+	protoReq := toproto.GetSchemaRequest(request)
+	protoResp, err := c.grpcClient.Get(ctx, protoReq)
 	if err != nil {
-		return pschema.GetResponse{}, fmt.Errorf("failed creating schema: %w", err)
+		return pschema.GetSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
-
-	return pschema.GetResponse{
-		Schema: cschema.Schema{
-			Subject: resp.Schema.Subject,
-			Version: int(resp.Schema.Version),
-			Type:    cschema.Type(resp.Schema.Type),
-			Bytes:   resp.Schema.Bytes,
-		},
-	}, nil
+	return fromproto.GetSchemaResponse(protoResp)
 }

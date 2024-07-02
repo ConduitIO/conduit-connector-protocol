@@ -37,7 +37,7 @@ func TestInMemoryService(t *testing.T) {
 	}
 
 	// Create first version
-	got1, err := underTest.Create(ctx, CreateRequest{
+	got1, err := underTest.Create(ctx, CreateSchemaRequest{
 		Subject: want1.Subject,
 		Type:    want1.Type,
 		Bytes:   want1.Bytes,
@@ -52,7 +52,7 @@ func TestInMemoryService(t *testing.T) {
 		Type:    want1.Type,
 		Bytes:   []byte("irrelevant 2"),
 	}
-	got2, err := underTest.Create(ctx, CreateRequest{
+	got2, err := underTest.Create(ctx, CreateSchemaRequest{
 		Subject: want2.Subject,
 		Type:    want2.Type,
 		Bytes:   want2.Bytes,
@@ -61,12 +61,12 @@ func TestInMemoryService(t *testing.T) {
 	is.Equal("", cmp.Diff(want2, got2.Schema))
 
 	// Get first version
-	getResp1, err := underTest.Get(ctx, GetRequest{Subject: want1.Subject, Version: 1})
+	getResp1, err := underTest.Get(ctx, GetSchemaRequest{Subject: want1.Subject, Version: 1})
 	is.NoErr(err)
 	is.Equal("", cmp.Diff(want1, getResp1.Schema))
 
 	// Get second version
-	getResp2, err := underTest.Get(ctx, GetRequest{Subject: want2.Subject, Version: 2})
+	getResp2, err := underTest.Get(ctx, GetSchemaRequest{Subject: want2.Subject, Version: 2})
 	is.NoErr(err)
 	is.Equal("", cmp.Diff(want2, getResp2.Schema))
 }

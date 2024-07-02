@@ -41,10 +41,10 @@ func (m *Service) EXPECT() *ServiceMockRecorder {
 }
 
 // Create mocks base method.
-func (m *Service) Create(arg0 context.Context, arg1 pschema.CreateRequest) (pschema.CreateResponse, error) {
+func (m *Service) Create(arg0 context.Context, arg1 pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0, arg1)
-	ret0, _ := ret[0].(pschema.CreateResponse)
+	ret0, _ := ret[0].(pschema.CreateSchemaResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -62,28 +62,28 @@ type ServiceCreateCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *ServiceCreateCall) Return(arg0 pschema.CreateResponse, arg1 error) *ServiceCreateCall {
+func (c *ServiceCreateCall) Return(arg0 pschema.CreateSchemaResponse, arg1 error) *ServiceCreateCall {
 	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *ServiceCreateCall) Do(f func(context.Context, pschema.CreateRequest) (pschema.CreateResponse, error)) *ServiceCreateCall {
+func (c *ServiceCreateCall) Do(f func(context.Context, pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error)) *ServiceCreateCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *ServiceCreateCall) DoAndReturn(f func(context.Context, pschema.CreateRequest) (pschema.CreateResponse, error)) *ServiceCreateCall {
+func (c *ServiceCreateCall) DoAndReturn(f func(context.Context, pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error)) *ServiceCreateCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // Get mocks base method.
-func (m *Service) Get(arg0 context.Context, arg1 pschema.GetRequest) (pschema.GetResponse, error) {
+func (m *Service) Get(arg0 context.Context, arg1 pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0, arg1)
-	ret0, _ := ret[0].(pschema.GetResponse)
+	ret0, _ := ret[0].(pschema.GetSchemaResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -101,19 +101,19 @@ type ServiceGetCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *ServiceGetCall) Return(arg0 pschema.GetResponse, arg1 error) *ServiceGetCall {
+func (c *ServiceGetCall) Return(arg0 pschema.GetSchemaResponse, arg1 error) *ServiceGetCall {
 	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *ServiceGetCall) Do(f func(context.Context, pschema.GetRequest) (pschema.GetResponse, error)) *ServiceGetCall {
+func (c *ServiceGetCall) Do(f func(context.Context, pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error)) *ServiceGetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *ServiceGetCall) DoAndReturn(f func(context.Context, pschema.GetRequest) (pschema.GetResponse, error)) *ServiceGetCall {
+func (c *ServiceGetCall) DoAndReturn(f func(context.Context, pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error)) *ServiceGetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
