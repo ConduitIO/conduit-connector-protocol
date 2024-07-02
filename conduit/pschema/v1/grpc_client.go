@@ -18,6 +18,7 @@ import (
 	"context"
 	"fmt"
 
+	schemav1 "github.com/conduitio/conduit-commons/proto/schema/v1"
 	cschema "github.com/conduitio/conduit-commons/schema"
 	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
 	"github.com/conduitio/conduit-connector-protocol/internal"
@@ -48,7 +49,7 @@ func (c *Client) Create(ctx context.Context, request pschema.CreateRequest) (psc
 	// request is a pschema.CreateRequest and I need to change to proto so I can create a schema request with that proto
 	resp, err := c.grpcClient.Create(ctx, &conduitv1.CreateSchemaRequest{
 		Subject: request.Subject,
-		Type:    conduitv1.Schema_Type(request.Type),
+		Type:    schemav1.Schema_Type(request.Type),
 		Bytes:   request.Bytes,
 	})
 	if err != nil {
