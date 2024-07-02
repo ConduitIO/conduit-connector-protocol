@@ -16,4 +16,4 @@
 Package conduit contains definitions of Conduit services available to connectors,
 as well as client that enable the usage of those.
 */
-package conduit
+package pconduit

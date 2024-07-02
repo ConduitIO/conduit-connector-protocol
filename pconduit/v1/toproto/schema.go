@@ -16,13 +16,13 @@ package toproto
 
 import (
 	schemav1 "github.com/conduitio/conduit-commons/proto/schema/v1"
-	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
 // -- Request Conversions -----------------------------------------------------
 
-func CreateSchemaRequest(in pschema.CreateSchemaRequest) *conduitv1.CreateSchemaRequest {
+func CreateSchemaRequest(in pconduit.CreateSchemaRequest) *conduitv1.CreateSchemaRequest {
 	return &conduitv1.CreateSchemaRequest{
 		Subject: in.Subject,
 		Type:    schemav1.Schema_Type(in.Type),
@@ -30,7 +30,7 @@ func CreateSchemaRequest(in pschema.CreateSchemaRequest) *conduitv1.CreateSchema
 	}
 }
 
-func GetSchemaRequest(in pschema.GetSchemaRequest) *conduitv1.GetSchemaRequest {
+func GetSchemaRequest(in pconduit.GetSchemaRequest) *conduitv1.GetSchemaRequest {
 	return &conduitv1.GetSchemaRequest{
 		Subject: in.Subject,
 		Version: int32(in.Version),
@@ -39,7 +39,7 @@ func GetSchemaRequest(in pschema.GetSchemaRequest) *conduitv1.GetSchemaRequest {
 
 // -- Response Conversions ----------------------------------------------------
 
-func CreateSchemaResponse(in pschema.CreateSchemaResponse) (*conduitv1.CreateSchemaResponse, error) {
+func CreateSchemaResponse(in pconduit.CreateSchemaResponse) (*conduitv1.CreateSchemaResponse, error) {
 	outSchema := &schemav1.Schema{}
 	err := in.Schema.ToProto(outSchema)
 	if err != nil {
@@ -51,7 +51,7 @@ func CreateSchemaResponse(in pschema.CreateSchemaResponse) (*conduitv1.CreateSch
 	}, nil
 }
 
-func GetSchemaResponse(in pschema.GetSchemaResponse) (*conduitv1.GetSchemaResponse, error) {
+func GetSchemaResponse(in pconduit.GetSchemaResponse) (*conduitv1.GetSchemaResponse, error) {
 	outSchema := &schemav1.Schema{}
 	err := in.Schema.ToProto(outSchema)
 	if err != nil {

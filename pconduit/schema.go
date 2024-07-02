@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate mockgen -typed -destination=mock/pschema.go -package=mock -mock_names=Service=Service . Service
+//go:generate mockgen -typed -destination=mock/pschema.go -package=mock -mock_names=SchemaService=SchemaService . SchemaService
 
-package pschema
+package pconduit
 
 import (
 	"context"
@@ -22,7 +22,7 @@ import (
 	"github.com/conduitio/conduit-commons/schema"
 )
 
-type Service interface {
+type SchemaService interface {
 	CreateSchema(context.Context, CreateSchemaRequest) (CreateSchemaResponse, error)
 	GetSchema(context.Context, GetSchemaRequest) (GetSchemaResponse, error)
 }

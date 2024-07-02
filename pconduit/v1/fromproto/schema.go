@@ -16,22 +16,22 @@ package fromproto
 
 import (
 	"github.com/conduitio/conduit-commons/schema"
-	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 )
 
 // -- Request Conversions -----------------------------------------------------
 
-func CreateSchemaRequest(in *conduitv1.CreateSchemaRequest) pschema.CreateSchemaRequest {
-	return pschema.CreateSchemaRequest{
+func CreateSchemaRequest(in *conduitv1.CreateSchemaRequest) pconduit.CreateSchemaRequest {
+	return pconduit.CreateSchemaRequest{
 		Subject: in.Subject,
 		Type:    schema.Type(in.Type),
 		Bytes:   in.Bytes,
 	}
 }
 
-func GetSchemaRequest(in *conduitv1.GetSchemaRequest) pschema.GetSchemaRequest {
-	return pschema.GetSchemaRequest{
+func GetSchemaRequest(in *conduitv1.GetSchemaRequest) pconduit.GetSchemaRequest {
+	return pconduit.GetSchemaRequest{
 		Subject: in.Subject,
 		Version: int(in.Version),
 	}
@@ -39,20 +39,20 @@ func GetSchemaRequest(in *conduitv1.GetSchemaRequest) pschema.GetSchemaRequest {
 
 // -- Response Conversions ----------------------------------------------------
 
-func CreateSchemaResponse(in *conduitv1.CreateSchemaResponse) (pschema.CreateSchemaResponse, error) {
+func CreateSchemaResponse(in *conduitv1.CreateSchemaResponse) (pconduit.CreateSchemaResponse, error) {
 	var schema schema.Schema
 	err := schema.FromProto(in.Schema)
 	if err != nil {
-		return pschema.CreateSchemaResponse{}, err
+		return pconduit.CreateSchemaResponse{}, err
 	}
-	return pschema.CreateSchemaResponse{Schema: schema}, nil
+	return pconduit.CreateSchemaResponse{Schema: schema}, nil
 }
 
-func GetSchemaResponse(in *conduitv1.GetSchemaResponse) (pschema.GetSchemaResponse, error) {
+func GetSchemaResponse(in *conduitv1.GetSchemaResponse) (pconduit.GetSchemaResponse, error) {
 	var schema schema.Schema
 	err := schema.FromProto(in.Schema)
 	if err != nil {
-		return pschema.GetSchemaResponse{}, err
+		return pconduit.GetSchemaResponse{}, err
 	}
-	return pschema.GetSchemaResponse{Schema: schema}, nil
+	return pconduit.GetSchemaResponse{Schema: schema}, nil
 }

@@ -7,8 +7,8 @@ import "schema/v1/schema.proto";
 option go_package = "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1";
 
 service SchemaService {
-  rpc Create(CreateSchemaRequest) returns (CreateSchemaResponse);
-  rpc Get(GetSchemaRequest) returns (GetSchemaResponse);
+  rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse);
+  rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse);
 }
 
 message CreateSchemaRequest {

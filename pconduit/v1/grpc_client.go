@@ -18,16 +18,16 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
-	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/conduit/pschema/v1/toproto"
 	"github.com/conduitio/conduit-connector-protocol/internal"
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
+	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-var _ pschema.Service = (*Client)(nil)
+var _ pconduit.SchemaService = (*Client)(nil)
 
 type Client struct {
 	grpcClient conduitv1.SchemaServiceClient
@@ -45,20 +45,20 @@ func NewClient(target string) (*Client, error) {
 	return &Client{grpcClient: conduitv1.NewSchemaServiceClient(conn)}, nil
 }
 
-func (c *Client) CreateSchema(ctx context.Context, request pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error) {
+func (c *Client) CreateSchema(ctx context.Context, request pconduit.CreateSchemaRequest) (pconduit.CreateSchemaResponse, error) {
 	protoReq := toproto.CreateSchemaRequest(request)
 	protoResp, err := c.grpcClient.Create(ctx, protoReq)
 	if err != nil {
-		return pschema.CreateSchemaResponse{}, internal.UnwrapGRPCError(err)
+		return pconduit.CreateSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.CreateSchemaResponse(protoResp)
 }
 
-func (c *Client) GetSchema(ctx context.Context, request pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error) {
+func (c *Client) GetSchema(ctx context.Context, request pconduit.GetSchemaRequest) (pconduit.GetSchemaResponse, error) {
 	protoReq := toproto.GetSchemaRequest(request)
 	protoResp, err := c.grpcClient.Get(ctx, protoReq)
 	if err != nil {
-		return pschema.GetSchemaResponse{}, internal.UnwrapGRPCError(err)
+		return pconduit.GetSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.GetSchemaResponse(protoResp)
 }

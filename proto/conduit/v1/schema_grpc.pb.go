@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SchemaService_Create_FullMethodName = "/conduit.v1.SchemaService/CreateSchema"
-	SchemaService_Get_FullMethodName    = "/conduit.v1.SchemaService/GetSchema"
+	SchemaService_CreateSchema_FullMethodName = "/conduit.v1.SchemaService/CreateSchema"
+	SchemaService_GetSchema_FullMethodName    = "/conduit.v1.SchemaService/GetSchema"
 )
 
 // SchemaServiceClient is the client API for SchemaService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SchemaServiceClient interface {
-	Create(ctx context.Context, in *CreateSchemaRequest, opts ...grpc.CallOption) (*CreateSchemaResponse, error)
-	Get(ctx context.Context, in *GetSchemaRequest, opts ...grpc.CallOption) (*GetSchemaResponse, error)
+	CreateSchema(ctx context.Context, in *CreateSchemaRequest, opts ...grpc.CallOption) (*CreateSchemaResponse, error)
+	GetSchema(ctx context.Context, in *GetSchemaRequest, opts ...grpc.CallOption) (*GetSchemaResponse, error)
 }
 
 type schemaServiceClient struct {
@@ -39,18 +39,18 @@ func NewSchemaServiceClient(cc grpc.ClientConnInterface) SchemaServiceClient {
 	return &schemaServiceClient{cc}
 }
 
-func (c *schemaServiceClient) Create(ctx context.Context, in *CreateSchemaRequest, opts ...grpc.CallOption) (*CreateSchemaResponse, error) {
+func (c *schemaServiceClient) CreateSchema(ctx context.Context, in *CreateSchemaRequest, opts ...grpc.CallOption) (*CreateSchemaResponse, error) {
 	out := new(CreateSchemaResponse)
-	err := c.cc.Invoke(ctx, SchemaService_Create_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, SchemaService_CreateSchema_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schemaServiceClient) Get(ctx context.Context, in *GetSchemaRequest, opts ...grpc.CallOption) (*GetSchemaResponse, error) {
+func (c *schemaServiceClient) GetSchema(ctx context.Context, in *GetSchemaRequest, opts ...grpc.CallOption) (*GetSchemaResponse, error) {
 	out := new(GetSchemaResponse)
-	err := c.cc.Invoke(ctx, SchemaService_Get_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, SchemaService_GetSchema_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -61,8 +61,8 @@ func (c *schemaServiceClient) Get(ctx context.Context, in *GetSchemaRequest, opt
 // All implementations must embed UnimplementedSchemaServiceServer
 // for forward compatibility
 type SchemaServiceServer interface {
-	Create(context.Context, *CreateSchemaRequest) (*CreateSchemaResponse, error)
-	Get(context.Context, *GetSchemaRequest) (*GetSchemaResponse, error)
+	CreateSchema(context.Context, *CreateSchemaRequest) (*CreateSchemaResponse, error)
+	GetSchema(context.Context, *GetSchemaRequest) (*GetSchemaResponse, error)
 	mustEmbedUnimplementedSchemaServiceServer()
 }
 
@@ -70,10 +70,10 @@ type SchemaServiceServer interface {
 type UnimplementedSchemaServiceServer struct {
 }
 
-func (UnimplementedSchemaServiceServer) Create(context.Context, *CreateSchemaRequest) (*CreateSchemaResponse, error) {
+func (UnimplementedSchemaServiceServer) CreateSchema(context.Context, *CreateSchemaRequest) (*CreateSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSchema not implemented")
 }
-func (UnimplementedSchemaServiceServer) Get(context.Context, *GetSchemaRequest) (*GetSchemaResponse, error) {
+func (UnimplementedSchemaServiceServer) GetSchema(context.Context, *GetSchemaRequest) (*GetSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSchema not implemented")
 }
 func (UnimplementedSchemaServiceServer) mustEmbedUnimplementedSchemaServiceServer() {}
@@ -89,38 +89,38 @@ func RegisterSchemaServiceServer(s grpc.ServiceRegistrar, srv SchemaServiceServe
 	s.RegisterService(&SchemaService_ServiceDesc, srv)
 }
 
-func _SchemaService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SchemaService_CreateSchema_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateSchemaRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchemaServiceServer).Create(ctx, in)
+		return srv.(SchemaServiceServer).CreateSchema(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SchemaService_Create_FullMethodName,
+		FullMethod: SchemaService_CreateSchema_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchemaServiceServer).Create(ctx, req.(*CreateSchemaRequest))
+		return srv.(SchemaServiceServer).CreateSchema(ctx, req.(*CreateSchemaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SchemaService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SchemaService_GetSchema_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetSchemaRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchemaServiceServer).Get(ctx, in)
+		return srv.(SchemaServiceServer).GetSchema(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SchemaService_Get_FullMethodName,
+		FullMethod: SchemaService_GetSchema_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchemaServiceServer).Get(ctx, req.(*GetSchemaRequest))
+		return srv.(SchemaServiceServer).GetSchema(ctx, req.(*GetSchemaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -134,11 +134,11 @@ var SchemaService_ServiceDesc = grpc.ServiceDesc{
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateSchema",
-			Handler:    _SchemaService_Create_Handler,
+			Handler:    _SchemaService_CreateSchema_Handler,
 		},
 		{
 			MethodName: "GetSchema",
-			Handler:    _SchemaService_Get_Handler,
+			Handler:    _SchemaService_GetSchema_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

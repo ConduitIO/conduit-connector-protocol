@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package pschema
+package pconduit
 
 import (
 	"context"
@@ -30,7 +30,7 @@ type inMemoryService struct {
 	m sync.Mutex
 }
 
-func NewInMemoryService() Service {
+func NewInMemoryService() SchemaService {
 	return &inMemoryService{
 		schemas: make(map[string][]schema.Schema),
 	}
