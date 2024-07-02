@@ -3,7 +3,6 @@ syntax = "proto3";
 package connector.v2;
 
 import "google/protobuf/descriptor.proto";
-import "opencdc/v1/opencdc.proto";
 import "config/v1/parameter.proto";
 
 option go_package = "github.com/conduitio/conduit-connector-protocol/proto/connector/v2";
