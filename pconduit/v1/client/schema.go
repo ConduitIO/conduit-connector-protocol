@@ -17,8 +17,8 @@ package client
 import (
 	"context"
 
-	"github.com/conduitio/conduit-connector-protocol/internal"
 	"github.com/conduitio/conduit-connector-protocol/pconduit"
+	"github.com/conduitio/conduit-connector-protocol/pconduit/internal"
 	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"

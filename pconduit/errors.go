@@ -16,4 +16,4 @@ package pconduit
 
 import "errors"
 
-var ErrSchemaNotFound = errors.New("schema not found")
+var ErrUnimplemented = errors.New("method not implemented")
