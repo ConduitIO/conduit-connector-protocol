@@ -20,6 +20,7 @@ import (
 
 	cschema "github.com/conduitio/conduit-commons/schema"
 	"github.com/conduitio/conduit-connector-protocol/conduit/pschema"
+	"github.com/conduitio/conduit-connector-protocol/internal"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -51,7 +52,7 @@ func (c *Client) Create(ctx context.Context, request pschema.CreateRequest) (psc
 		Bytes:   request.Bytes,
 	})
 	if err != nil {
-		return pschema.CreateResponse{}, unwrapGRPCError(err)
+		return pschema.CreateResponse{}, internal.UnwrapGRPCError(err)
 	}
 
 	return pschema.CreateResponse{
