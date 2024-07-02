@@ -45,7 +45,7 @@ func NewClient(target string) (*Client, error) {
 	return &Client{grpcClient: conduitv1.NewSchemaServiceClient(conn)}, nil
 }
 
-func (c *Client) Create(ctx context.Context, request pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error) {
+func (c *Client) CreateSchema(ctx context.Context, request pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error) {
 	protoReq := toproto.CreateSchemaRequest(request)
 	protoResp, err := c.grpcClient.Create(ctx, protoReq)
 	if err != nil {
@@ -54,7 +54,7 @@ func (c *Client) Create(ctx context.Context, request pschema.CreateSchemaRequest
 	return fromproto.CreateSchemaResponse(protoResp)
 }
 
-func (c *Client) Get(ctx context.Context, request pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error) {
+func (c *Client) GetSchema(ctx context.Context, request pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error) {
 	protoReq := toproto.GetSchemaRequest(request)
 	protoResp, err := c.grpcClient.Get(ctx, protoReq)
 	if err != nil {

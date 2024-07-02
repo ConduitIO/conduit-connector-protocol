@@ -40,80 +40,80 @@ func (m *Service) EXPECT() *ServiceMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method.
-func (m *Service) Create(arg0 context.Context, arg1 pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error) {
+// CreateSchema mocks base method.
+func (m *Service) CreateSchema(arg0 context.Context, arg1 pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", arg0, arg1)
+	ret := m.ctrl.Call(m, "CreateSchema", arg0, arg1)
 	ret0, _ := ret[0].(pschema.CreateSchemaResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Create indicates an expected call of Create.
-func (mr *ServiceMockRecorder) Create(arg0, arg1 any) *ServiceCreateCall {
+// CreateSchema indicates an expected call of CreateSchema.
+func (mr *ServiceMockRecorder) CreateSchema(arg0, arg1 any) *ServiceCreateSchemaCall {
 	mr.mock.ctrl.T.Helper()
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*Service)(nil).Create), arg0, arg1)
-	return &ServiceCreateCall{Call: call}
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSchema", reflect.TypeOf((*Service)(nil).CreateSchema), arg0, arg1)
+	return &ServiceCreateSchemaCall{Call: call}
 }
 
-// ServiceCreateCall wrap *gomock.Call
-type ServiceCreateCall struct {
+// ServiceCreateSchemaCall wrap *gomock.Call
+type ServiceCreateSchemaCall struct {
 	*gomock.Call
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *ServiceCreateCall) Return(arg0 pschema.CreateSchemaResponse, arg1 error) *ServiceCreateCall {
+func (c *ServiceCreateSchemaCall) Return(arg0 pschema.CreateSchemaResponse, arg1 error) *ServiceCreateSchemaCall {
 	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *ServiceCreateCall) Do(f func(context.Context, pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error)) *ServiceCreateCall {
+func (c *ServiceCreateSchemaCall) Do(f func(context.Context, pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error)) *ServiceCreateSchemaCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *ServiceCreateCall) DoAndReturn(f func(context.Context, pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error)) *ServiceCreateCall {
+func (c *ServiceCreateSchemaCall) DoAndReturn(f func(context.Context, pschema.CreateSchemaRequest) (pschema.CreateSchemaResponse, error)) *ServiceCreateSchemaCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
-// Get mocks base method.
-func (m *Service) Get(arg0 context.Context, arg1 pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error) {
+// GetSchema mocks base method.
+func (m *Service) GetSchema(arg0 context.Context, arg1 pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", arg0, arg1)
+	ret := m.ctrl.Call(m, "GetSchema", arg0, arg1)
 	ret0, _ := ret[0].(pschema.GetSchemaResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get.
-func (mr *ServiceMockRecorder) Get(arg0, arg1 any) *ServiceGetCall {
+// GetSchema indicates an expected call of GetSchema.
+func (mr *ServiceMockRecorder) GetSchema(arg0, arg1 any) *ServiceGetSchemaCall {
 	mr.mock.ctrl.T.Helper()
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*Service)(nil).Get), arg0, arg1)
-	return &ServiceGetCall{Call: call}
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSchema", reflect.TypeOf((*Service)(nil).GetSchema), arg0, arg1)
+	return &ServiceGetSchemaCall{Call: call}
 }
 
-// ServiceGetCall wrap *gomock.Call
-type ServiceGetCall struct {
+// ServiceGetSchemaCall wrap *gomock.Call
+type ServiceGetSchemaCall struct {
 	*gomock.Call
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *ServiceGetCall) Return(arg0 pschema.GetSchemaResponse, arg1 error) *ServiceGetCall {
+func (c *ServiceGetSchemaCall) Return(arg0 pschema.GetSchemaResponse, arg1 error) *ServiceGetSchemaCall {
 	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *ServiceGetCall) Do(f func(context.Context, pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error)) *ServiceGetCall {
+func (c *ServiceGetSchemaCall) Do(f func(context.Context, pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error)) *ServiceGetSchemaCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *ServiceGetCall) DoAndReturn(f func(context.Context, pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error)) *ServiceGetCall {
+func (c *ServiceGetSchemaCall) DoAndReturn(f func(context.Context, pschema.GetSchemaRequest) (pschema.GetSchemaResponse, error)) *ServiceGetSchemaCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

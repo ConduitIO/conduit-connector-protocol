@@ -23,8 +23,8 @@ import (
 )
 
 type Service interface {
-	Create(context.Context, CreateSchemaRequest) (CreateSchemaResponse, error)
-	Get(context.Context, GetSchemaRequest) (GetSchemaResponse, error)
+	CreateSchema(context.Context, CreateSchemaRequest) (CreateSchemaResponse, error)
+	GetSchema(context.Context, GetSchemaRequest) (GetSchemaResponse, error)
 }
 
 type CreateSchemaRequest struct {

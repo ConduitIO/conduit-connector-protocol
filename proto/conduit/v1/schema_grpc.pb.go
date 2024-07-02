@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SchemaService_Create_FullMethodName = "/conduit.v1.SchemaService/Create"
-	SchemaService_Get_FullMethodName    = "/conduit.v1.SchemaService/Get"
+	SchemaService_Create_FullMethodName = "/conduit.v1.SchemaService/CreateSchema"
+	SchemaService_Get_FullMethodName    = "/conduit.v1.SchemaService/GetSchema"
 )
 
 // SchemaServiceClient is the client API for SchemaService service.
@@ -71,10 +71,10 @@ type UnimplementedSchemaServiceServer struct {
 }
 
 func (UnimplementedSchemaServiceServer) Create(context.Context, *CreateSchemaRequest) (*CreateSchemaResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSchema not implemented")
 }
 func (UnimplementedSchemaServiceServer) Get(context.Context, *GetSchemaRequest) (*GetSchemaResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method GetSchema not implemented")
 }
 func (UnimplementedSchemaServiceServer) mustEmbedUnimplementedSchemaServiceServer() {}
 
@@ -133,11 +133,11 @@ var SchemaService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SchemaServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
+			MethodName: "CreateSchema",
 			Handler:    _SchemaService_Create_Handler,
 		},
 		{
-			MethodName: "Get",
+			MethodName: "GetSchema",
 			Handler:    _SchemaService_Get_Handler,
 		},
 	},

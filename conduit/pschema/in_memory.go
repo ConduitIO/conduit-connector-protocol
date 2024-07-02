@@ -36,7 +36,7 @@ func NewInMemoryService() Service {
 	}
 }
 
-func (s *inMemoryService) Create(_ context.Context, request CreateSchemaRequest) (CreateSchemaResponse, error) {
+func (s *inMemoryService) CreateSchema(_ context.Context, request CreateSchemaRequest) (CreateSchemaResponse, error) {
 	s.m.Lock()
 	defer s.m.Unlock()
 
@@ -51,7 +51,7 @@ func (s *inMemoryService) Create(_ context.Context, request CreateSchemaRequest)
 	return CreateSchemaResponse{Schema: inst}, nil
 }
 
-func (s *inMemoryService) Get(_ context.Context, request GetSchemaRequest) (GetSchemaResponse, error) {
+func (s *inMemoryService) GetSchema(_ context.Context, request GetSchemaRequest) (GetSchemaResponse, error) {
 	s.m.Lock()
 	defer s.m.Unlock()
 

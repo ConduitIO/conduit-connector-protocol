@@ -309,10 +309,10 @@ var file_conduit_v1_schema_proto_depIdxs = []int32{
 	4, // 0: conduit.v1.CreateSchemaRequest.type:type_name -> schema.v1.Schema.Type
 	5, // 1: conduit.v1.CreateSchemaResponse.schema:type_name -> schema.v1.Schema
 	5, // 2: conduit.v1.GetSchemaResponse.schema:type_name -> schema.v1.Schema
-	0, // 3: conduit.v1.SchemaService.Create:input_type -> conduit.v1.CreateSchemaRequest
-	2, // 4: conduit.v1.SchemaService.Get:input_type -> conduit.v1.GetSchemaRequest
-	1, // 5: conduit.v1.SchemaService.Create:output_type -> conduit.v1.CreateSchemaResponse
-	3, // 6: conduit.v1.SchemaService.Get:output_type -> conduit.v1.GetSchemaResponse
+	0, // 3: conduit.v1.SchemaService.CreateSchema:input_type -> conduit.v1.CreateSchemaRequest
+	2, // 4: conduit.v1.SchemaService.GetSchema:input_type -> conduit.v1.GetSchemaRequest
+	1, // 5: conduit.v1.SchemaService.CreateSchema:output_type -> conduit.v1.CreateSchemaResponse
+	3, // 6: conduit.v1.SchemaService.GetSchema:output_type -> conduit.v1.GetSchemaResponse
 	5, // [5:7] is the sub-list for method output_type
 	3, // [3:5] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
