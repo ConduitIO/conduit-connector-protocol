@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package connector.v2;
+
+import "google/protobuf/descriptor.proto";
+import "opencdc/v1/opencdc.proto";
+import "config/v1/parameter.proto";
+
+option go_package = "github.com/conduitio/conduit-connector-protocol/proto/connector/v2";
+
+
+// SpecifierPlugin is responsible for returning the plugin specification.
+service SpecifierPlugin {
+  // Specify should return the plugin specification.
+  rpc Specify(Specifier.Specify.Request) returns (Specifier.Specify.Response);
+}
+
+message Specification {
+  // Name is the name of the plugin.
+  string name = 1;
+  // Summary is a brief description of the plugin and what it does,
+  // ideally not longer than one sentence.
+  string summary = 2;
+  // Description is a longer form field, appropriate for README-like
+  // text that the author can provide for documentation about the
+  // usage of the plugin.
+  string description = 3;
+  // Version string. Should follow semantic versioning and use the "v"
+  // prefix (e.g. v1.23.4).
+  string version = 4;
+  // Author declares the entity that created or maintains this plugin.
+  string author = 5;
+  // A map that describes parameters available for configuring the
+  // destination plugin.
+  map<string, config.v1.Parameter> destination_params = 6;
+  // A map that describes parameters available for configuring the
+  // source plugin.
+  map<string, config.v1.Parameter> source_params = 7;
+}
+
+message Specifier {
+  message Specify {
+    message Request {}
+    message Response {
+      Specification specification = 1;
+    }
+  }
+}
