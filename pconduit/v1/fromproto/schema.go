@@ -40,19 +40,19 @@ func GetSchemaRequest(in *conduitv1.GetSchemaRequest) pconduit.GetSchemaRequest 
 // -- Response Conversions ----------------------------------------------------
 
 func CreateSchemaResponse(in *conduitv1.CreateSchemaResponse) (pconduit.CreateSchemaResponse, error) {
-	var schema schema.Schema
-	err := schema.FromProto(in.Schema)
+	var outSchema schema.Schema
+	err := outSchema.FromProto(in.Schema)
 	if err != nil {
 		return pconduit.CreateSchemaResponse{}, err
 	}
-	return pconduit.CreateSchemaResponse{Schema: schema}, nil
+	return pconduit.CreateSchemaResponse{Schema: outSchema}, nil
 }
 
 func GetSchemaResponse(in *conduitv1.GetSchemaResponse) (pconduit.GetSchemaResponse, error) {
-	var schema schema.Schema
-	err := schema.FromProto(in.Schema)
+	var outSchema schema.Schema
+	err := outSchema.FromProto(in.Schema)
 	if err != nil {
 		return pconduit.GetSchemaResponse{}, err
 	}
-	return pconduit.GetSchemaResponse{Schema: schema}, nil
+	return pconduit.GetSchemaResponse{Schema: outSchema}, nil
 }

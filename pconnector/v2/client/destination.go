@@ -18,8 +18,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/conduitio/conduit-connector-protocol/internal"
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
+	"github.com/conduitio/conduit-connector-protocol/pconnector/internal"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v2/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v2/toproto"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"

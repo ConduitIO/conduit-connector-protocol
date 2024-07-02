@@ -77,7 +77,7 @@ func SpecifierSpecifyResponse(in *connectorv1.Specifier_Specify_Response) (pconn
 
 func Parameters(proto map[string]*connectorv1.Specifier_Parameter) (config.Parameters, error) {
 	if proto == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // This is the expected behavior.
 	}
 
 	out := make(config.Parameters, len(proto))
