@@ -90,5 +90,5 @@ func getFreePort() int {
 		panic(err)
 	}
 
-	return l.Addr().(*net.TCPAddr).Port
+	return l.Addr().(*net.TCPAddr).Port //nolint:forcetypeassert // we know it's a TCPAddr
 }

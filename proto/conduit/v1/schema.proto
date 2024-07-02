@@ -2,41 +2,30 @@ syntax = "proto3";
 
 package conduit.v1;
 
+import "schema/v1/schema.proto";
+
 option go_package = "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1";
 
 service SchemaService {
-  rpc Create(CreateSchemaRequest) returns (CreateSchemaResponse);
-  rpc Get(GetSchemaRequest) returns (GetSchemaResponse);
-}
-
-message Schema {
-  enum Type {
-    TYPE_UNSPECIFIED = 0;
-    TYPE_AVRO = 1;
-  }
-
-  // The schema's globally unique ID
-  string id = 1;
-  string name = 2;
-  int32 version = 3;
-  Type type = 4;
-  // The schema contents
-  bytes bytes = 5;
+  rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse);
+  rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse);
 }
 
 message CreateSchemaRequest {
-  // The schema name. It needs to be unique in the scope of a connector.
-  string name = 1;
-  Schema.Type type = 2;
+  string subject = 1;
+  schema.v1.Schema.Type type = 2;
   bytes bytes = 3;
 }
+
 message CreateSchemaResponse {
-  Schema schema = 1;
+  schema.v1.Schema schema = 1;
 }
 
 message GetSchemaRequest {
-  string id = 1;
+  string subject = 1;
+  int32 version = 2;
 }
+
 message GetSchemaResponse {
-  Schema schema = 1;
+  schema.v1.Schema schema = 1;
 }

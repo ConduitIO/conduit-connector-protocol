@@ -19,6 +19,7 @@ import (
 	"fmt"
 
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
+	"github.com/conduitio/conduit-connector-protocol/pconnector/internal"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v1/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v1/toproto"
 	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
@@ -39,7 +40,7 @@ func (s *DestinationPluginClient) Configure(ctx context.Context, goReq pconnecto
 	protoReq := toproto.DestinationConfigureRequest(goReq)
 	protoResp, err := s.grpcClient.Configure(ctx, protoReq)
 	if err != nil {
-		return pconnector.DestinationConfigureResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationConfigureResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.DestinationConfigureResponse(protoResp), nil
 }
@@ -48,7 +49,7 @@ func (s *DestinationPluginClient) Open(ctx context.Context, goReq pconnector.Des
 	protoReq := toproto.DestinationStartRequest(goReq)
 	protoResp, err := s.grpcClient.Start(ctx, protoReq)
 	if err != nil {
-		return pconnector.DestinationOpenResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationOpenResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.DestinationStartResponse(protoResp), nil
 }
@@ -64,7 +65,7 @@ func (s *DestinationPluginClient) Run(ctx context.Context, stream pconnector.Des
 
 	grpcStream, err := s.grpcClient.Run(ctx)
 	if err != nil {
-		return unwrapGRPCError(err)
+		return internal.UnwrapGRPCError(err)
 	}
 
 	clientStream.client = grpcStream
@@ -75,7 +76,7 @@ func (s *DestinationPluginClient) Stop(ctx context.Context, goReq pconnector.Des
 	protoReq := toproto.DestinationStopRequest(goReq)
 	protoResp, err := s.grpcClient.Stop(ctx, protoReq)
 	if err != nil {
-		return pconnector.DestinationStopResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationStopResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.DestinationStopResponse(protoResp), nil
 }
@@ -84,7 +85,7 @@ func (s *DestinationPluginClient) Teardown(ctx context.Context, goReq pconnector
 	protoReq := toproto.DestinationTeardownRequest(goReq)
 	protoResp, err := s.grpcClient.Teardown(ctx, protoReq)
 	if err != nil {
-		return pconnector.DestinationTeardownResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationTeardownResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.DestinationTeardownResponse(protoResp), nil
 }
@@ -93,7 +94,7 @@ func (s *DestinationPluginClient) LifecycleOnCreated(ctx context.Context, goReq 
 	protoReq := toproto.DestinationLifecycleOnCreatedRequest(goReq)
 	protoResp, err := s.grpcClient.LifecycleOnCreated(ctx, protoReq)
 	if err != nil {
-		return pconnector.DestinationLifecycleOnCreatedResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationLifecycleOnCreatedResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.DestinationLifecycleOnCreatedResponse(protoResp), nil
 }
@@ -102,7 +103,7 @@ func (s *DestinationPluginClient) LifecycleOnUpdated(ctx context.Context, goReq 
 	protoReq := toproto.DestinationLifecycleOnUpdatedRequest(goReq)
 	protoResp, err := s.grpcClient.LifecycleOnUpdated(ctx, protoReq)
 	if err != nil {
-		return pconnector.DestinationLifecycleOnUpdatedResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationLifecycleOnUpdatedResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.DestinationLifecycleOnUpdatedResponse(protoResp), nil
 }
@@ -111,7 +112,7 @@ func (s *DestinationPluginClient) LifecycleOnDeleted(ctx context.Context, goReq 
 	protoReq := toproto.DestinationLifecycleOnDeletedRequest(goReq)
 	protoResp, err := s.grpcClient.LifecycleOnDeleted(ctx, protoReq)
 	if err != nil {
-		return pconnector.DestinationLifecycleOnDeletedResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationLifecycleOnDeletedResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.DestinationLifecycleOnDeletedResponse(protoResp), nil
 }
@@ -147,7 +148,7 @@ func (s *DestinationRunStream) Send(goReq pconnector.DestinationRunRequest) erro
 	for _, req := range protoReq {
 		err = s.client.Send(req)
 		if err != nil {
-			return unwrapGRPCError(err)
+			return internal.UnwrapGRPCError(err)
 		}
 	}
 	return nil
@@ -156,7 +157,7 @@ func (s *DestinationRunStream) Send(goReq pconnector.DestinationRunRequest) erro
 func (s *DestinationRunStream) Recv() (pconnector.DestinationRunResponse, error) {
 	protoResp, err := s.client.Recv()
 	if err != nil {
-		return pconnector.DestinationRunResponse{}, unwrapGRPCError(err)
+		return pconnector.DestinationRunResponse{}, internal.UnwrapGRPCError(err)
 	}
 	goResp := fromproto.DestinationRunResponse(protoResp)
 

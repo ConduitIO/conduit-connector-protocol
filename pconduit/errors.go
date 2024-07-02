@@ -12,37 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package schema
+package pconduit
 
-import (
-	"context"
+import "errors"
 
-	"github.com/conduitio/conduit-commons/schema"
-)
-
-type Service interface {
-	Create(context.Context, CreateRequest) (CreateResponse, error)
-	Get(context.Context, GetRequest) (GetResponse, error)
-}
-
-type Type int32
-
-const (
-	TypeAvro Type = iota + 1
-)
-
-type CreateRequest struct {
-	Name  string
-	Type  Type
-	Bytes []byte
-}
-type CreateResponse struct {
-	schema.Instance
-}
-
-type GetRequest struct {
-	ID string
-}
-type GetResponse struct {
-	schema.Instance
-}
+var ErrUnimplemented = errors.New("method not implemented")
