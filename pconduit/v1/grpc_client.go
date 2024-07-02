@@ -47,7 +47,7 @@ func NewClient(target string) (*Client, error) {
 
 func (c *Client) CreateSchema(ctx context.Context, request pconduit.CreateSchemaRequest) (pconduit.CreateSchemaResponse, error) {
 	protoReq := toproto.CreateSchemaRequest(request)
-	protoResp, err := c.grpcClient.Create(ctx, protoReq)
+	protoResp, err := c.grpcClient.CreateSchema(ctx, protoReq)
 	if err != nil {
 		return pconduit.CreateSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
@@ -56,7 +56,7 @@ func (c *Client) CreateSchema(ctx context.Context, request pconduit.CreateSchema
 
 func (c *Client) GetSchema(ctx context.Context, request pconduit.GetSchemaRequest) (pconduit.GetSchemaResponse, error) {
 	protoReq := toproto.GetSchemaRequest(request)
-	protoResp, err := c.grpcClient.Get(ctx, protoReq)
+	protoResp, err := c.grpcClient.GetSchema(ctx, protoReq)
 	if err != nil {
 		return pconduit.GetSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
