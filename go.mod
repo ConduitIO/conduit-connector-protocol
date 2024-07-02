@@ -6,7 +6,6 @@ toolchain go1.22.3
 
 require (
 	github.com/bufbuild/buf v1.34.0
-	github.com/conduitio/conduit v0.10.3
 	github.com/conduitio/conduit-commons v0.2.1-0.20240701165122-3948a38f3667
 	github.com/golangci/golangci-lint v1.59.1
 	github.com/google/go-cmp v0.6.0
@@ -254,7 +253,6 @@ require (
 	golang.org/x/term v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/tools v0.22.0 // indirect
-	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240617180043-68d350f18fd4 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240624140628-dc46fd24d27d // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
