@@ -14,6 +14,14 @@ generate:
 proto-generate:
 	cd proto && buf generate
 
+.PHONY: proto-update
+proto-update:
+	cd proto && buf dep update
+
+.PHONY: proto-lint
+proto-lint:
+	cd proto && buf lint
+
 .PHONY: install-tools
 install-tools:
 	@echo Installing tools from tools.go

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package conduit.v1;
+
+import "schema/v1/schema.proto";
+
+option go_package = "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1";
+
+service SchemaService {
+  rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse);
+  rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse);
+}
+
+message CreateSchemaRequest {
+  string subject = 1;
+  schema.v1.Schema.Type type = 2;
+  bytes bytes = 3;
+}
+
+message CreateSchemaResponse {
+  schema.v1.Schema schema = 1;
+}
+
+message GetSchemaRequest {
+  string subject = 1;
+  int32 version = 2;
+}
+
+message GetSchemaResponse {
+  schema.v1.Schema schema = 1;
+}

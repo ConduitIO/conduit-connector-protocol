@@ -18,6 +18,7 @@ import (
 	"context"
 
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
+	"github.com/conduitio/conduit-connector-protocol/pconnector/internal"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v2/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v2/toproto"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
@@ -38,7 +39,7 @@ func (s *SpecifierPluginClient) Specify(ctx context.Context, goReq pconnector.Sp
 	protoReq := toproto.SpecifierSpecifyRequest(goReq)
 	protoResp, err := s.grpcClient.Specify(ctx, protoReq)
 	if err != nil {
-		return pconnector.SpecifierSpecifyResponse{}, unwrapGRPCError(err)
+		return pconnector.SpecifierSpecifyResponse{}, internal.UnwrapGRPCError(err)
 	}
 	goResp, err := fromproto.SpecifierSpecifyResponse(protoResp)
 	if err != nil {

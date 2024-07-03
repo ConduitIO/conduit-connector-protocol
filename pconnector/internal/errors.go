@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package client
+package internal
 
 import (
 	"context"
@@ -32,9 +32,9 @@ var knownErrors = map[string]error{
 	"context deadline exceeded": context.DeadlineExceeded,
 }
 
-// unwrapGRPCError removes the gRPC wrapper from the error and returns a known
+// UnwrapGRPCError removes the gRPC wrapper from the error and returns a known
 // error if possible, otherwise creates an internal error.
-func unwrapGRPCError(err error) error {
+func UnwrapGRPCError(err error) error {
 	st, ok := status.FromError(err)
 	if !ok {
 		return err

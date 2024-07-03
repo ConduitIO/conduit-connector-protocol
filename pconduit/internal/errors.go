@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package client
+package internal
 
 import (
 	"context"
 	"errors"
 	"fmt"
 
-	"github.com/conduitio/conduit-connector-protocol/pconnector"
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -32,15 +32,15 @@ var knownErrors = map[string]error{
 	"context deadline exceeded": context.DeadlineExceeded,
 }
 
-// unwrapGRPCError removes the gRPC wrapper from the error and returns a known
+// UnwrapGRPCError removes the gRPC wrapper from the error and returns a known
 // error if possible, otherwise creates an internal error.
-func unwrapGRPCError(err error) error {
+func UnwrapGRPCError(err error) error {
 	st, ok := status.FromError(err)
 	if !ok {
 		return err
 	}
 	if st.Code() == codes.Unimplemented {
-		return fmt.Errorf("%s: %w", st.Message(), pconnector.ErrUnimplemented)
+		return fmt.Errorf("%s: %w", st.Message(), pconduit.ErrUnimplemented)
 	}
 	if knownErr, ok := knownErrors[st.Message()]; ok {
 		return knownErr
