@@ -28,7 +28,7 @@ func ContextWithConnectorToken(ctx context.Context, connectorToken string) conte
 func ConnectorTokenFromContext(ctx context.Context) string {
 	connectorToken := ctx.Value(connectorTokenCtxKey{})
 	if connectorToken != nil {
-		return connectorToken.(string)
+		return connectorToken.(string) //nolint:forcetypeassert // only this package can set the value, it has to be a string
 	}
 	return ""
 }
