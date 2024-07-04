@@ -16,4 +16,11 @@ package pconduit
 
 import "errors"
 
-var ErrUnimplemented = errors.New("method not implemented")
+var (
+	ErrUnimplemented = errors.New("method not implemented")
+
+	ErrSchemaNotFound       = errors.New("schema not found")
+	ErrInvalidSchemaSubject = errors.New("invalid schema subject")
+	ErrInvalidSchemaType    = errors.New("invalid schema type")
+	ErrInvalidSchemaBytes   = errors.New("invalid schema bytes")
+)
