@@ -36,6 +36,7 @@ func NewSchemaServiceClient(cc *grpc.ClientConn) *SchemaServiceClient {
 }
 
 func (c *SchemaServiceClient) CreateSchema(ctx context.Context, request pconduit.CreateSchemaRequest) (pconduit.CreateSchemaResponse, error) {
+	ctx = internal.RepackConnectorTokenOutgoingContext(ctx)
 	protoReq := toproto.CreateSchemaRequest(request)
 	protoResp, err := c.grpcClient.CreateSchema(ctx, protoReq)
 	if err != nil {
@@ -45,6 +46,7 @@ func (c *SchemaServiceClient) CreateSchema(ctx context.Context, request pconduit
 }
 
 func (c *SchemaServiceClient) GetSchema(ctx context.Context, request pconduit.GetSchemaRequest) (pconduit.GetSchemaResponse, error) {
+	ctx = internal.RepackConnectorTokenOutgoingContext(ctx)
 	protoReq := toproto.GetSchemaRequest(request)
 	protoResp, err := c.grpcClient.GetSchema(ctx, protoReq)
 	if err != nil {

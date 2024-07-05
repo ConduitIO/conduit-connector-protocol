@@ -24,13 +24,29 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// knownErrors contains known error messages that are mapped to internal error
-// types. gRPC does not retain error types, so we have to resort to relying on
-// the error message itself.
-var knownErrors = map[string]error{
-	"context canceled":          context.Canceled,
-	"context deadline exceeded": context.DeadlineExceeded,
+// knownErrors is the list of known errors that are returned by gRPC.
+var knownErrors = []error{
+	context.Canceled,
+	context.DeadlineExceeded,
+
+	pconduit.ErrUnimplemented,
+
+	pconduit.ErrSchemaNotFound,
+	pconduit.ErrInvalidSchemaSubject,
+	pconduit.ErrInvalidSchemaType,
+	pconduit.ErrInvalidSchemaBytes,
 }
+
+// knownErrorsMap contains known errors messages that are mapped to internal error
+// types. gRPC does not retain error types, so we have to resort to relying on
+// the error message itself. The map is built based on the knownErrors slice.
+var knownErrorsMap = func() map[string]error {
+	m := make(map[string]error)
+	for _, err := range knownErrors {
+		m[err.Error()] = err
+	}
+	return m
+}()
 
 // UnwrapGRPCError removes the gRPC wrapper from the error and returns a known
 // error if possible, otherwise creates an internal error.
@@ -42,7 +58,7 @@ func UnwrapGRPCError(err error) error {
 	if st.Code() == codes.Unimplemented {
 		return fmt.Errorf("%s: %w", st.Message(), pconduit.ErrUnimplemented)
 	}
-	if knownErr, ok := knownErrors[st.Message()]; ok {
+	if knownErr, ok := knownErrorsMap[st.Message()]; ok {
 		return knownErr
 	}
 	return errors.New(st.Message())
