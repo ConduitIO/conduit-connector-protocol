@@ -17,6 +17,7 @@ package client
 import (
 	"context"
 	"errors"
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"os/exec"
 
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
@@ -34,11 +35,12 @@ import (
 func New(
 	logger hclog.Logger,
 	path string,
+	connectorUtilsAddr string,
 	opts ...Option,
 ) (*plugin.Client, error) {
 	cmd := exec.Command(path)
 	// NB: we give cmd a clean env here by setting Env to an empty slice
-	cmd.Env = make([]string, 0)
+	cmd.Env = []string{pconduit.EnvConduitConnectorUtilitiesGRPCTarget + "=" + connectorUtilsAddr}
 
 	clientConfig := &plugin.ClientConfig{
 		HandshakeConfig: pconnector.HandshakeConfig,
