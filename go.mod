@@ -2,8 +2,6 @@ module github.com/conduitio/conduit-connector-protocol
 
 go 1.22.4
 
-toolchain go1.22.5
-
 require (
 	github.com/bufbuild/buf v1.34.0
 	github.com/conduitio/conduit-commons v0.2.1-0.20240709142247-d973cba9694c
