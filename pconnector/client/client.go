@@ -19,7 +19,6 @@ import (
 	"errors"
 	"os/exec"
 
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
 	v1 "github.com/conduitio/conduit-connector-protocol/pconnector/v1"              //nolint:staticcheck // v1 is used for backwards compatibility
 	clientv1 "github.com/conduitio/conduit-connector-protocol/pconnector/v1/client" //nolint:staticcheck // v1 is used for backwards compatibility
@@ -35,16 +34,11 @@ import (
 func New(
 	logger hclog.Logger,
 	path string,
-	connUtilsAddr string,
-	connUtilsToken string,
 	opts ...Option,
 ) (*plugin.Client, error) {
 	cmd := exec.Command(path)
 	// NB: we give cmd a clean env here by setting Env to an empty slice
-	cmd.Env = []string{
-		pconduit.EnvConduitConnectorUtilitiesGRPCTarget + "=" + connUtilsAddr,
-		pconduit.EnvConduitConnectorSchemaToken + "=" + connUtilsToken,
-	}
+	cmd.Env = make([]string, 0)
 
 	clientConfig := &plugin.ClientConfig{
 		HandshakeConfig: pconnector.HandshakeConfig,

@@ -16,6 +16,7 @@ package client
 
 import (
 	"fmt"
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"net"
 	"os/exec"
 
@@ -72,6 +73,20 @@ func WithDelve(port int) Option {
 		}
 
 		in.Logger.Info("DELVE: starting plugin", "port", port)
+		return nil
+	})
+}
+
+func WithConnectorUtilsAddress(addr string) Option {
+	return serveConfigFunc(func(in *plugin.ClientConfig) error {
+		in.Cmd.Env = append(in.Cmd.Env, pconduit.EnvConduitConnectorUtilitiesGRPCTarget+"="+addr)
+		return nil
+	})
+}
+
+func WithConnectorUtilsToken(token string) Option {
+	return serveConfigFunc(func(in *plugin.ClientConfig) error {
+		in.Cmd.Env = append(in.Cmd.Env, pconduit.EnvConduitConnectorSchemaToken+"="+token)
 		return nil
 	})
 }
