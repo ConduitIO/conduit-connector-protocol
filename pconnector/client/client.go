@@ -35,12 +35,16 @@ import (
 func New(
 	logger hclog.Logger,
 	path string,
-	connectorUtilsAddr string,
+	connUtilsAddr string,
+	connUtilsToken string,
 	opts ...Option,
 ) (*plugin.Client, error) {
 	cmd := exec.Command(path)
 	// NB: we give cmd a clean env here by setting Env to an empty slice
-	cmd.Env = []string{pconduit.EnvConduitConnectorUtilitiesGRPCTarget + "=" + connectorUtilsAddr}
+	cmd.Env = []string{
+		pconduit.EnvConduitConnectorUtilitiesGRPCTarget + "=" + connUtilsAddr,
+		pconduit.EnvConduitConnectorSchemaToken + "=" + connUtilsToken,
+	}
 
 	clientConfig := &plugin.ClientConfig{
 		HandshakeConfig: pconnector.HandshakeConfig,
