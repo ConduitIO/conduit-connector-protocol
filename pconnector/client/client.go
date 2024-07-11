@@ -17,9 +17,9 @@ package client
 import (
 	"context"
 	"errors"
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"os/exec"
 
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
 	v1 "github.com/conduitio/conduit-connector-protocol/pconnector/v1"              //nolint:staticcheck // v1 is used for backwards compatibility
 	clientv1 "github.com/conduitio/conduit-connector-protocol/pconnector/v1/client" //nolint:staticcheck // v1 is used for backwards compatibility
