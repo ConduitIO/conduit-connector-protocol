@@ -16,10 +16,10 @@ package client
 
 import (
 	"fmt"
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"net"
 	"os/exec"
 
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"github.com/hashicorp/go-plugin"
 )
 

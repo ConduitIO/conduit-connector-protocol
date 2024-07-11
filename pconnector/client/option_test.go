@@ -15,11 +15,11 @@
 package client
 
 import (
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"os/exec"
 	"slices"
 	"testing"
 
+	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"github.com/hashicorp/go-plugin"
 	"github.com/matryer/is"
 )
