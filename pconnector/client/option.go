@@ -78,6 +78,9 @@ func WithDelve(port int) Option {
 
 func WithEnvVar(key, value string) Option {
 	return serveConfigFunc(func(in *plugin.ClientConfig) error {
+		if in.Cmd == nil {
+			return nil
+		}
 		in.Cmd.Env = append(in.Cmd.Env, key+"="+value)
 		return nil
 	})
