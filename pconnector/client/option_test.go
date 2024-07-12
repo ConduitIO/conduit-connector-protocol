@@ -30,7 +30,7 @@ func TestOption_WithConnectorUtilsAddress(t *testing.T) {
 	cmd.Env = []string{"FOO=BAR"}
 	cc := &plugin.ClientConfig{Cmd: cmd}
 
-	underTest := WithConnectorUtilsAddress("localhost:12345")
+	underTest := WithEnvVar(pconduit.EnvConduitConnectorUtilitiesGRPCTarget, "localhost:12345")
 
 	err := underTest.ApplyOption(cc)
 	is.NoErr(err)
@@ -38,26 +38,6 @@ func TestOption_WithConnectorUtilsAddress(t *testing.T) {
 	want := []string{
 		"FOO=BAR",
 		pconduit.EnvConduitConnectorUtilitiesGRPCTarget + "=localhost:12345",
-	}
-	slices.Sort(want)
-	slices.Sort(cc.Cmd.Env)
-	is.Equal(want, cc.Cmd.Env)
-}
-
-func TestOption_WithConnectorUtilsToken(t *testing.T) {
-	is := is.New(t)
-	cmd := exec.Command("test-path")
-	cmd.Env = []string{"FOO=BAR"}
-	cc := &plugin.ClientConfig{Cmd: cmd}
-
-	underTest := WithConnectorUtilsToken("test-token")
-
-	err := underTest.ApplyOption(cc)
-	is.NoErr(err)
-
-	want := []string{
-		"FOO=BAR",
-		pconduit.EnvConduitConnectorSchemaToken + "=test-token",
 	}
 	slices.Sort(want)
 	slices.Sort(cc.Cmd.Env)

@@ -16,7 +16,6 @@ package server
 
 import (
 	"context"
-
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v2/fromproto"
 	"github.com/conduitio/conduit-connector-protocol/pconnector/v2/toproto"

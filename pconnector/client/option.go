@@ -19,7 +19,6 @@ import (
 	"net"
 	"os/exec"
 
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
 	"github.com/hashicorp/go-plugin"
 )
 
@@ -77,16 +76,9 @@ func WithDelve(port int) Option {
 	})
 }
 
-func WithConnectorUtilsAddress(addr string) Option {
+func WithEnvVar(key, value string) Option {
 	return serveConfigFunc(func(in *plugin.ClientConfig) error {
-		in.Cmd.Env = append(in.Cmd.Env, pconduit.EnvConduitConnectorUtilitiesGRPCTarget+"="+addr)
-		return nil
-	})
-}
-
-func WithConnectorUtilsToken(token string) Option {
-	return serveConfigFunc(func(in *plugin.ClientConfig) error {
-		in.Cmd.Env = append(in.Cmd.Env, pconduit.EnvConduitConnectorSchemaToken+"="+token)
+		in.Cmd.Env = append(in.Cmd.Env, key+"="+value)
 		return nil
 	})
 }
