@@ -23,27 +23,24 @@ import (
 	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/toproto"
 	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 )
 
 type SchemaServiceClient struct {
 	grpcClient conduitv1.SchemaServiceClient
-	token      string
 }
 
 var _ pconduit.SchemaService = (*SchemaServiceClient)(nil)
 
-func NewSchemaServiceClient(cc *grpc.ClientConn, token string) *SchemaServiceClient {
+func NewSchemaServiceClient(cc *grpc.ClientConn) *SchemaServiceClient {
 	return &SchemaServiceClient{
 		grpcClient: conduitv1.NewSchemaServiceClient(cc),
-		token:      token,
 	}
 }
 
 func (c *SchemaServiceClient) CreateSchema(ctx context.Context, request pconduit.CreateSchemaRequest) (pconduit.CreateSchemaResponse, error) {
-	ctx = metadata.AppendToOutgoingContext(ctx, internal.MetadataConnectorTokenKey, c.token)
+	createCtx := internal.RepackConnectorTokenOutgoingContext(ctx)
 	protoReq := toproto.CreateSchemaRequest(request)
-	protoResp, err := c.grpcClient.CreateSchema(ctx, protoReq)
+	protoResp, err := c.grpcClient.CreateSchema(createCtx, protoReq)
 	if err != nil {
 		return pconduit.CreateSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
@@ -51,9 +48,9 @@ func (c *SchemaServiceClient) CreateSchema(ctx context.Context, request pconduit
 }
 
 func (c *SchemaServiceClient) GetSchema(ctx context.Context, request pconduit.GetSchemaRequest) (pconduit.GetSchemaResponse, error) {
-	ctx = metadata.AppendToOutgoingContext(ctx, internal.MetadataConnectorTokenKey, c.token)
+	getCtx := internal.RepackConnectorTokenOutgoingContext(ctx)
 	protoReq := toproto.GetSchemaRequest(request)
-	protoResp, err := c.grpcClient.GetSchema(ctx, protoReq)
+	protoResp, err := c.grpcClient.GetSchema(getCtx, protoReq)
 	if err != nil {
 		return pconduit.GetSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
