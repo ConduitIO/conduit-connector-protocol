@@ -14,36 +14,21 @@
 
 package pconnector
 
-// Level represents a log level.
-type Level int32
+// LogLevel represents a log level.
+type LogLevel int32
 
 const (
-	// NoLevel is a special level used to indicate that no level has been
-	// set and allow for a default to be used.
-	NoLevel Level = 0
-
-	// Trace is the most verbose level. Intended to be used for the tracing
-	// of actions in code, such as function enters/exits, etc.
-	Trace Level = 1
-
-	// Debug information for programmer low-level analysis.
-	Debug Level = 2
-
-	// Info information about steady state operations.
-	Info Level = 3
-
-	// Warn information about rare but handled events.
-	Warn Level = 4
-
-	// Error information about unrecoverable events.
-	Error Level = 5
-
-	// Off disables all logging output.
-	Off Level = 6
+	NoLevel LogLevel = 0
+	Trace   LogLevel = 1
+	Debug   LogLevel = 2
+	Info    LogLevel = 3
+	Warn    LogLevel = 4
+	Error   LogLevel = 5
+	Off     LogLevel = 6
 )
 
 type PluginConfig struct {
 	Token       string
 	ConnectorID string
-	Level       Level
+	LogLevel    LogLevel
 }
