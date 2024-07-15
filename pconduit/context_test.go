@@ -16,9 +16,10 @@ package pconduit
 
 import (
 	"context"
+	"testing"
+
 	"github.com/conduitio/conduit-connector-protocol/pconnector"
 	"github.com/matryer/is"
-	"testing"
 )
 
 func TestContextUtils_ConnectorToken(t *testing.T) {
