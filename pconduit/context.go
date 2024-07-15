@@ -75,7 +75,7 @@ func LogLevelFromContext(ctx context.Context) pconnector.LogLevel {
 		return logLevel.(pconnector.LogLevel) //nolint:forcetypeassert // only this package can set the value, it has to be a string
 	}
 
-	return pconnector.NoLevel
+	return pconnector.LogLevelNo
 }
 
 func Enrich(ctx context.Context, cfg pconnector.PluginConfig) context.Context {

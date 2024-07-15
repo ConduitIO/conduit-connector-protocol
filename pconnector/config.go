@@ -18,13 +18,13 @@ package pconnector
 type LogLevel int32
 
 const (
-	NoLevel LogLevel = 0
-	Trace   LogLevel = 1
-	Debug   LogLevel = 2
-	Info    LogLevel = 3
-	Warn    LogLevel = 4
-	Error   LogLevel = 5
-	Off     LogLevel = 6
+	LogLevelNo    LogLevel = 0
+	LogLevelTrace LogLevel = 1
+	LogLevelDebug LogLevel = 2
+	LogLevelInfo  LogLevel = 3
+	LogLevelWarn  LogLevel = 4
+	LogLevelError LogLevel = 5
+	LogLevelOff   LogLevel = 6
 )
 
 type PluginConfig struct {
