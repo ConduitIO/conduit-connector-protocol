@@ -78,8 +78,10 @@ func LogLevelFromContext(ctx context.Context) pconnector.LogLevel {
 	return pconnector.NoLevel
 }
 
-func Enrich(ctx context.Context, cfg pconnector.PluginConfig) {
-	ctx = ContextWithConnectorToken(ctx, cfg.Token)
-	ctx = ContextWithConnectorID(ctx, cfg.ConnectorID)
-	ctx = ContextWithLogLevel(ctx, cfg.LogLevel)
+func Enrich(ctx context.Context, cfg pconnector.PluginConfig) context.Context {
+	enriched := ContextWithConnectorToken(ctx, cfg.Token)
+	enriched = ContextWithConnectorID(enriched, cfg.ConnectorID)
+	enriched = ContextWithLogLevel(enriched, cfg.LogLevel)
+
+	return enriched
 }
