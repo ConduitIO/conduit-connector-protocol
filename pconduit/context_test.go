@@ -14,9 +14,20 @@
 
 package pconduit
 
-const (
-	EnvConduitConnectorUtilitiesGRPCTarget = "CONDUIT_CONNECTOR_UTILITIES_GRPC_TARGET"
-	EnvConduitConnectorSchemaToken         = "CONDUIT_CONNECTOR_TOKEN"
-	EnvConduitConnectorID                  = "CONDUIT_CONNECTOR_ID"
-	EnvConduitLogLevel                     = "CONDUIT_LOG_LEVEL"
+import (
+	"context"
+	"testing"
+
+	"github.com/matryer/is"
 )
+
+func TestContextUtils_ConnectorToken(t *testing.T) {
+	is := is.New(t)
+	ctx := context.Background()
+
+	want := "test-token"
+	ctx = ContextWithConnectorToken(ctx, want)
+	got := ConnectorTokenFromContext(ctx)
+
+	is.Equal(want, got)
+}

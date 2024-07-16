@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package pconduit
+package pconnector
 
-const (
-	EnvConduitConnectorUtilitiesGRPCTarget = "CONDUIT_CONNECTOR_UTILITIES_GRPC_TARGET"
-	EnvConduitConnectorSchemaToken         = "CONDUIT_CONNECTOR_TOKEN"
-	EnvConduitConnectorID                  = "CONDUIT_CONNECTOR_ID"
-	EnvConduitLogLevel                     = "CONDUIT_LOG_LEVEL"
-)
+type PluginConfig struct {
+	Token       string
+	ConnectorID string
+	LogLevel    string
+}

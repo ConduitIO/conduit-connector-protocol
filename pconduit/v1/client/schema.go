@@ -32,7 +32,9 @@ type SchemaServiceClient struct {
 var _ pconduit.SchemaService = (*SchemaServiceClient)(nil)
 
 func NewSchemaServiceClient(cc *grpc.ClientConn) *SchemaServiceClient {
-	return &SchemaServiceClient{grpcClient: conduitv1.NewSchemaServiceClient(cc)}
+	return &SchemaServiceClient{
+		grpcClient: conduitv1.NewSchemaServiceClient(cc),
+	}
 }
 
 func (c *SchemaServiceClient) CreateSchema(ctx context.Context, request pconduit.CreateSchemaRequest) (pconduit.CreateSchemaResponse, error) {

@@ -15,6 +15,7 @@
 package client
 
 import (
+	"errors"
 	"fmt"
 	"net"
 	"os/exec"
@@ -72,6 +73,17 @@ func WithDelve(port int) Option {
 		}
 
 		in.Logger.Info("DELVE: starting plugin", "port", port)
+		return nil
+	})
+}
+
+func WithEnvVar(key, value string) Option {
+	return serveConfigFunc(func(in *plugin.ClientConfig) error {
+		if in.Cmd == nil {
+			return errors.New("plugin client config has no Cmd set (tip: check if WithReattachConfig is used)")
+		}
+
+		in.Cmd.Env = append(in.Cmd.Env, key+"="+value)
 		return nil
 	})
 }

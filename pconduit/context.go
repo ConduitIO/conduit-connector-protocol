@@ -14,7 +14,11 @@
 
 package pconduit
 
-import "context"
+import (
+	"context"
+)
+
+// -- Connector token ----------------------------------------------------------
 
 type connectorTokenCtxKey struct{}
 
