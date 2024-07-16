@@ -18,4 +18,5 @@ const (
 	EnvConduitConnectorUtilitiesGRPCTarget = "CONDUIT_CONNECTOR_UTILITIES_GRPC_TARGET"
 	EnvConduitConnectorSchemaToken         = "CONDUIT_CONNECTOR_SCHEMA_TOKEN"
 	EnvConduitConnectorID                  = "CONDUIT_CONNECTOR_ID"
+	EnvConduitLogLevel                     = "CONDUIT_LOG_LEVEL"
 )
