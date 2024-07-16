@@ -14,21 +14,8 @@
 
 package pconnector
 
-// LogLevel represents a log level.
-type LogLevel int32
-
-const (
-	LogLevelNo    LogLevel = 0
-	LogLevelTrace LogLevel = 1
-	LogLevelDebug LogLevel = 2
-	LogLevelInfo  LogLevel = 3
-	LogLevelWarn  LogLevel = 4
-	LogLevelError LogLevel = 5
-	LogLevelOff   LogLevel = 6
-)
-
 type PluginConfig struct {
 	Token       string
 	ConnectorID string
-	LogLevel    LogLevel
+	LogLevel    string
 }
