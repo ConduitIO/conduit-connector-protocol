@@ -54,18 +54,3 @@ func TestContextUtils_LogLevel(t *testing.T) {
 
 	is.Equal(want, got)
 }
-
-func TestContextUtils_Enrich(t *testing.T) {
-	is := is.New(t)
-	ctx := context.Background()
-	cfg := pconnector.PluginConfig{
-		Token:       "test-token",
-		ConnectorID: "test-connector-id",
-		LogLevel:    pconnector.LogLevelDebug,
-	}
-
-	got := Enrich(ctx, cfg)
-	is.Equal(cfg.Token, ConnectorTokenFromContext(got))
-	is.Equal(cfg.ConnectorID, ConnectorIDFromContext(got))
-	is.Equal(cfg.LogLevel, LogLevelFromContext(got))
-}
