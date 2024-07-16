@@ -16,7 +16,6 @@ package client
 
 import (
 	"os/exec"
-	"slices"
 	"testing"
 
 	"github.com/conduitio/conduit-connector-protocol/pconduit"
@@ -39,7 +38,5 @@ func TestOption_WithConnectorUtilsAddress(t *testing.T) {
 		"FOO=BAR",
 		pconduit.EnvConduitConnectorUtilitiesGRPCTarget + "=localhost:12345",
 	}
-	slices.Sort(want)
-	slices.Sort(cc.Cmd.Env)
 	is.Equal(want, cc.Cmd.Env)
 }
