@@ -18,7 +18,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/conduitio/conduit-connector-protocol/pconnector"
 	"github.com/matryer/is"
 )
 
@@ -29,28 +28,6 @@ func TestContextUtils_ConnectorToken(t *testing.T) {
 	want := "test-token"
 	ctx = ContextWithConnectorToken(ctx, want)
 	got := ConnectorTokenFromContext(ctx)
-
-	is.Equal(want, got)
-}
-
-func TestContextUtils_ConnectorID(t *testing.T) {
-	is := is.New(t)
-	ctx := context.Background()
-
-	want := "test-connector-id"
-	ctx = ContextWithConnectorID(ctx, want)
-	got := ConnectorIDFromContext(ctx)
-
-	is.Equal(want, got)
-}
-
-func TestContextUtils_LogLevel(t *testing.T) {
-	is := is.New(t)
-	ctx := context.Background()
-
-	want := pconnector.LogLevelDebug
-	ctx = ContextWithLogLevel(ctx, want)
-	got := LogLevelFromContext(ctx)
 
 	is.Equal(want, got)
 }
