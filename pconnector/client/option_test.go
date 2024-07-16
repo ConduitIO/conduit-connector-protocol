@@ -23,7 +23,7 @@ import (
 	"github.com/matryer/is"
 )
 
-func TestOption_WithConnectorUtilsAddress(t *testing.T) {
+func TestOption_WithEnvVar(t *testing.T) {
 	is := is.New(t)
 	cmd := exec.Command("test-path")
 	cmd.Env = []string{"FOO=BAR"}
