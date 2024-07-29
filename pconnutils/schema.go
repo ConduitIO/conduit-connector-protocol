@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate mockgen -typed -destination=mock/pschema.go -package=mock -mock_names=SchemaService=SchemaService . SchemaService
+//go:generate mockgen -typed -destination=mock/schema.go -package=mock -mock_names=SchemaService=SchemaService . SchemaService
 
-package pconduit
+package pconnutils
 
 import (
 	"context"

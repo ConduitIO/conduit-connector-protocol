@@ -19,20 +19,20 @@ import (
 
 	schemav1 "github.com/conduitio/conduit-commons/proto/schema/v1"
 	"github.com/conduitio/conduit-commons/schema"
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
-	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils"
+	connutilsv1 "github.com/conduitio/conduit-connector-protocol/proto/connutils/v1"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/matryer/is"
 )
 
 func TestCreateSchemaRequest(t *testing.T) {
-	have := pconduit.CreateSchemaRequest{
+	have := pconnutils.CreateSchemaRequest{
 		Subject: "foo",
 		Type:    schema.TypeAvro,
 		Bytes:   []byte("bar"),
 	}
-	want := &conduitv1.CreateSchemaRequest{
+	want := &connutilsv1.CreateSchemaRequest{
 		Subject: "foo",
 		Type:    schemav1.Schema_TYPE_AVRO,
 		Bytes:   []byte("bar"),
@@ -43,17 +43,17 @@ func TestCreateSchemaRequest(t *testing.T) {
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(conduitv1.CreateSchemaRequest{}),
+			cmpopts.IgnoreUnexported(connutilsv1.CreateSchemaRequest{}),
 		),
 	)
 }
 
 func TestGetSchemaRequest(t *testing.T) {
-	have := pconduit.GetSchemaRequest{
+	have := pconnutils.GetSchemaRequest{
 		Subject: "foo",
 		Version: 2,
 	}
-	want := &conduitv1.GetSchemaRequest{
+	want := &connutilsv1.GetSchemaRequest{
 		Subject: "foo",
 		Version: 2,
 	}
@@ -63,13 +63,13 @@ func TestGetSchemaRequest(t *testing.T) {
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(conduitv1.GetSchemaRequest{}),
+			cmpopts.IgnoreUnexported(connutilsv1.GetSchemaRequest{}),
 		),
 	)
 }
 
 func TestCreateSchemaResponse(t *testing.T) {
-	have := pconduit.CreateSchemaResponse{
+	have := pconnutils.CreateSchemaResponse{
 		Schema: schema.Schema{
 			Subject: "foo",
 			Version: 2,
@@ -77,7 +77,7 @@ func TestCreateSchemaResponse(t *testing.T) {
 			Bytes:   []byte("bar"),
 		},
 	}
-	want := &conduitv1.CreateSchemaResponse{
+	want := &connutilsv1.CreateSchemaResponse{
 		Schema: &schemav1.Schema{
 			Subject: "foo",
 			Version: 2,
@@ -92,14 +92,14 @@ func TestCreateSchemaResponse(t *testing.T) {
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(conduitv1.CreateSchemaResponse{}),
+			cmpopts.IgnoreUnexported(connutilsv1.CreateSchemaResponse{}),
 			cmpopts.IgnoreUnexported(schemav1.Schema{}),
 		),
 	)
 }
 
 func TestGetSchemaResponse(t *testing.T) {
-	have := pconduit.GetSchemaResponse{
+	have := pconnutils.GetSchemaResponse{
 		Schema: schema.Schema{
 			Subject: "foo",
 			Version: 2,
@@ -107,7 +107,7 @@ func TestGetSchemaResponse(t *testing.T) {
 			Bytes:   []byte("bar"),
 		},
 	}
-	want := &conduitv1.GetSchemaResponse{
+	want := &connutilsv1.GetSchemaResponse{
 		Schema: &schemav1.Schema{
 			Subject: "foo",
 			Version: 2,
@@ -122,7 +122,7 @@ func TestGetSchemaResponse(t *testing.T) {
 	is.Equal(
 		"",
 		cmp.Diff(want, got,
-			cmpopts.IgnoreUnexported(conduitv1.GetSchemaResponse{}),
+			cmpopts.IgnoreUnexported(connutilsv1.GetSchemaResponse{}),
 			cmpopts.IgnoreUnexported(schemav1.Schema{}),
 		),
 	)

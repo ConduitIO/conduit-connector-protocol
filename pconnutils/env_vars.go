@@ -12,22 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package pconduit
+package pconnutils
 
-import (
-	"context"
-	"testing"
-
-	"github.com/matryer/is"
+const (
+	EnvConduitConnectorUtilitiesGRPCTarget = "CONDUIT_CONNECTOR_UTILITIES_GRPC_TARGET"
+	EnvConduitConnectorToken               = "CONDUIT_CONNECTOR_TOKEN"
+	EnvConduitConnectorID                  = "CONDUIT_CONNECTOR_ID"
+	EnvConduitLogLevel                     = "CONDUIT_LOG_LEVEL"
 )
-
-func TestContextUtils_ConnectorToken(t *testing.T) {
-	is := is.New(t)
-	ctx := context.Background()
-
-	want := "test-token"
-	ctx = ContextWithConnectorToken(ctx, want)
-	got := ConnectorTokenFromContext(ctx)
-
-	is.Equal(want, got)
-}

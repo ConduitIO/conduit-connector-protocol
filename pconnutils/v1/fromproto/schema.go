@@ -16,22 +16,22 @@ package fromproto
 
 import (
 	"github.com/conduitio/conduit-commons/schema"
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
-	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils"
+	connutilsv1 "github.com/conduitio/conduit-connector-protocol/proto/connutils/v1"
 )
 
 // -- Request Conversions -----------------------------------------------------
 
-func CreateSchemaRequest(in *conduitv1.CreateSchemaRequest) pconduit.CreateSchemaRequest {
-	return pconduit.CreateSchemaRequest{
+func CreateSchemaRequest(in *connutilsv1.CreateSchemaRequest) pconnutils.CreateSchemaRequest {
+	return pconnutils.CreateSchemaRequest{
 		Subject: in.Subject,
 		Type:    schema.Type(in.Type),
 		Bytes:   in.Bytes,
 	}
 }
 
-func GetSchemaRequest(in *conduitv1.GetSchemaRequest) pconduit.GetSchemaRequest {
-	return pconduit.GetSchemaRequest{
+func GetSchemaRequest(in *connutilsv1.GetSchemaRequest) pconnutils.GetSchemaRequest {
+	return pconnutils.GetSchemaRequest{
 		Subject: in.Subject,
 		Version: int(in.Version),
 	}
@@ -39,20 +39,20 @@ func GetSchemaRequest(in *conduitv1.GetSchemaRequest) pconduit.GetSchemaRequest 
 
 // -- Response Conversions ----------------------------------------------------
 
-func CreateSchemaResponse(in *conduitv1.CreateSchemaResponse) (pconduit.CreateSchemaResponse, error) {
+func CreateSchemaResponse(in *connutilsv1.CreateSchemaResponse) (pconnutils.CreateSchemaResponse, error) {
 	var outSchema schema.Schema
 	err := outSchema.FromProto(in.Schema)
 	if err != nil {
-		return pconduit.CreateSchemaResponse{}, err
+		return pconnutils.CreateSchemaResponse{}, err
 	}
-	return pconduit.CreateSchemaResponse{Schema: outSchema}, nil
+	return pconnutils.CreateSchemaResponse{Schema: outSchema}, nil
 }
 
-func GetSchemaResponse(in *conduitv1.GetSchemaResponse) (pconduit.GetSchemaResponse, error) {
+func GetSchemaResponse(in *connutilsv1.GetSchemaResponse) (pconnutils.GetSchemaResponse, error) {
 	var outSchema schema.Schema
 	err := outSchema.FromProto(in.Schema)
 	if err != nil {
-		return pconduit.GetSchemaResponse{}, err
+		return pconnutils.GetSchemaResponse{}, err
 	}
-	return pconduit.GetSchemaResponse{Schema: outSchema}, nil
+	return pconnutils.GetSchemaResponse{Schema: outSchema}, nil
 }

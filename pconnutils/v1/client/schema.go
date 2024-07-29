@@ -17,42 +17,42 @@ package client
 import (
 	"context"
 
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
-	"github.com/conduitio/conduit-connector-protocol/pconduit/internal"
-	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/toproto"
-	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils/internal"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils/v1/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils/v1/toproto"
+	connutilsv1 "github.com/conduitio/conduit-connector-protocol/proto/connutils/v1"
 	"google.golang.org/grpc"
 )
 
 type SchemaServiceClient struct {
-	grpcClient conduitv1.SchemaServiceClient
+	grpcClient connutilsv1.SchemaServiceClient
 }
 
-var _ pconduit.SchemaService = (*SchemaServiceClient)(nil)
+var _ pconnutils.SchemaService = (*SchemaServiceClient)(nil)
 
 func NewSchemaServiceClient(cc *grpc.ClientConn) *SchemaServiceClient {
 	return &SchemaServiceClient{
-		grpcClient: conduitv1.NewSchemaServiceClient(cc),
+		grpcClient: connutilsv1.NewSchemaServiceClient(cc),
 	}
 }
 
-func (c *SchemaServiceClient) CreateSchema(ctx context.Context, request pconduit.CreateSchemaRequest) (pconduit.CreateSchemaResponse, error) {
+func (c *SchemaServiceClient) CreateSchema(ctx context.Context, request pconnutils.CreateSchemaRequest) (pconnutils.CreateSchemaResponse, error) {
 	ctx = internal.RepackConnectorTokenOutgoingContext(ctx)
 	protoReq := toproto.CreateSchemaRequest(request)
 	protoResp, err := c.grpcClient.CreateSchema(ctx, protoReq)
 	if err != nil {
-		return pconduit.CreateSchemaResponse{}, internal.UnwrapGRPCError(err)
+		return pconnutils.CreateSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.CreateSchemaResponse(protoResp)
 }
 
-func (c *SchemaServiceClient) GetSchema(ctx context.Context, request pconduit.GetSchemaRequest) (pconduit.GetSchemaResponse, error) {
+func (c *SchemaServiceClient) GetSchema(ctx context.Context, request pconnutils.GetSchemaRequest) (pconnutils.GetSchemaResponse, error) {
 	ctx = internal.RepackConnectorTokenOutgoingContext(ctx)
 	protoReq := toproto.GetSchemaRequest(request)
 	protoResp, err := c.grpcClient.GetSchema(ctx, protoReq)
 	if err != nil {
-		return pconduit.GetSchemaResponse{}, internal.UnwrapGRPCError(err)
+		return pconnutils.GetSchemaResponse{}, internal.UnwrapGRPCError(err)
 	}
 	return fromproto.GetSchemaResponse(protoResp)
 }

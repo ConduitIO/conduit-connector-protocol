@@ -12,11 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package pconduit
+package pconnutils
 
-const (
-	EnvConduitConnectorUtilitiesGRPCTarget = "CONDUIT_CONNECTOR_UTILITIES_GRPC_TARGET"
-	EnvConduitConnectorToken               = "CONDUIT_CONNECTOR_TOKEN"
-	EnvConduitConnectorID                  = "CONDUIT_CONNECTOR_ID"
-	EnvConduitLogLevel                     = "CONDUIT_LOG_LEVEL"
+import "errors"
+
+var (
+	ErrUnimplemented = errors.New("method not implemented")
+
+	ErrSchemaNotFound       = errors.New("schema not found")
+	ErrInvalidSchemaSubject = errors.New("invalid schema subject")
+	ErrInvalidSchemaType    = errors.New("invalid schema type")
+	ErrInvalidSchemaBytes   = errors.New("invalid schema bytes")
 )

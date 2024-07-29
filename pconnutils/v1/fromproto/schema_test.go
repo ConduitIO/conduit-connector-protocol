@@ -19,19 +19,19 @@ import (
 
 	schemav1 "github.com/conduitio/conduit-commons/proto/schema/v1"
 	"github.com/conduitio/conduit-commons/schema"
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
-	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils"
+	connutilsv1 "github.com/conduitio/conduit-connector-protocol/proto/connutils/v1"
 	"github.com/google/go-cmp/cmp"
 	"github.com/matryer/is"
 )
 
 func TestCreateSchemaRequest(t *testing.T) {
-	have := &conduitv1.CreateSchemaRequest{
+	have := &connutilsv1.CreateSchemaRequest{
 		Subject: "foo",
 		Type:    schemav1.Schema_TYPE_AVRO,
 		Bytes:   []byte("bar"),
 	}
-	want := pconduit.CreateSchemaRequest{
+	want := pconnutils.CreateSchemaRequest{
 		Subject: "foo",
 		Type:    schema.TypeAvro,
 		Bytes:   []byte("bar"),
@@ -43,11 +43,11 @@ func TestCreateSchemaRequest(t *testing.T) {
 }
 
 func TestGetSchemaRequest(t *testing.T) {
-	have := &conduitv1.GetSchemaRequest{
+	have := &connutilsv1.GetSchemaRequest{
 		Subject: "foo",
 		Version: 2,
 	}
-	want := pconduit.GetSchemaRequest{
+	want := pconnutils.GetSchemaRequest{
 		Subject: "foo",
 		Version: 2,
 	}
@@ -58,7 +58,7 @@ func TestGetSchemaRequest(t *testing.T) {
 }
 
 func TestCreateSchemaResponse(t *testing.T) {
-	have := &conduitv1.CreateSchemaResponse{
+	have := &connutilsv1.CreateSchemaResponse{
 		Schema: &schemav1.Schema{
 			Subject: "foo",
 			Version: 2,
@@ -66,7 +66,7 @@ func TestCreateSchemaResponse(t *testing.T) {
 			Bytes:   []byte("bar"),
 		},
 	}
-	want := pconduit.CreateSchemaResponse{
+	want := pconnutils.CreateSchemaResponse{
 		Schema: schema.Schema{
 			Subject: "foo",
 			Version: 2,
@@ -82,7 +82,7 @@ func TestCreateSchemaResponse(t *testing.T) {
 }
 
 func TestGetSchemaResponse(t *testing.T) {
-	have := &conduitv1.GetSchemaResponse{
+	have := &connutilsv1.GetSchemaResponse{
 		Schema: &schemav1.Schema{
 			Subject: "foo",
 			Version: 2,
@@ -90,7 +90,7 @@ func TestGetSchemaResponse(t *testing.T) {
 			Bytes:   []byte("bar"),
 		},
 	}
-	want := pconduit.GetSchemaResponse{
+	want := pconnutils.GetSchemaResponse{
 		Schema: schema.Schema{
 			Subject: "foo",
 			Version: 2,
