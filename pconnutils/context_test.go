@@ -12,15 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package pconduit
+package pconnutils
 
-import "errors"
+import (
+	"context"
+	"testing"
 
-var (
-	ErrUnimplemented = errors.New("method not implemented")
-
-	ErrSchemaNotFound       = errors.New("schema not found")
-	ErrInvalidSchemaSubject = errors.New("invalid schema subject")
-	ErrInvalidSchemaType    = errors.New("invalid schema type")
-	ErrInvalidSchemaBytes   = errors.New("invalid schema bytes")
+	"github.com/matryer/is"
 )
+
+func TestContextUtils_ConnectorToken(t *testing.T) {
+	is := is.New(t)
+	ctx := context.Background()
+
+	want := "test-token"
+	ctx = ContextWithConnectorToken(ctx, want)
+	got := ConnectorTokenFromContext(ctx)
+
+	is.Equal(want, got)
+}

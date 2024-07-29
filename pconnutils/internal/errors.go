@@ -19,7 +19,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -29,12 +29,11 @@ var knownErrors = []error{
 	context.Canceled,
 	context.DeadlineExceeded,
 
-	pconduit.ErrUnimplemented,
+	pconnutils.ErrUnimplemented,
 
-	pconduit.ErrSchemaNotFound,
-	pconduit.ErrInvalidSchemaSubject,
-	pconduit.ErrInvalidSchemaType,
-	pconduit.ErrInvalidSchemaBytes,
+	pconnutils.ErrSubjectNotFound,
+	pconnutils.ErrSubjectNotFound,
+	pconnutils.ErrInvalidSchema,
 }
 
 // knownErrorsMap contains known errors messages that are mapped to internal error
@@ -56,7 +55,7 @@ func UnwrapGRPCError(err error) error {
 		return err
 	}
 	if st.Code() == codes.Unimplemented {
-		return fmt.Errorf("%s: %w", st.Message(), pconduit.ErrUnimplemented)
+		return fmt.Errorf("%s: %w", st.Message(), pconnutils.ErrUnimplemented)
 	}
 	if knownErr, ok := knownErrorsMap[st.Message()]; ok {
 		return knownErr

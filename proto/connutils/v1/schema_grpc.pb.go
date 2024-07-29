@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: conduit/v1/schema.proto
+// source: connutils/v1/schema.proto
 
-package conduitv1
+package connutilsv1
 
 import (
 	context "context"
@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SchemaService_CreateSchema_FullMethodName = "/conduit.v1.SchemaService/CreateSchema"
-	SchemaService_GetSchema_FullMethodName    = "/conduit.v1.SchemaService/GetSchema"
+	SchemaService_CreateSchema_FullMethodName = "/connutils.v1.SchemaService/CreateSchema"
+	SchemaService_GetSchema_FullMethodName    = "/connutils.v1.SchemaService/GetSchema"
 )
 
 // SchemaServiceClient is the client API for SchemaService service.
@@ -129,7 +129,7 @@ func _SchemaService_GetSchema_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SchemaService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "conduit.v1.SchemaService",
+	ServiceName: "connutils.v1.SchemaService",
 	HandlerType: (*SchemaServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -142,5 +142,5 @@ var SchemaService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "conduit/v1/schema.proto",
+	Metadata: "connutils/v1/schema.proto",
 }

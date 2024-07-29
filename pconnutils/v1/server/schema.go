@@ -17,23 +17,23 @@ package server
 import (
 	"context"
 
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
-	"github.com/conduitio/conduit-connector-protocol/pconduit/internal"
-	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/fromproto"
-	"github.com/conduitio/conduit-connector-protocol/pconduit/v1/toproto"
-	conduitv1 "github.com/conduitio/conduit-connector-protocol/proto/conduit/v1"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils/internal"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils/v1/fromproto"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils/v1/toproto"
+	connutilsv1 "github.com/conduitio/conduit-connector-protocol/proto/connutils/v1"
 )
 
-func NewSchemaServiceServer(impl pconduit.SchemaService) conduitv1.SchemaServiceServer {
+func NewSchemaServiceServer(impl pconnutils.SchemaService) connutilsv1.SchemaServiceServer {
 	return &schemaServiceServer{impl: impl}
 }
 
 type schemaServiceServer struct {
-	conduitv1.UnimplementedSchemaServiceServer
-	impl pconduit.SchemaService
+	connutilsv1.UnimplementedSchemaServiceServer
+	impl pconnutils.SchemaService
 }
 
-func (s *schemaServiceServer) CreateSchema(ctx context.Context, protoReq *conduitv1.CreateSchemaRequest) (*conduitv1.CreateSchemaResponse, error) {
+func (s *schemaServiceServer) CreateSchema(ctx context.Context, protoReq *connutilsv1.CreateSchemaRequest) (*connutilsv1.CreateSchemaResponse, error) {
 	ctx = internal.RepackConnectorTokenIncomingContext(ctx)
 	goReq := fromproto.CreateSchemaRequest(protoReq)
 	goResp, err := s.impl.CreateSchema(ctx, goReq)
@@ -43,7 +43,7 @@ func (s *schemaServiceServer) CreateSchema(ctx context.Context, protoReq *condui
 	return toproto.CreateSchemaResponse(goResp)
 }
 
-func (s *schemaServiceServer) GetSchema(ctx context.Context, protoReq *conduitv1.GetSchemaRequest) (*conduitv1.GetSchemaResponse, error) {
+func (s *schemaServiceServer) GetSchema(ctx context.Context, protoReq *connutilsv1.GetSchemaRequest) (*connutilsv1.GetSchemaResponse, error) {
 	ctx = internal.RepackConnectorTokenIncomingContext(ctx)
 	goReq := fromproto.GetSchemaRequest(protoReq)
 	goResp, err := s.impl.GetSchema(ctx, goReq)

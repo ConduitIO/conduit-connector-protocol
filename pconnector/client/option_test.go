@@ -18,7 +18,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
+	"github.com/conduitio/conduit-connector-protocol/pconnector"
 	"github.com/hashicorp/go-plugin"
 	"github.com/matryer/is"
 )
@@ -29,14 +29,14 @@ func TestOption_WithEnvVar(t *testing.T) {
 	cmd.Env = []string{"FOO=BAR"}
 	cc := &plugin.ClientConfig{Cmd: cmd}
 
-	underTest := WithEnvVar(pconduit.EnvConduitConnectorUtilitiesGRPCTarget, "localhost:12345")
+	underTest := WithEnvVar(pconnector.EnvConduitConnectorLogLevel, "info")
 
 	err := underTest.ApplyOption(cc)
 	is.NoErr(err)
 
 	want := []string{
 		"FOO=BAR",
-		pconduit.EnvConduitConnectorUtilitiesGRPCTarget + "=localhost:12345",
+		pconnector.EnvConduitConnectorLogLevel + "=info",
 	}
 	is.Equal(want, cc.Cmd.Env)
 }

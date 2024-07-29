@@ -17,17 +17,17 @@ package internal
 import (
 	"context"
 
-	"github.com/conduitio/conduit-connector-protocol/pconduit"
+	"github.com/conduitio/conduit-connector-protocol/pconnutils"
 	"google.golang.org/grpc/metadata"
 )
 
 const MetadataConnectorTokenKey = "conduit-connector-token"
 
 // RepackConnectorTokenOutgoingContext takes the connector token from ctx using
-// pconduit.ConnectorTokenFromContext and repacks it into gRPC metadata so it can
+// pconnutils.ConnectorTokenFromContext and repacks it into gRPC metadata so it can
 // be sent to the server.
 func RepackConnectorTokenOutgoingContext(ctx context.Context) context.Context {
-	token := pconduit.ConnectorTokenFromContext(ctx)
+	token := pconnutils.ConnectorTokenFromContext(ctx)
 	if token == "" {
 		return ctx // no connector token attached
 	}
@@ -36,11 +36,11 @@ func RepackConnectorTokenOutgoingContext(ctx context.Context) context.Context {
 
 // RepackConnectorTokenIncomingContext takes the connector token from the gRPC
 // metadata and repacks it into the context so it can be retrieved using
-// pconduit.ConnectorTokenFromContext.
+// pconnutils.ConnectorTokenFromContext.
 func RepackConnectorTokenIncomingContext(ctx context.Context) context.Context {
 	token := metadata.ValueFromIncomingContext(ctx, MetadataConnectorTokenKey)
 	if len(token) == 0 {
 		return ctx // no connector token attached
 	}
-	return pconduit.ContextWithConnectorToken(ctx, token[0])
+	return pconnutils.ContextWithConnectorToken(ctx, token[0])
 }
