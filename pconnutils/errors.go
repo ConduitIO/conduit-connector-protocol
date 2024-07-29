@@ -19,8 +19,7 @@ import "errors"
 var (
 	ErrUnimplemented = errors.New("method not implemented")
 
-	ErrSchemaNotFound       = errors.New("schema not found")
-	ErrInvalidSchemaSubject = errors.New("invalid schema subject")
-	ErrInvalidSchemaType    = errors.New("invalid schema type")
-	ErrInvalidSchemaBytes   = errors.New("invalid schema bytes")
+	ErrSubjectNotFound = errors.New("schema subject not found")
+	ErrVersionNotFound = errors.New("schema version not found")
+	ErrInvalidSchema   = errors.New("invalid schema")
 )

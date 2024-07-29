@@ -31,10 +31,9 @@ var knownErrors = []error{
 
 	pconnutils.ErrUnimplemented,
 
-	pconnutils.ErrSchemaNotFound,
-	pconnutils.ErrInvalidSchemaSubject,
-	pconnutils.ErrInvalidSchemaType,
-	pconnutils.ErrInvalidSchemaBytes,
+	pconnutils.ErrSubjectNotFound,
+	pconnutils.ErrSubjectNotFound,
+	pconnutils.ErrInvalidSchema,
 }
 
 // knownErrorsMap contains known errors messages that are mapped to internal error
