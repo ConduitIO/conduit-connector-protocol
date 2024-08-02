@@ -14,4 +14,7 @@
 
 package pconnector
 
-const EnvConduitConnectorLogLevel = "CONDUIT_CONNECTOR_LOG_LEVEL"
+const (
+	EnvConduitConnectorID       = "CONDUIT_CONNECTOR_ID"
+	EnvConduitConnectorLogLevel = "CONDUIT_CONNECTOR_LOG_LEVEL"
+)

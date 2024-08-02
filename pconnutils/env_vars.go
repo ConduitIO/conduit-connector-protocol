@@ -17,6 +17,4 @@ package pconnutils
 const (
 	EnvConduitConnectorUtilitiesGRPCTarget = "CONDUIT_CONNECTOR_UTILITIES_GRPC_TARGET"
 	EnvConduitConnectorToken               = "CONDUIT_CONNECTOR_TOKEN"
-	EnvConduitConnectorID                  = "CONDUIT_CONNECTOR_ID"
-	EnvConduitLogLevel                     = "CONDUIT_LOG_LEVEL"
 )
