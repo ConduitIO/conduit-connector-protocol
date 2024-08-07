@@ -3,7 +3,7 @@ module github.com/conduitio/conduit-connector-protocol
 go 1.22.4
 
 require (
-	github.com/bufbuild/buf v1.35.1
+	github.com/bufbuild/buf v1.36.0
 	github.com/conduitio/conduit-commons v0.3.0
 	github.com/golangci/golangci-lint v1.59.1
 	github.com/google/go-cmp v0.6.0
