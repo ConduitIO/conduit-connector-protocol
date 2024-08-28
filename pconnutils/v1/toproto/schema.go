@@ -33,7 +33,7 @@ func CreateSchemaRequest(in pconnutils.CreateSchemaRequest) *connutilsv1.CreateS
 func GetSchemaRequest(in pconnutils.GetSchemaRequest) *connutilsv1.GetSchemaRequest {
 	return &connutilsv1.GetSchemaRequest{
 		Subject: in.Subject,
-		Version: int32(in.Version),
+		Version: int32(in.Version), //nolint:gosec // no risk of overflow
 	}
 }
 
