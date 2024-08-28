@@ -71,7 +71,7 @@ func SpecifierParameter(in config.Parameter) *connectorv1.Specifier_Parameter {
 	return &connectorv1.Specifier_Parameter{
 		Default:     in.Default,
 		Description: in.Description,
-		Type:        connectorv1.Specifier_Parameter_Type(in.Type),
+		Type:        connectorv1.Specifier_Parameter_Type(in.Type), //nolint:gosec // no risk of overflow
 		Validations: SpecifierParameterValidations(in.Validations),
 	}
 }
@@ -80,7 +80,7 @@ func SpecifierParameterValidations(in []config.Validation) []*connectorv1.Specif
 	out := make([]*connectorv1.Specifier_Parameter_Validation, len(in))
 	for i, v := range in {
 		out[i] = &connectorv1.Specifier_Parameter_Validation{
-			Type:  connectorv1.Specifier_Parameter_Validation_Type(v.Type()),
+			Type:  connectorv1.Specifier_Parameter_Validation_Type(v.Type()), //nolint:gosec // no risk of overflow
 			Value: v.Value(),
 		}
 	}
