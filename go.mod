@@ -11,7 +11,7 @@ require (
 	github.com/hashicorp/go-plugin v1.6.1
 	github.com/matryer/is v1.4.1
 	go.uber.org/mock v0.4.0
-	google.golang.org/grpc v1.65.0
+	google.golang.org/grpc v1.66.0
 	google.golang.org/protobuf v1.34.2
 	mvdan.cc/gofumpt v0.7.0
 )
