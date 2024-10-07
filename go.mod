@@ -12,7 +12,7 @@ require (
 	github.com/matryer/is v1.4.1
 	go.uber.org/mock v0.4.0
 	google.golang.org/grpc v1.67.1
-	google.golang.org/protobuf v1.34.3-0.20240906163944-03df6c145d96
+	google.golang.org/protobuf v1.35.1
 	mvdan.cc/gofumpt v0.7.0
 )
 
