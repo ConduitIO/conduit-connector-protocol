@@ -21,6 +21,7 @@ import (
 type SpecifierPlugin struct {
 	ctrl     *gomock.Controller
 	recorder *SpecifierPluginMockRecorder
+	isgomock struct{}
 }
 
 // SpecifierPluginMockRecorder is the mock recorder for SpecifierPlugin.

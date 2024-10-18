@@ -21,6 +21,7 @@ import (
 type SchemaService struct {
 	ctrl     *gomock.Controller
 	recorder *SchemaServiceMockRecorder
+	isgomock struct{}
 }
 
 // SchemaServiceMockRecorder is the mock recorder for SchemaService.
