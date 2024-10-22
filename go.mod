@@ -8,7 +8,7 @@ require (
 	github.com/golangci/golangci-lint v1.61.0
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/go-hclog v1.6.3
-	github.com/hashicorp/go-plugin v1.6.1
+	github.com/hashicorp/go-plugin v1.6.2
 	github.com/matryer/is v1.4.1
 	go.uber.org/mock v0.5.0
 	google.golang.org/grpc v1.67.1
@@ -169,7 +169,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/mgechev/revive v1.3.9 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
-	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/locker v1.0.1 // indirect
