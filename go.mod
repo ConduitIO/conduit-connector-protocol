@@ -5,7 +5,7 @@ go 1.23.2
 require (
 	github.com/bufbuild/buf v1.48.0
 	github.com/conduitio/conduit-commons v0.5.0
-	github.com/golangci/golangci-lint v1.63.3
+	github.com/golangci/golangci-lint v1.63.4
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.6.2
