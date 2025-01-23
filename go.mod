@@ -8,7 +8,7 @@ require (
 	github.com/golangci/golangci-lint v1.63.4
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/go-hclog v1.6.3
-	github.com/hashicorp/go-plugin v1.6.2
+	github.com/hashicorp/go-plugin v1.6.3
 	github.com/matryer/is v1.4.1
 	go.uber.org/mock v0.5.0
 	google.golang.org/grpc v1.69.4
