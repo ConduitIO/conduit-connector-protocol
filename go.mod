@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/bufbuild/buf v1.50.0
-	github.com/conduitio/conduit-commons v0.5.0
+	github.com/conduitio/conduit-commons v0.5.1
 	github.com/golangci/golangci-lint v1.63.4
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/go-hclog v1.6.3
@@ -115,7 +115,7 @@ require (
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/go-xmlfmt/xmlfmt v1.1.3 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
-	github.com/goccy/go-json v0.10.3 // indirect
+	github.com/goccy/go-json v0.10.4 // indirect
 	github.com/gofrs/flock v0.12.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
