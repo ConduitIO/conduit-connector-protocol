@@ -1,6 +1,7 @@
 module github.com/conduitio/conduit-connector-protocol
 
 go 1.24.2
+
 require (
 	github.com/conduitio/conduit-commons v0.5.2
 	github.com/google/go-cmp v0.7.0
