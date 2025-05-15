@@ -9,7 +9,7 @@ require (
 	github.com/hashicorp/go-plugin v1.6.3
 	github.com/matryer/is v1.4.1
 	go.uber.org/mock v0.5.2
-	google.golang.org/grpc v1.72.0
+	google.golang.org/grpc v1.72.1
 	google.golang.org/protobuf v1.36.6
 )
 
