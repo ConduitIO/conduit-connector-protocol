@@ -2,11 +2,10 @@ syntax = "proto3";
 
 package connector.v2;
 
-import "google/protobuf/descriptor.proto";
 import "config/v1/parameter.proto";
+import "google/protobuf/descriptor.proto";
 
 option go_package = "github.com/conduitio/conduit-connector-protocol/proto/connector/v2";
-
 
 // SpecifierPlugin is responsible for returning the plugin specification.
 service SpecifierPlugin {
