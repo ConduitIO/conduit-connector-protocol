@@ -15,8 +15,8 @@
 package pconnector
 
 type GRPCConfig struct {
-	Target               string
-	MaxReceiveRecordSize int
+	ConnectorUtilitiesTarget string
+	MaxReceiveRecordSize     int
 }
 
 type PluginConfig struct {
