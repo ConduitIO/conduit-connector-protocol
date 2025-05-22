@@ -15,6 +15,7 @@
 package pconnector
 
 const (
-	EnvConduitConnectorID       = "CONDUIT_CONNECTOR_ID"
-	EnvConduitConnectorLogLevel = "CONDUIT_CONNECTOR_LOG_LEVEL"
+	EnvConduitConnectorID                   = "CONDUIT_CONNECTOR_ID"
+	EnvConduitConnectorLogLevel             = "CONDUIT_CONNECTOR_LOG_LEVEL"
+	EnvConduitConnectorMaxReceiveRecordSize = "CONDUIT_CONNECTOR_MAX_RECEIVE_RECORD_SIZE"
 )

@@ -21,6 +21,12 @@ import (
 	"google.golang.org/grpc"
 )
 
+// DefaultMaxReceiveRecordSize is the default maximum size of a record that can
+// be received by the connector. This is set to 4MB by default, which
+// corresponds to defaultServerMaxReceiveMessageSize = 1024 * 1024 * 4 defined in
+// https://github.com/grpc/grpc-go/blob/master/server.go#L59
+const DefaultMaxReceiveRecordSize = 4 * 1024 * 1024 // 4MB
+
 // Option is an interface for defining options that can be passed to the
 // Serve function. Each implementation modifies the ServeConfig being
 // generated. A slice of Options then, cumulatively applied, render a full
@@ -48,6 +54,9 @@ func WithDebug(ctx context.Context, config chan *plugin.ReattachConfig, closeCh 
 	})
 }
 
+// WithGRPCServerOptions returns an Option that will set the server's gRPC
+// server options (appended to the default options).
+// Can be used to configure grpc.MaxRecvMsgSize for example.
 func WithGRPCServerOptions(opt ...grpc.ServerOption) Option {
 	return serveConfigFunc(func(in *plugin.ServeConfig) error {
 		in.GRPCServer = func(opts []grpc.ServerOption) *grpc.Server {

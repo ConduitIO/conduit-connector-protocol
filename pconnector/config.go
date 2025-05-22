@@ -14,8 +14,15 @@
 
 package pconnector
 
+type GRPCConfig struct {
+	ConnectorUtilitiesTarget string
+	MaxReceiveRecordSize     int
+}
+
 type PluginConfig struct {
 	Token       string
 	ConnectorID string
 	LogLevel    string
+
+	Grpc GRPCConfig
 }
