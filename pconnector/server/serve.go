@@ -44,6 +44,7 @@ func Serve(
 			v1.Version: v1PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
 			v2.Version: v2PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
 		},
+		GRPCServer: plugin.DefaultGRPCServer,
 	}
 	for _, opt := range opts {
 		err := opt.ApplyOption(serveConfig)
