@@ -3,7 +3,7 @@ module github.com/conduitio/conduit-connector-protocol
 go 1.24.2
 
 require (
-	github.com/conduitio/conduit-commons v0.5.4
+	github.com/conduitio/conduit-commons v0.6.0
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.6.3
