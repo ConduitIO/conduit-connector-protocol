@@ -8,7 +8,7 @@ require (
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.7.0
 	github.com/matryer/is v1.4.1
-	go.uber.org/mock v0.5.2
+	go.uber.org/mock v0.6.0
 	google.golang.org/grpc v1.74.2
 	google.golang.org/protobuf v1.36.7
 )
