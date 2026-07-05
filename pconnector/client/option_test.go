@@ -25,7 +25,7 @@ import (
 
 func TestOption_WithEnvVar(t *testing.T) {
 	is := is.New(t)
-	cmd := exec.Command("test-path")
+	cmd := exec.CommandContext(t.Context(), "test-path")
 	cmd.Env = []string{"FOO=BAR"}
 	cc := &plugin.ClientConfig{Cmd: cmd}
 

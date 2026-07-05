@@ -36,7 +36,11 @@ func New(
 	path string,
 	opts ...Option,
 ) (*plugin.Client, error) {
-	cmd := exec.Command(path)
+	// context.Background(): New's signature is a public protocol contract, so we
+	// don't thread a caller context through it here (that would be a breaking
+	// change). Behavior is identical to exec.Command. The plugin process lifecycle
+	// is managed by go-plugin (Kill/Wait), not by this context.
+	cmd := exec.CommandContext(context.Background(), path)
 	// NB: we give cmd a clean env here by setting Env to an empty slice
 	cmd.Env = make([]string, 0)
 
