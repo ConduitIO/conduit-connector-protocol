@@ -3,7 +3,7 @@ module github.com/conduitio/conduit-connector-protocol
 go 1.25.0
 
 require (
-	github.com/conduitio/conduit-commons v0.6.0
+	github.com/conduitio/conduit-commons v0.7.0
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.8.0
@@ -18,8 +18,8 @@ require (
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/goccy/go-json v0.10.6 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/hamba/avro/v2 v2.31.0 // indirect
 	github.com/hashicorp/yamux v0.1.2 // indirect
+	github.com/iskorotkov/avro/v2 v2.34.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
