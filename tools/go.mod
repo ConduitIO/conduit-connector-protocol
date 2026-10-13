@@ -1,6 +1,6 @@
 module github.com/conduitio/conduit-connector-protocol/tools
 
-go 1.25.0
+go 1.26.9
 
 tool (
 	github.com/bufbuild/buf/cmd/buf
