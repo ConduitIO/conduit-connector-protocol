@@ -10,6 +10,9 @@ lint:
       - connector/v2/source.proto
       - connector/v2/destination.proto
       - connector/v2/specifier.proto
+      - connector/v3/source.proto
+      - connector/v3/destination.proto
+      - connector/v3/specifier.proto
   use:
     - STANDARD
   except:
