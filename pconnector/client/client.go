@@ -24,13 +24,15 @@ import (
 	clientv1 "github.com/conduitio/conduit-connector-protocol/pconnector/v1/client" //nolint:staticcheck // v1 is used for backwards compatibility
 	v2 "github.com/conduitio/conduit-connector-protocol/pconnector/v2"
 	clientv2 "github.com/conduitio/conduit-connector-protocol/pconnector/v2/client"
+	v3 "github.com/conduitio/conduit-connector-protocol/pconnector/v3"
+	clientv3 "github.com/conduitio/conduit-connector-protocol/pconnector/v3/client"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
 
 // New creates a new plugin client. Path should point to the plugin
-// executable. The client will support both v1 and v2 of the connector protocol.
+// executable. The client will support v1, v2 and v3 of the connector protocol.
 func New(
 	logger hclog.Logger,
 	path string,
@@ -45,20 +47,9 @@ func New(
 	cmd.Env = make([]string, 0)
 
 	clientConfig := &plugin.ClientConfig{
-		HandshakeConfig: pconnector.HandshakeConfig,
-		VersionedPlugins: map[int]plugin.PluginSet{
-			v1.Version: newPluginSet(
-				clientv1.NewSpecifierPluginClient,
-				clientv1.NewSourcePluginClient,
-				clientv1.NewDestinationPluginClient,
-			),
-			v2.Version: newPluginSet(
-				clientv2.NewSpecifierPluginClient,
-				clientv2.NewSourcePluginClient,
-				clientv2.NewDestinationPluginClient,
-			),
-		},
-		Cmd: cmd,
+		HandshakeConfig:  pconnector.HandshakeConfig,
+		VersionedPlugins: versionedPlugins(),
+		Cmd:              cmd,
 		AllowedProtocols: []plugin.Protocol{
 			plugin.ProtocolGRPC,
 		},
@@ -75,6 +66,30 @@ func New(
 	}
 
 	return plugin.NewClient(clientConfig), nil
+}
+
+// versionedPlugins returns the map of protocol versions the client supports.
+// The keys are the protocol versions, the values the plugin sets that implement
+// each version. go-plugin negotiates the highest version both peers support, so
+// v3 is only used when the server also offers it.
+func versionedPlugins() map[int]plugin.PluginSet {
+	return map[int]plugin.PluginSet{
+		v1.Version: newPluginSet(
+			clientv1.NewSpecifierPluginClient,
+			clientv1.NewSourcePluginClient,
+			clientv1.NewDestinationPluginClient,
+		),
+		v2.Version: newPluginSet(
+			clientv2.NewSpecifierPluginClient,
+			clientv2.NewSourcePluginClient,
+			clientv2.NewDestinationPluginClient,
+		),
+		v3.Version: newPluginSet(
+			clientv3.NewSpecifierPluginClient,
+			clientv3.NewSourcePluginClient,
+			clientv3.NewDestinationPluginClient,
+		),
+	}
 }
 
 func newPluginSet[SPEC, SRC, DST any](

@@ -23,15 +23,18 @@ import (
 	serverv1 "github.com/conduitio/conduit-connector-protocol/pconnector/v1/server" //nolint:staticcheck // v1 is used for backwards compatibility
 	v2 "github.com/conduitio/conduit-connector-protocol/pconnector/v2"
 	serverv2 "github.com/conduitio/conduit-connector-protocol/pconnector/v2/server"
+	v3 "github.com/conduitio/conduit-connector-protocol/pconnector/v3"
+	serverv3 "github.com/conduitio/conduit-connector-protocol/pconnector/v3/server"
 	connectorv1 "github.com/conduitio/conduit-connector-protocol/proto/connector/v1"
 	connectorv2 "github.com/conduitio/conduit-connector-protocol/proto/connector/v2"
+	connectorv3 "github.com/conduitio/conduit-connector-protocol/proto/connector/v3"
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
 
 // Serve starts a go-plugin server with the given factories for creating
-// Specifier, Source, and Destination plugins. The server will support both v1
-// and v2 of the connector protocol.
+// Specifier, Source, and Destination plugins. The server will support v1, v2
+// and v3 of the connector protocol.
 func Serve(
 	specifierFactory func() pconnector.SpecifierPlugin,
 	sourceFactory func() pconnector.SourcePlugin,
@@ -39,12 +42,9 @@ func Serve(
 	opts ...Option,
 ) error {
 	serveConfig := &plugin.ServeConfig{
-		HandshakeConfig: pconnector.HandshakeConfig,
-		VersionedPlugins: map[int]plugin.PluginSet{
-			v1.Version: v1PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
-			v2.Version: v2PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
-		},
-		GRPCServer: plugin.DefaultGRPCServer,
+		HandshakeConfig:  pconnector.HandshakeConfig,
+		VersionedPlugins: versionedPlugins(specifierFactory, sourceFactory, destinationFactory),
+		GRPCServer:       plugin.DefaultGRPCServer,
 	}
 	for _, opt := range opts {
 		err := opt.ApplyOption(serveConfig)
@@ -78,7 +78,33 @@ var (
 		connectorv2.RegisterDestinationPluginServer,
 		serverv2.NewDestinationPluginServer,
 	)
+	// v3PluginSetFactory is a factory for creating a PluginSet for v3 of the
+	// connector protocol.
+	v3PluginSetFactory = newPluginSetFactory(
+		connectorv3.RegisterSpecifierPluginServer,
+		serverv3.NewSpecifierPluginServer,
+		connectorv3.RegisterSourcePluginServer,
+		serverv3.NewSourcePluginServer,
+		connectorv3.RegisterDestinationPluginServer,
+		serverv3.NewDestinationPluginServer,
+	)
 )
+
+// versionedPlugins returns the map of protocol versions the server supports.
+// The keys are the protocol versions, the values the plugin sets that implement
+// each version. go-plugin negotiates the highest version both peers support, so
+// v3 is only used when the client also offers it.
+func versionedPlugins(
+	specifierFactory func() pconnector.SpecifierPlugin,
+	sourceFactory func() pconnector.SourcePlugin,
+	destinationFactory func() pconnector.DestinationPlugin,
+) map[int]plugin.PluginSet {
+	return map[int]plugin.PluginSet{
+		v1.Version: v1PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
+		v2.Version: v2PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
+		v3.Version: v3PluginSetFactory(specifierFactory, sourceFactory, destinationFactory),
+	}
+}
 
 // pluginSetFactory is a function that takes pconnector factories and creates a PluginSet.
 type pluginSetFactory func(

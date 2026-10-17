@@ -3,7 +3,7 @@ module github.com/conduitio/conduit-connector-protocol
 go 1.26.9
 
 require (
-	github.com/conduitio/conduit-commons v0.8.0
+	github.com/conduitio/conduit-commons v0.10.0
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.8.0
@@ -29,7 +29,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/oklog/run v1.2.0 // indirect
 	github.com/petermattis/goid v0.0.0-20250319124200-ccd6737f222a // indirect
-	github.com/twmb/go-cache v1.3.0 // indirect
+	github.com/twmb/franz-go/pkg/sr v1.8.0 // indirect
 	golang.org/x/net v0.61.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
