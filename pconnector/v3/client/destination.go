@@ -139,12 +139,15 @@ func (s *DestinationRunStream) Server() pconnector.DestinationRunStreamServer {
 }
 
 func (s *DestinationRunStream) Send(goReq pconnector.DestinationRunRequest) error {
-	protoReq, err := toproto.DestinationRunRequest(goReq)
+	buf := toproto.GetRecordBytes()
+	buf, err := toproto.DestinationRunRequestBytes(buf, goReq)
 	if err != nil {
+		toproto.PutRecordBytes(buf)
 		return err
 	}
 
-	err = s.client.Send(protoReq)
+	err = s.client.SendMsg(toproto.RawMessage(buf))
+	toproto.PutRecordBytes(buf)
 	if err != nil {
 		return internal.UnwrapGRPCError(err)
 	}

@@ -117,11 +117,15 @@ func (s *SourceRunStream) Server() pconnector.SourceRunStreamServer {
 }
 
 func (s *SourceRunStream) Send(in pconnector.SourceRunResponse) error {
-	out, err := toproto.SourceRunResponse(in)
+	buf := toproto.GetRecordBytes()
+	buf, err := toproto.SourceRunResponseBytes(buf, in)
 	if err != nil {
+		toproto.PutRecordBytes(buf)
 		return err
 	}
-	return s.stream.Send(out)
+	err = s.stream.SendMsg(toproto.RawMessage(buf))
+	toproto.PutRecordBytes(buf)
+	return err
 }
 
 func (s *SourceRunStream) Recv() (pconnector.SourceRunRequest, error) {
