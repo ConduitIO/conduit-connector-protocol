@@ -109,19 +109,25 @@ A destination plugin can declare, in its `Destination.Open` response, that it
 upholds the **ack-order guarantee** on the `Run` stream (field `ordered_acks`,
 available in protocol v2 and v3):
 
-- acks are sent in the order the records were received, across all `Run`
-  requests on the same stream (not only within one request), and
-- every record received gets exactly one ack, never zero and never two.
-
-One exception: records received after `Teardown` has begun may be left unacked.
-The host treats them as not durable and replays them; no later record is acked
-ahead of an earlier one.
+- acks are sent in receive order across all `Run` requests on the stream: the
+  acked records always form a prefix of the received records;
+- each record gets at most one ack, and a nack (an ack carrying an error) is
+  that record's one ack;
+- every received record is acked, except that once `Teardown` has begun, or
+  once the `Run` stream has ended, the plugin sends no further acks and every
+  record not acked by then stays unacked (records still buffered by the plugin
+  and a write abandoned on timeout included). The host must treat unacked
+  records as not durable and redeliver them;
+- acks for one request may be split across several `Run` responses, and one
+  response may carry acks for several requests. Only the order of the
+  individual acks is the contract.
 
 `ordered_acks = false` or absent means **no ordering guarantee**. This is what
 every plugin built before the field existed reports. The host (Conduit) must
 then run that destination with at most one `Run` request in flight (the next
-request is sent only after every record of the previous one has been acked) and
-must not mix records from different sources in one request. Plugins and hosts
+request is sent only after every record of the previous one has been acked).
+As host guidance, not a plugin obligation, it should also not mix records from
+different sources in one request. Plugins and hosts
 that do not know the field ignore it, so the change is wire compatible in both
 directions and needs no migration. Setting it is optional and opt-in: only set
 it if your plugin really upholds both rules, since a host that sees `true` may

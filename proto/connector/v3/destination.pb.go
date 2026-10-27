@@ -418,20 +418,24 @@ type Destination_Open_Response struct {
 	unknownFields protoimpl.UnknownFields
 
 	// OrderedAcks declares that this destination upholds the ack-order
-	// guarantee on the Run stream: acks are sent in the order the records
-	// were received, across all Run requests on the same stream, with
-	// exactly one ack per record received (never zero, never two).
-	//
-	// Exception: records received after Teardown has begun may be left
-	// unacked; the host treats them as not durable and replays them. This
-	// does not violate the guarantee for the records that are acked.
+	// guarantee on the Run stream. Acks are sent in receive order across all
+	// Run requests on the stream: the acked records always form a prefix of
+	// the received records. Each record gets at most one ack; an ack carrying
+	// an error (a nack) is that record's one ack. Every received record is
+	// acked, except that once Teardown has begun, or once the Run stream has
+	// ended, the plugin sends no further acks, and every record not acked by
+	// then stays unacked. That covers records still buffered by the plugin and
+	// a write abandoned on timeout. The host must treat unacked records as not
+	// durable and redeliver them. Acks for one request may be split across
+	// several Run responses, and one response may carry acks for several
+	// requests; only the order of the individual acks is the contract.
 	//
 	// false or absent (plugins built before this field existed) means NO
 	// ordering guarantee is made. The host must then run the destination
 	// with at most one Run request in flight (it sends the next request
-	// only after every record of the previous one has been acked) and
-	// must not mix records from different sources in one request. Hosts
-	// and plugins that do not know this field ignore it, which yields the
+	// only after every record of the previous one has been acked). Host
+	// guidance, not a plugin obligation: the host should also not mix
+	// records from different sources in one request. Hosts and plugins that do not know this field ignore it, which yields the
 	// same conservative behavior.
 	OrderedAcks bool `protobuf:"varint,1,opt,name=ordered_acks,json=orderedAcks,proto3" json:"ordered_acks,omitempty"`
 }
@@ -532,7 +536,9 @@ type Destination_Run_Response struct {
 	// Ack contains the acknowledgments for the records that were processed.
 	// If the plugin declared ordered_acks in the Open response, acks appear
 	// in the order the records were received, across all Run requests on the
-	// stream, and every record is acked exactly once.
+	// stream, and each record gets at most one ack (see the Run rpc for the
+	// prefix property and what stays unacked). Acks may be split across or
+	// combined into responses.
 	Acks []*Destination_Run_Response_Ack `protobuf:"bytes,1,rep,name=acks,proto3" json:"acks,omitempty"`
 }
 

@@ -68,12 +68,15 @@ type (
 	// DestinationOpenResponse is returned by DestinationPlugin.Open.
 	DestinationOpenResponse struct {
 		// OrderedAcks declares that the destination sends acks in the order the
-		// records were received, across all Run requests on the same stream,
-		// with exactly one ack per record. False (the zero value, and what a
+		// records were received, across all Run requests on the same stream:
+		// the acked records always form a prefix of the received records, each
+		// record gets at most one ack, and after Teardown or stream end no
+		// further acks are sent (unacked records are not durable and must be
+		// redelivered). See the proto comments. False (the zero value, and what a
 		// plugin built before this field existed reports) means no ordering
 		// guarantee: the host must run the destination with at most one Run
-		// request in flight and must not mix records from different sources in
-		// one request.
+		// request in flight (host guidance: and should not mix records from
+		// different sources in one request).
 		OrderedAcks bool
 	}
 )
