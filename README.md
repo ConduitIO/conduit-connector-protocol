@@ -103,6 +103,29 @@ the [Conduit API](https://github.com/conduitio/conduit#api)):
 Click [here](https://github.com/ConduitIO/conduit/blob/main/docs/connector_discovery.md) to learn more 
 about how Conduit discovers connectors.
 
+## Destination ack ordering (`ordered_acks`)
+
+A destination plugin can declare, in its `Destination.Open` response, that it
+upholds the **ack-order guarantee** on the `Run` stream (field `ordered_acks`,
+available in protocol v2 and v3):
+
+- acks are sent in the order the records were received, across all `Run`
+  requests on the same stream (not only within one request), and
+- every record received gets exactly one ack, never zero and never two.
+
+`ordered_acks = false` or absent means **no ordering guarantee**. This is what
+every plugin built before the field existed reports. The host (Conduit) must
+then run that destination with at most one `Run` request in flight (the next
+request is sent only after every record of the previous one has been acked) and
+must not mix records from different sources in one request. Plugins and hosts
+that do not know the field ignore it, so the change is wire compatible in both
+directions and needs no migration. Setting it is optional and opt-in: only set
+it if your plugin really upholds both rules, since a host that sees `true` may
+keep several requests in flight and match acks to records by order and position.
+The Go Connector SDK sets it for you.
+
+The Go layer exposes it as `pconnector.DestinationOpenResponse.OrderedAcks`.
+
 ## Development
 
 To generate protobuf code run `make proto-generate`.

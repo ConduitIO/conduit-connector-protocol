@@ -64,8 +64,18 @@ type DestinationConfigureRequest struct {
 type DestinationConfigureResponse struct{}
 
 type (
-	DestinationOpenRequest  struct{}
-	DestinationOpenResponse struct{}
+	DestinationOpenRequest struct{}
+	// DestinationOpenResponse is returned by DestinationPlugin.Open.
+	DestinationOpenResponse struct {
+		// OrderedAcks declares that the destination sends acks in the order the
+		// records were received, across all Run requests on the same stream,
+		// with exactly one ack per record. False (the zero value, and what a
+		// plugin built before this field existed reports) means no ordering
+		// guarantee: the host must run the destination with at most one Run
+		// request in flight and must not mix records from different sources in
+		// one request.
+		OrderedAcks bool
+	}
 )
 
 type DestinationRunRequest struct {

@@ -24,6 +24,12 @@ service DestinationPlugin {
   // acknowledgment should contain an error in case a record could not be
   // successfully processed. The stream should still stay open in case Conduit
   // is able to recover from the error and the pipeline keeps running.
+  //
+  // Ack ordering: a plugin that sets ordered_acks in the Open response
+  // guarantees that acks are sent in the order the records were received,
+  // across all requests on this stream, with exactly one ack per record.
+  // Without that declaration no ordering is guaranteed (see
+  // Destination.Open.Response.ordered_acks).
   rpc Run(stream Destination.Run.Request) returns (stream Destination.Run.Response);
   // Stop signals to the plugin that the record with the specified position is
   // the last one and no more records will be written to the stream after it.
@@ -68,7 +74,21 @@ message Destination {
 
   message Open {
     message Request {}
-    message Response {}
+    message Response {
+      // OrderedAcks declares that this destination upholds the ack-order
+      // guarantee on the Run stream: acks are sent in the order the records
+      // were received, across all Run requests on the same stream, with
+      // exactly one ack per record received (never zero, never two).
+      //
+      // false or absent (plugins built before this field existed) means NO
+      // ordering guarantee is made. The host must then run the destination
+      // with at most one Run request in flight (it sends the next request
+      // only after every record of the previous one has been acked) and
+      // must not mix records from different sources in one request. Hosts
+      // and plugins that do not know this field ignore it, which yields the
+      // same conservative behavior.
+      bool ordered_acks = 1;
+    }
   }
 
   message Run {
@@ -79,6 +99,9 @@ message Destination {
     }
     message Response {
       // Ack contains the acknowledgments for the records that were processed.
+      // If the plugin declared ordered_acks in the Open response, acks appear
+      // in the order the records were received, across all Run requests on the
+      // stream, and every record is acked exactly once.
       repeated Ack acks = 1;
 
       message Ack {

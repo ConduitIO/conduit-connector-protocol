@@ -48,6 +48,12 @@ type DestinationPluginClient interface {
 	// acknowledgment should contain an error in case a record could not be
 	// successfully processed. The stream should still stay open in case Conduit
 	// is able to recover from the error and the pipeline keeps running.
+	//
+	// Ack ordering: a plugin that sets ordered_acks in the Open response
+	// guarantees that acks are sent in the order the records were received,
+	// across all requests on this stream, with exactly one ack per record.
+	// Without that declaration no ordering is guaranteed (see
+	// Destination.Open.Response.ordered_acks).
 	Run(ctx context.Context, opts ...grpc.CallOption) (DestinationPlugin_RunClient, error)
 	// Stop signals to the plugin that the record with the specified position is
 	// the last one and no more records will be written to the stream after it.
@@ -199,6 +205,12 @@ type DestinationPluginServer interface {
 	// acknowledgment should contain an error in case a record could not be
 	// successfully processed. The stream should still stay open in case Conduit
 	// is able to recover from the error and the pipeline keeps running.
+	//
+	// Ack ordering: a plugin that sets ordered_acks in the Open response
+	// guarantees that acks are sent in the order the records were received,
+	// across all requests on this stream, with exactly one ack per record.
+	// Without that declaration no ordering is guaranteed (see
+	// Destination.Open.Response.ordered_acks).
 	Run(DestinationPlugin_RunServer) error
 	// Stop signals to the plugin that the record with the specified position is
 	// the last one and no more records will be written to the stream after it.
