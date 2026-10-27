@@ -48,6 +48,22 @@ type DestinationPluginClient interface {
 	// acknowledgment should contain an error in case a record could not be
 	// successfully processed. The stream should still stay open in case Conduit
 	// is able to recover from the error and the pipeline keeps running.
+	//
+	// Ack ordering: a plugin that sets ordered_acks in the Open response
+	// guarantees the following. Acks are sent in receive order across all Run
+	// requests on the stream: the acked records always form a prefix of the
+	// received records. Each record gets at most one ack; an ack carrying an error
+	// (a nack) is that record's one ack. Every received record is acked, except
+	// that once Teardown has begun, or once the Run stream has ended, the plugin
+	// sends no further acks, and every record not acked by then stays unacked.
+	// That covers records still buffered by the plugin and a write abandoned on
+	// timeout. The host must treat unacked records as not durable and redeliver
+	// them. Acks for one request may be split across several Run responses, and
+	// one response may carry acks for several requests; only the order of the
+	// individual acks is the contract.
+	//
+	// Without that declaration no ordering is guaranteed (see
+	// Destination.Open.Response.ordered_acks).
 	Run(ctx context.Context, opts ...grpc.CallOption) (DestinationPlugin_RunClient, error)
 	// Stop signals to the plugin that the record with the specified position is
 	// the last one and no more records will be written to the stream after it.
@@ -199,6 +215,22 @@ type DestinationPluginServer interface {
 	// acknowledgment should contain an error in case a record could not be
 	// successfully processed. The stream should still stay open in case Conduit
 	// is able to recover from the error and the pipeline keeps running.
+	//
+	// Ack ordering: a plugin that sets ordered_acks in the Open response
+	// guarantees the following. Acks are sent in receive order across all Run
+	// requests on the stream: the acked records always form a prefix of the
+	// received records. Each record gets at most one ack; an ack carrying an error
+	// (a nack) is that record's one ack. Every received record is acked, except
+	// that once Teardown has begun, or once the Run stream has ended, the plugin
+	// sends no further acks, and every record not acked by then stays unacked.
+	// That covers records still buffered by the plugin and a write abandoned on
+	// timeout. The host must treat unacked records as not durable and redeliver
+	// them. Acks for one request may be split across several Run responses, and
+	// one response may carry acks for several requests; only the order of the
+	// individual acks is the contract.
+	//
+	// Without that declaration no ordering is guaranteed (see
+	// Destination.Open.Response.ordered_acks).
 	Run(DestinationPlugin_RunServer) error
 	// Stop signals to the plugin that the record with the specified position is
 	// the last one and no more records will be written to the stream after it.

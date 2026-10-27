@@ -84,8 +84,8 @@ func DestinationConfigureResponse(_ pconnector.DestinationConfigureResponse) *co
 	return &connectorv2.Destination_Configure_Response{}
 }
 
-func DestinationOpenResponse(_ pconnector.DestinationOpenResponse) *connectorv2.Destination_Open_Response {
-	return &connectorv2.Destination_Open_Response{}
+func DestinationOpenResponse(in pconnector.DestinationOpenResponse) *connectorv2.Destination_Open_Response {
+	return &connectorv2.Destination_Open_Response{OrderedAcks: in.OrderedAcks}
 }
 
 func DestinationRunResponse(in pconnector.DestinationRunResponse) *connectorv2.Destination_Run_Response {
