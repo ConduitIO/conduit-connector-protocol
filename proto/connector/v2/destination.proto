@@ -30,6 +30,10 @@ service DestinationPlugin {
   // across all requests on this stream, with exactly one ack per record.
   // Without that declaration no ordering is guaranteed (see
   // Destination.Open.Response.ordered_acks).
+  //
+  // Teardown exception: records received after Teardown has begun may be left
+  // unacked (neither acked nor nacked). The host must treat them as not
+  // durable and replay them; no later record is acked ahead of an earlier one.
   rpc Run(stream Destination.Run.Request) returns (stream Destination.Run.Response);
   // Stop signals to the plugin that the record with the specified position is
   // the last one and no more records will be written to the stream after it.
@@ -79,6 +83,10 @@ message Destination {
       // guarantee on the Run stream: acks are sent in the order the records
       // were received, across all Run requests on the same stream, with
       // exactly one ack per record received (never zero, never two).
+      //
+      // Exception: records received after Teardown has begun may be left
+      // unacked; the host treats them as not durable and replays them. This
+      // does not violate the guarantee for the records that are acked.
       //
       // false or absent (plugins built before this field existed) means NO
       // ordering guarantee is made. The host must then run the destination

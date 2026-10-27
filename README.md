@@ -113,6 +113,10 @@ available in protocol v2 and v3):
   requests on the same stream (not only within one request), and
 - every record received gets exactly one ack, never zero and never two.
 
+One exception: records received after `Teardown` has begun may be left unacked.
+The host treats them as not durable and replays them; no later record is acked
+ahead of an earlier one.
+
 `ordered_acks = false` or absent means **no ordering guarantee**. This is what
 every plugin built before the field existed reports. The host (Conduit) must
 then run that destination with at most one `Run` request in flight (the next

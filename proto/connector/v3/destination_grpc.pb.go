@@ -54,6 +54,10 @@ type DestinationPluginClient interface {
 	// across all requests on this stream, with exactly one ack per record.
 	// Without that declaration no ordering is guaranteed (see
 	// Destination.Open.Response.ordered_acks).
+	//
+	// Teardown exception: records received after Teardown has begun may be left
+	// unacked (neither acked nor nacked). The host must treat them as not
+	// durable and replay them; no later record is acked ahead of an earlier one.
 	Run(ctx context.Context, opts ...grpc.CallOption) (DestinationPlugin_RunClient, error)
 	// Stop signals to the plugin that the record with the specified position is
 	// the last one and no more records will be written to the stream after it.
@@ -211,6 +215,10 @@ type DestinationPluginServer interface {
 	// across all requests on this stream, with exactly one ack per record.
 	// Without that declaration no ordering is guaranteed (see
 	// Destination.Open.Response.ordered_acks).
+	//
+	// Teardown exception: records received after Teardown has begun may be left
+	// unacked (neither acked nor nacked). The host must treat them as not
+	// durable and replay them; no later record is acked ahead of an earlier one.
 	Run(DestinationPlugin_RunServer) error
 	// Stop signals to the plugin that the record with the specified position is
 	// the last one and no more records will be written to the stream after it.

@@ -422,6 +422,10 @@ type Destination_Open_Response struct {
 	// were received, across all Run requests on the same stream, with
 	// exactly one ack per record received (never zero, never two).
 	//
+	// Exception: records received after Teardown has begun may be left
+	// unacked; the host treats them as not durable and replays them. This
+	// does not violate the guarantee for the records that are acked.
+	//
 	// false or absent (plugins built before this field existed) means NO
 	// ordering guarantee is made. The host must then run the destination
 	// with at most one Run request in flight (it sends the next request
